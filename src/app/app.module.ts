@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { GeneralInfoComponent } from './general-info/general-info.component';
 import { FooterComponent } from './footer/footer.component';
-import { FeatureDescriptionComponent } from './feature-description/feature-description.component';
+import { HomeComponent } from './home/home.component';
+
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
@@ -15,19 +15,17 @@ import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
-import { AuthenticationComponent } from './authentication/authentication.component';
 import {MatMenuModule} from "@angular/material/menu";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    GeneralInfoComponent,
     FooterComponent,
-    FeatureDescriptionComponent,
+    HomeComponent,
     LoginComponent,
     SignupComponent,
-    AuthenticationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +37,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatButtonModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

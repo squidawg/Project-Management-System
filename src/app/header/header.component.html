@@ -1,16 +1,24 @@
 <nav class="navbar navbar-default navbar-color">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a href="#" class="navbar-brand title">PMA</a>
+        <a style="cursor: pointer" class="navbar-brand title" routerLink="/">PMA</a>
       </div>
       <div>
         <div class="nav_btn">
           <ul class="nav nav_btn">
-              <button mat-fab extended color="primary">
+              <button
+                      mat-fab
+                      extended
+                      color="primary"
+                      routerLink="/login">
                   <mat-icon>login</mat-icon>
                   Log in
               </button>
-              <button mat-fab extended color="accent">
+              <button
+                      mat-fab
+                      extended
+                      color="accent"
+                      routerLink="/signup">
                   <mat-icon>app_registration</mat-icon>
                   Sign Up
               </button>
