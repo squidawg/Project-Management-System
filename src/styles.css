@@ -37,3 +37,7 @@
 .icon-git{
   background-image: url("../src/assets/github-142-svgrepo-com.svg");
 }
+
+.mat-mdc-form-field{
+  width: 100%;
+}

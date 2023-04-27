@@ -17,6 +17,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {AppRoutingModule} from "./app-routing.module";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -27,19 +28,20 @@ import {AppRoutingModule} from "./app-routing.module";
     LoginComponent,
     SignupComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatMenuModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatMenuModule,
+        AppRoutingModule,
+        MatDividerModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

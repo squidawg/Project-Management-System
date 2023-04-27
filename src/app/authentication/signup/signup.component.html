@@ -7,7 +7,7 @@
         <div class="example-container">
             <mat-form-field appearance="fill">
                 <mat-label>Enter your name</mat-label>
-                <input matInput placeholder="name" [formControl]="name" required>
+                <input  matInput placeholder="name" [formControl]="name" required>
                 <mat-error *ngIf="name.invalid">{{onError(name, 'pattern')}}</mat-error>
             </mat-form-field>
             <br>

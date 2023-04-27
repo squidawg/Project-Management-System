@@ -17,11 +17,16 @@
     <br>
     <div class="btn_size">
       <button
-              class="btn btn-success "
-              routerLink="/signup">Try it now!</button>
+              mat-raised-button
+              color="primary"
+              routerLink="/signup">Try it now!
+      </button>
     </div>
   </div>
   <div class="container">
+    <br>
+    <mat-divider></mat-divider>
+    <br>
     <h2 class="text-center">Our Team</h2>
     <div class="container-fluid to_flex">
       <div  *ngFor="let card of cardData">
