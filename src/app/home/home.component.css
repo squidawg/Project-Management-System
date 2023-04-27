@@ -1,0 +1,49 @@
+.teams_card{
+    flex-direction: column;
+    padding: 0.3rem;
+}
+
+.team-member{
+    background-color: transparent;
+    border: 2px solid #987ece;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.image-round{
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.image_duck{
+    display: inline-flex;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: 0.3rem;
+    border: 2px solid #9370DB;
+}
+.duck_temp{
+    position: relative;
+    top: -3px;
+    left: -30px;
+}
+
+.block_frame {
+    border: 1px solid purple;
+    border-radius: 10px;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.description {
+    margin-bottom: 0;
+}
+
+.feature_description{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

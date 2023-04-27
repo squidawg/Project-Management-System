@@ -1,0 +1,8 @@
+.navbar-color {
+    background: linear-gradient(to right, #a29bfe, #0984e3);
+}
+.title {
+    font-weight: bold;
+    font-size: 36px;
+    color: purple;
+}

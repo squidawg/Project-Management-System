@@ -1,0 +1,25 @@
+.rss-logo{
+    width: 100px;
+    height: 50px;
+}
+
+.footer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.width{
+    display: flex;
+    width: 220px;
+}
+
+.link_item{
+    text-decoration: none;
+    color: black;
+
+}
+a:hover{
+    color: #523c81;
+}
