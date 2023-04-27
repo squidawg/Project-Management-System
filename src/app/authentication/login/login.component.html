@@ -1,0 +1,28 @@
+<div class="container window-height">
+    <div class="row col-md-4 offset-md-4 justify-content-center">
+        <div class="container row justify-content-center text-center">
+            <h2>Login</h2>
+            <h4>Don't have an account? <a href="#">Sign up</a></h4>
+        </div>
+        <div class="example-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                <mat-error *ngIf="email.invalid">{{onError(email, 'email')}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+                <mat-error *ngIf="password.invalid">{{onError(password, 'minLength')}}</mat-error>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div class="container row justify-content-center">
+            <button mat-raised-button color="primary">Login</button>
+        </div>
+    </div>
+</div>
+
