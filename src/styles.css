@@ -1,0 +1,131 @@
+
+.navbar-color{
+  background: linear-gradient(to right, #a29bfe, #0984e3);
+
+}
+.rss-logo{
+  width: 100px;
+  height: 50px;
+}
+
+.footer{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.width{
+  display: flex;
+  width: 220px;
+}
+.team-member{
+  height: 100%;
+  background-color: transparent;
+  border: 2px solid #987ece;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image-round{
+  border-radius: 50%;
+  overflow: hidden;
+}
+.image_duck{
+  display: inline-flex;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 0.3rem;
+  border: 2px solid #9370DB;
+}
+.size{
+  width: 200px;
+  height: 200px;
+}
+
+.duck_temp{
+  position: relative;
+  top: -3px;
+  left: -30px;
+}
+
+.icon{
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+.icon-login{
+  background-image: url("../src/assets/login-svgrepo-com.svg");
+}
+.icon-signup{
+  background-image: url("../src/assets/user-add-svgrepo-com.svg");
+}
+.icon-git{
+  background-image: url("../src/assets/github-142-svgrepo-com.svg");
+}
+.nav_btn{
+  display: flex;
+  gap: 0.5rem;
+}
+.log_link{
+  align-items: center;
+  display: flex;
+}
+
+.footer_inner{
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.link_item{
+  text-decoration: none;
+  color: black;
+
+}
+a:hover{
+  color: #523c81;
+}
+
+.block {
+  border: 1px solid purple;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 36px;
+  color: purple;
+}
+
+.description {
+  margin-bottom: 0;
+}
+.icon-bar{
+  border: 1px solid purple;
+}
+
+.feature_description{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.btn_size{
+  display: flex;
+  justify-content: center;
+}
+
+.mat-mdc-form-field{
+  width: 100%;
+}
+.window-height{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default navbar-color">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand title">PMA</a>
+      </div>
+      <div>
+        <div class="nav_btn">
+          <ul class="nav nav_btn">
+              <button mat-fab extended color="primary">
+                  <mat-icon>login</mat-icon>
+                  Log in
+              </button>
+              <button mat-fab extended color="accent">
+                  <mat-icon>app_registration</mat-icon>
+                  Sign Up
+              </button>
+          </ul>
+            <button mat-fab color="primary" aria-label="Example icon button with a delete icon" [matMenuTriggerFor]="menu">
+                <mat-icon>language</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>en</button>
+                <button mat-menu-item>ru</button>
+            </mat-menu>
+        </div>
+      </div>
+    </div>
+</nav>
