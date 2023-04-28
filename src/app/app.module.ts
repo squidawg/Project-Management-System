@@ -18,6 +18,8 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {AppRoutingModule} from "./app-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import {MatDividerModule} from "@angular/material/divider";
     HomeComponent,
     LoginComponent,
     SignupComponent,
+    DashboardComponent,
+
   ],
     imports: [
         BrowserModule,

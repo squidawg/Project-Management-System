@@ -1,0 +1,28 @@
+.board_card{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+    align-items: center;
+    justify-content: end;
+    flex: 1 0 calc(25% - 10px); /* set the width of each item to 25% of the container minus 10px */
+    margin: 1rem;
+    cursor: pointer;
+}
+.card_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.card-title_wrapper{
+    margin: 0;
+}
+.card_title{
+    margin: 0;
+}
+.board_card:hover{
+    color: purple;
+}
+.board_card:hover {
+    box-shadow: 0 0 20px #9c27b0;
+}
+
