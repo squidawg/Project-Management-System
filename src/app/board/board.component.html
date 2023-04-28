@@ -1,0 +1,10 @@
+<div class="container window-height">
+    <div class="row">
+        <div class="container" *ngFor="let column of columns; let i = index">
+            <h3>{{column.title}}</h3>
+            <p>{{column.tasks? column.tasks[i].name : ''}}</p>
+            <p>{{column.tasks? column.tasks[i].description : ''}}</p>
+        </div>
+    </div>
+    <button mat-button color="primary" (click)="onAddColumn()">Add Column</button>
+</div>
