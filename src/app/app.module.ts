@@ -19,6 +19,9 @@ import {MatMenuModule} from "@angular/material/menu";
 import {AppRoutingModule} from "./app-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditProfileComponent } from './authentication/edit-profile/edit-profile.component';
+import { BoardComponent } from './board/board.component';
+import {BoardService} from "./board/board.service";
 
 
 @NgModule({
@@ -30,6 +33,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     LoginComponent,
     SignupComponent,
     DashboardComponent,
+    EditProfileComponent,
+    BoardComponent,
 
   ],
     imports: [
@@ -46,7 +51,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         AppRoutingModule,
         MatDividerModule
     ],
-  providers: [],
+  providers: [BoardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
