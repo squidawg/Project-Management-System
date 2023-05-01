@@ -22,6 +22,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditProfileComponent } from './authentication/edit-profile/edit-profile.component';
 import { BoardComponent } from './board/board.component';
 import {BoardService} from "./board/board.service";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {BoardService} from "./board/board.service";
         ReactiveFormsModule,
         MatMenuModule,
         AppRoutingModule,
-        MatDividerModule
+        MatDividerModule,
+        DragDropModule
     ],
   providers: [BoardService],
   bootstrap: [AppComponent]

@@ -1,9 +1,28 @@
-<div class="container window-height">
-    <div class="row">
-        <div class="container" *ngFor="let column of columns; let i = index">
-            <h3>{{column.title}}</h3>
-            <p>{{column.tasks? column.tasks[i].name : ''}}</p>
-            <p>{{column.tasks? column.tasks[i].description : ''}}</p>
+<div class="container board_wrapper">
+    <div cdkDropListGroup class="columns_wrapper">
+        <div class="block_frame column_wrapper" *ngFor="let column of columns; let i = index">
+            <div class="column_title-wrapper">
+                <h2>{{column.title}}</h2>
+                <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <div
+                    cdkDropList
+                    [cdkDropListData]="column.tasks"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                <div class="example-box to_flex test" *ngFor="let item of column.tasks" cdkDrag>
+                    <div>
+                        <h3>{{item.name}}</h3>
+                        <p>{{item.description}}</p>
+                    </div>
+                    <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <button mat-flat-button color="primary">Add Task</button>
         </div>
     </div>
     <button mat-button color="primary" (click)="onAddColumn()">Add Column</button>
