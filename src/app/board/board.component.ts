@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {BoardService} from "./board.service";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {BoardsTaskModel} from "./boards.task.model";
+import {BoardModel} from "./board.model";
+import {ActivatedRoute} from "@angular/router";
+import {DashboardModel} from "../dashboard/dashboard.model";
 
 @Component({
   selector: 'app-board',
@@ -9,22 +11,32 @@ import {BoardsTaskModel} from "./boards.task.model";
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit{
-  constructor(private boardService:BoardService) {
+  constructor(private boardService:BoardService, private route: ActivatedRoute) {
   }
-  columns = this.boardService.columns;
-  connectedList: BoardsTaskModel[] = []
-  onAddColumn(){
+  columns: DashboardModel | any = new DashboardModel(0,'',[
+    new BoardModel('',
+        []),
+  ])
+  onAddColumn() {
   }
+
+  onDeleteColumn(column: any) {
+    const index = this.columns.indexOf(this.columns[column]);
+    if (index >= 0) {
+      this.columns.splice(index, 1);
+    }
+  }
+
   ngOnInit(){
-    this.columns.forEach(el => {
-      this.connectedList.push(el.tasks)
-    })
-    console.log(this.connectedList)
+    const id = this.route.snapshot.params['id'];
+    this.columns = this.boardService.getBoard(+id);
   }
-  dropIt(event: CdkDragDrop<string[]>) {
+
+  dropColumn(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
-  drop(event: CdkDragDrop<string[] | any>) {
+
+  dropTask(event: CdkDragDrop<string[] | any>) {
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

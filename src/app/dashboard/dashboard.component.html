@@ -3,12 +3,12 @@
         <h1 class="text-center">My Boards:</h1>
     </div>
     <div class="container card_wrapper">
-        <div *ngIf="boards.length <= 0">
+        <div *ngIf="!boards">
             <h3 class="text-center">You don’t have any boards in this Workspace yet. Boards you create or join will show up here.</h3>
         </div>
-        <div class="row" *ngFor="let board of boards; let i = index" routerLink="/">
+        <div class="row" *ngFor="let board of boards; let i = index" (click)="onLoadBoard(board.id)">
             <div class="block_frame to_flex board_card">
-                <h2 class="card_title">{{board}}</h2>
+                <h2 class="card_title">{{board.boardTitle}}</h2>
                 <button mat-icon-button color="primary" (click)="onDeleteBoard(i)">
                     <mat-icon>delete</mat-icon>
                 </button>

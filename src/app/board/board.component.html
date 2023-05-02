@@ -1,10 +1,13 @@
 <div class="container board_wrapper">
-    <div cdkDropList cdkDropListOrientation="horizontal" class="board_wrapper" (cdkDropListDropped)="dropIt($event)">
+    <div cdkDropList cdkDropListOrientation="horizontal" class="board_wrapper" (cdkDropListDropped)="dropColumn($event)">
         <div cdkDropListGroup class="columns_wrapper" >
-                <div cdkDrag class="block_frame column_wrapper" *ngFor="let column of columns">
+                <div cdkDrag class="block_frame column_wrapper" *ngFor="let column of columns; let i = index">
                     <div class="column_title-wrapper">
                         <h2>{{column.title}}</h2>
-                        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                        <button
+                                mat-icon-button color="primary"
+                                aria-label="Example icon button with a home icon" (click)="onDeleteColumn(i)"
+                        >
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
@@ -12,7 +15,7 @@
                             cdkDropList
                             [cdkDropListData]="column.tasks"
                             class="example-list"
-                            (cdkDropListDropped)="drop($event)">
+                            (cdkDropListDropped)="dropTask($event)">
                         <div class="example-box to_flex test"
                              *ngFor="let item of column.tasks"
                              cdkDrag>

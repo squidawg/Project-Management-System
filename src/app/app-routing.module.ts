@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'signup', component: SignupComponent},
     {path: 'edit', component: EditProfileComponent},
-    {path: 'board', component: BoardComponent}
+    {path: 'board/:id', component: BoardComponent}
 ]
 
 @NgModule({

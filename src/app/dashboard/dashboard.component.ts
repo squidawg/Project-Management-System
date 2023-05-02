@@ -1,4 +1,7 @@
 import {Component, OnInit,} from '@angular/core';
+import {BoardService} from "../board/board.service";
+import {Router} from "@angular/router";
+import {DashboardModel} from "./dashboard.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -6,13 +9,19 @@ import {Component, OnInit,} from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit{
-  boards: string[] = ['Task Master', 'Workflow Wizard', 'Agile Avenue'];
+  constructor(private boardService:BoardService, private router: Router) {
+  }
+  boards = this.boardService.columns;
 
   ngOnInit() {
   }
 
   onDeleteBoard(i:number){
     this.boards.splice(i,1)
+  }
+
+  onLoadBoard(i:number){
+    this.router.navigate(['board', i])
   }
 
 }
