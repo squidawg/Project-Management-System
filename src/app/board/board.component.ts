@@ -4,6 +4,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
 import {BoardModel} from "./board.model";
 import {ActivatedRoute} from "@angular/router";
 import {DashboardModel} from "../dashboard/dashboard.model";
+import {DialogService} from "../shared/dialog/dialog.service";
+import {AddTaskFormComponent} from "./dialog/add-task-form/add-task-form.component";
 
 @Component({
   selector: 'app-board',
@@ -11,13 +13,14 @@ import {DashboardModel} from "../dashboard/dashboard.model";
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit{
-  constructor(private boardService:BoardService, private route: ActivatedRoute) {
+  constructor(private boardService:BoardService, private route: ActivatedRoute, private dialog:DialogService) {
   }
   columns: DashboardModel | any = new DashboardModel(0,'',[
     new BoardModel('',
         []),
   ])
-  onAddColumn() {
+  onAddTask(start:string, end:string) {
+    this.dialog.openDialog(start, end, AddTaskFormComponent)
   }
 
   onDeleteColumn(column: any) {

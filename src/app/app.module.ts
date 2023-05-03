@@ -23,6 +23,10 @@ import { EditProfileComponent } from './authentication/edit-profile/edit-profile
 import { BoardComponent } from './board/board.component';
 import {BoardService} from "./board/board.service";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { DialogComponent } from './shared/dialog/dialog.component';
+import { AddTaskFormComponent } from './board/dialog/add-task-form/add-task-form.component';
+import {DialogService} from "./shared/dialog/dialog.service";
+import { MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -36,6 +40,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     DashboardComponent,
     EditProfileComponent,
     BoardComponent,
+    DialogComponent,
+    AddTaskFormComponent,
 
   ],
     imports: [
@@ -51,9 +57,10 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
         MatMenuModule,
         AppRoutingModule,
         MatDividerModule,
-        DragDropModule
+        DragDropModule,
+        MatDialogModule,
     ],
-  providers: [BoardService],
+  providers: [BoardService, DialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

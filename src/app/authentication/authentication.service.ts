@@ -11,7 +11,7 @@ export class AuthenticationService{
       new FormControl('', [Validators.required, Validators.minLength(4)]),
       new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       new FormControl('', [Validators.required, Validators.minLength(4)]),
-
+      new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z ]*')]),
    )
     getErrorMessage(value: FormControl, name:string) {
         if (value.hasError('required')) {
