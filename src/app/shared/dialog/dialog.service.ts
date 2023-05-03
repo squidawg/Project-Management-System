@@ -5,14 +5,19 @@ import {ComponentType} from "@angular/cdk/overlay";
 @Injectable({
   providedIn: 'root'
 })
+
 export class DialogService {
+  state: string = '';
   constructor(public dialog: MatDialog) {}
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, component: ComponentType<any>): void {
-    this.dialog.open(component, {
+  openDialog(component: ComponentType<any>): void {
+    const dialogRef = this.dialog.open(component, {
       width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.state = result;
     });
   }
 }

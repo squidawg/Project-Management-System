@@ -26,7 +26,9 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { AddTaskFormComponent } from './board/dialog/add-task-form/add-task-form.component';
 import {DialogService} from "./shared/dialog/dialog.service";
-import { MatDialogModule} from "@angular/material/dialog";
+import {MatDialog, MatDialogClose, MatDialogModule} from "@angular/material/dialog";
+import { AddColumnFormComponent } from './board/dialog/add-column-form/add-column-form.component';
+import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/delete-warning-form.component';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { MatDialogModule} from "@angular/material/dialog";
     BoardComponent,
     DialogComponent,
     AddTaskFormComponent,
+    AddColumnFormComponent,
+    DeleteWarningFormComponent,
 
   ],
     imports: [
@@ -60,7 +64,7 @@ import { MatDialogModule} from "@angular/material/dialog";
         DragDropModule,
         MatDialogModule,
     ],
-  providers: [BoardService, DialogService],
+  providers: [BoardService, DialogService, MatDialogClose],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
