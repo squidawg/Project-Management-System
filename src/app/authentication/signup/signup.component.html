@@ -1,33 +1,54 @@
 <div class="container window-height">
-    <div class="row col-md-4 offset-md-4 justify-content-center">
-        <div class="container row justify-content-center text-center">
-            <h2>Registration </h2>
-            <h4>Already have an account? <a style="cursor: pointer" routerLink="/login">Log in</a></h4>
+    <div class="col-md-4 offset-md-4 justify-content-center">
+        <div class="alert alert-danger" *ngIf="error">
+            <p>{{error}}</p>
         </div>
-        <div class="example-container">
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your name</mat-label>
-                <input  matInput placeholder="name" [formControl]="name" required>
-                <mat-error *ngIf="name.invalid">{{onError(name, 'pattern')}}</mat-error>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your email</mat-label>
-                <input matInput placeholder="pat@example.com" [formControl]="email" required>
-                <mat-error *ngIf="email.invalid">{{onError(email, 'email')}}</mat-error>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
-                <mat-error *ngIf="password.invalid">{{onError(password, 'minLength')}}</mat-error>
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <div class="container justify-content-center text-center to_flex" *ngIf="isLoading">
+            <mat-spinner ></mat-spinner>
+        </div>
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+            <div class="container row justify-content-center text-center">
+                <h2>Registration </h2>
+                <h4>Already have an account? <a style="cursor: pointer" routerLink="/login">Log in</a></h4>
+            </div>
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your name</mat-label>
+                    <input
+                            matInput
+                            formControlName="name">
+                    <mat-error *ngIf="!signUpForm.get('name')!.valid">{{onError(signUpForm.get('name'),'name')}}</mat-error>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your login</mat-label>
+                    <input
+                            matInput
+                            formControlName="login"
+                    >
+                    <mat-error *ngIf="!signUpForm.get('login')!.valid">Invalid input</mat-error>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your password</mat-label>
+                    <input
+                            matInput
+                            [type]="hide ? 'password' : 'text'"
+                            formControlName="password"
+                    >
+                    <mat-error *ngIf="!signUpForm.get('password')!.valid">Invalid input</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button
+                        mat-raised-button
+                        color="primary"
+                        [disabled]="!signUpForm.valid"
+                >
+                    Sign up
                 </button>
-            </mat-form-field>
-        </div>
-        <div class="container row justify-content-center">
-            <button mat-raised-button color="primary">Sign up</button>
-        </div>
+            </div>
+        </form>
     </div>
 </div>

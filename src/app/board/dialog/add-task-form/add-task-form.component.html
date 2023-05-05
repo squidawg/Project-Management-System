@@ -2,8 +2,8 @@
 <div mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Enter a title</mat-label>
-        <input matInput  [formControl]="task" required>
-        <mat-error *ngIf="task.invalid">{{onError(task, 'pattern')}}</mat-error>
+        <input matInput   required>
+        <mat-error></mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>

@@ -2,8 +2,8 @@
 <div mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Enter a title</mat-label>
-        <input matInput  [formControl]="column" required>
-        <mat-error *ngIf="column.invalid">{{onError(column, 'pattern')}}</mat-error>
+        <input matInput   required>
+        <mat-error></mat-error>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>

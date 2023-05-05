@@ -9,7 +9,6 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./add-task-form.component.css']
 })
 export class AddTaskFormComponent {
-  task = this.formField.authenticationModel.taskName;
 
   constructor(public dialogRef: MatDialogRef<AddTaskFormComponent>, private formField: AuthenticationService) {
     }

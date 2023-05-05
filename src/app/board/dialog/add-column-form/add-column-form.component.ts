@@ -9,7 +9,6 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./add-column-form.component.css']
 })
 export class AddColumnFormComponent {
-  column = this.formField.authenticationModel.columnName;
 
   constructor(public dialogRef: MatDialogRef<AddColumnFormComponent>, private formField: AuthenticationService, private dialogClose:MatDialogClose) {
   }

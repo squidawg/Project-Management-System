@@ -26,9 +26,12 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { AddTaskFormComponent } from './board/dialog/add-task-form/add-task-form.component';
 import {DialogService} from "./shared/dialog/dialog.service";
-import {MatDialog, MatDialogClose, MatDialogModule} from "@angular/material/dialog";
+import { MatDialogClose, MatDialogModule} from "@angular/material/dialog";
 import { AddColumnFormComponent } from './board/dialog/add-column-form/add-column-form.component';
 import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/delete-warning-form.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {HttpClientModule} from "@angular/common/http";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -63,6 +66,9 @@ import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/
         MatDividerModule,
         DragDropModule,
         MatDialogModule,
+        MatAutocompleteModule,
+        HttpClientModule,
+        MatProgressSpinnerModule
     ],
   providers: [BoardService, DialogService, MatDialogClose],
   bootstrap: [AppComponent]

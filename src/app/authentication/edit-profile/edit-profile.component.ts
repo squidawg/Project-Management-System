@@ -10,9 +10,6 @@ import {AuthenticationService} from "../authentication.service";
 export class EditProfileComponent {
   constructor(private authentication: AuthenticationService) {
   }
-  name = this.authentication.authenticationModel.name;
-  password = this.authentication.authenticationModel.password;
-  newPassword = this.authentication.authenticationModel.newPassword;
   hide = true;
 
   onError(value: FormControl, valueName: string) {

@@ -6,22 +6,22 @@
         <div class="example-container">
             <mat-form-field appearance="fill">
                 <mat-label>Enter your name</mat-label>
-                <input  matInput placeholder="name" [formControl]="name" required>
-                <mat-error *ngIf="name.invalid">{{onError(name, 'pattern')}}</mat-error>
+                <input  matInput placeholder="name" required>
+                <mat-error></mat-error>
             </mat-form-field>
             <br>
             <mat-form-field appearance="fill">
                 <mat-label>Enter old password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
-                <mat-error *ngIf="password.invalid">{{onError(password, 'minLength')}}</mat-error>
+                <input matInput [type]="hide ? 'password' : 'text'" required>
+                <mat-error></mat-error>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Enter new password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="newPassword" required>
-                <mat-error *ngIf="newPassword.invalid">{{onError(newPassword, 'minLength')}}</mat-error>
+                <input matInput [type]="hide ? 'password' : 'text'"  required>
+                <mat-error></mat-error>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
