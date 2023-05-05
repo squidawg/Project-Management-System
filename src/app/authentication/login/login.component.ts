@@ -1,19 +1,46 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  email = this.authentication.authenticationModel.email;
-  password = this.authentication.authenticationModel.password;
+export class LoginComponent implements OnInit{
+  signInForm!: FormGroup;
+  isLoading = false;
   hide = true;
+  error?:string;
+
   constructor(private authentication: AuthenticationService) {
   }
-  onError(value: FormControl, valueName: string) {
+
+  ngOnInit() {
+    this.signInForm = new FormGroup({
+      'login': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(4)])
+    })
+  }
+  onSubmit(){
+    const login = this.signInForm.value.login;
+    const password = this.signInForm.value.password;
+
+    this.isLoading = true;
+    this.authentication.signIn(login, password)
+        .subscribe(res => {
+          console.log(res)
+          this.isLoading = false;
+
+        }, errRes => {
+          console.log(errRes)
+          this.error = errRes.error.message
+          this.isLoading = false;
+        })
+    this.signInForm.reset()
+  }
+
+  onError(value: any, valueName: string) {
     return this.authentication.getErrorMessage(value, valueName)
   }
 }
