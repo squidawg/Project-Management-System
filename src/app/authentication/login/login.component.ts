@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit{
   hide = true;
   error?:string;
 
-  constructor(private authentication: AuthenticationService) {
+  constructor(private authentication: AuthenticationService, private router: Router) {
   }
 
   ngOnInit() {
@@ -28,12 +29,11 @@ export class LoginComponent implements OnInit{
 
     this.isLoading = true;
     this.authentication.signIn(login, password)
-        .subscribe(res => {
-          console.log(res)
+        .subscribe(resData => {
           this.isLoading = false;
+          this.router.navigate(['/dashboard'])
 
         }, errRes => {
-          console.log(errRes)
           this.error = errRes.error.message
           this.isLoading = false;
         })

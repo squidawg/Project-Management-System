@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {AuthenticationService} from "../authentication.service";
-import {AuthenticationModel} from "../authentication.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit{
   signUpForm!: FormGroup;
   hide = true;
   error?:string;
-  constructor(private authentication: AuthenticationService) {
+  constructor(private authentication: AuthenticationService, private router: Router) {
   }
 
   ngOnInit() {
@@ -40,13 +40,13 @@ export class SignupComponent implements OnInit{
     this.authentication.signUp(name, login, password)
         .subscribe(res => {
           this.isLoading = false;
+          this.router.navigate(['/login']);
 
     }, errRes => {
-          console.log(errRes)
           this.error = errRes.error.message
           this.isLoading = false;
     })
-    this.signUpForm.reset()
+    this.signUpForm.reset();
   }
 
 }

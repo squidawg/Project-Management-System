@@ -32,6 +32,7 @@ import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {JwtService} from "./authentication/jwt.service";
 
 
 @NgModule({
@@ -70,7 +71,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         HttpClientModule,
         MatProgressSpinnerModule
     ],
-  providers: [BoardService, DialogService, MatDialogClose],
+  providers: [BoardService, DialogService, MatDialogClose, JwtService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

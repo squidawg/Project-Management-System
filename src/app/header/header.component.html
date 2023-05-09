@@ -5,25 +5,25 @@
       </div>
       <div>
         <div class="nav_btn" >
-<!--          <ul class="nav nav_btn">-->
-<!--              <button-->
-<!--                      mat-fab-->
-<!--                      extended-->
-<!--                      color="primary"-->
-<!--                      routerLink="/login">-->
-<!--                  <mat-icon>login</mat-icon>-->
-<!--                  Log in-->
-<!--              </button>-->
-<!--              <button-->
-<!--                      mat-fab-->
-<!--                      extended-->
-<!--                      color="accent"-->
-<!--                      routerLink="/signup">-->
-<!--                  <mat-icon>app_registration</mat-icon>-->
-<!--                  Sign Up-->
-<!--              </button>-->
-<!--          </ul>-->
-          <ul class="nav nav_btn">
+          <ul class="nav nav_btn" *ngIf="!isAuth">
+              <button
+                      mat-fab
+                      extended
+                      color="primary"
+                      routerLink="/login">
+                  <mat-icon>login</mat-icon>
+                  Sign In
+              </button>
+              <button
+                      mat-fab
+                      extended
+                      color="accent"
+                      routerLink="/signup">
+                  <mat-icon>app_registration</mat-icon>
+                  Sign Up
+              </button>
+          </ul>
+          <ul class="nav nav_btn" *ngIf="isAuth">
             <button
                     mat-fab
                     extended

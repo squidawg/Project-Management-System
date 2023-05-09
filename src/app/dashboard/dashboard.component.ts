@@ -8,6 +8,7 @@ import {DashboardModel} from "./dashboard.model";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit{
   constructor(private boardService:BoardService, private router: Router) {
   }
