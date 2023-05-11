@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BoardService} from "./board.service";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {BoardModel} from "./board.model";
@@ -15,50 +15,40 @@ import {BoardsTaskModel} from "./boards.task.model";
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit, DoCheck{
-  constructor(private boardService:BoardService, private route: ActivatedRoute, private dialog:DialogService) {
-  }
-  columns: DashboardModel | any = new DashboardModel(0,'',[
-    new BoardModel('',
-        []),
-  ]);
+
+export class BoardComponent implements OnInit{
+  constructor(private boardService:BoardService, private route: ActivatedRoute, private dialog:DialogService) {}
+
+  columns: DashboardModel | any;
 
   ngOnInit(){
     const id = this.route.snapshot.params['id'];
-    this.columns = this.boardService.getBoard(+id);
+    //this.columns = this.boardService.getBoard(+id);
   }
-  ngDoCheck() {
-    if(this.dialog.state === 'ok'){
-      this.onAddColumn();
-    }
-  }
+
 
   onAddColumn() {
-    if(this.dialog.state === 'ok'){
-      this.columns.push(new BoardModel('title',[]))
-    }
+    // if(this.dialog.state === 'ok'){
+    //   this.columns.push(new BoardModel('title',[]));
+    // }
     this.dialog.state = '';
-    this.dialog.openDialog(AddColumnFormComponent)
-  }
-  onAddTask() {
-    this.dialog.openDialog(AddTaskFormComponent)
+    this.dialog.openDialog(AddColumnFormComponent);
   }
 
-  // onDeleteColumn(column: any) {
-  //   const index = this.columns.indexOf(this.columns[column]);
-  //   if (index >= 0) {
-  //     this.columns.splice(index, 1);
-  //   }
-  // }
-  onDeleteColumn() {
-    this.dialog.openDialog(DeleteWarningFormComponent)
+  onAddTask() {
+    this.dialog.openDialog(AddTaskFormComponent);
   }
+
+  onDeleteColumn() {
+    this.dialog.openDialog(DeleteWarningFormComponent);
+  }
+
   onDeleteTask() {
-    this.dialog.openDialog(DeleteWarningFormComponent)
+    this.dialog.openDialog(DeleteWarningFormComponent);
   }
 
   dropColumn(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+    //moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 
   dropTask(event: CdkDragDrop<string[] | any>) {
