@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ComponentType} from "@angular/cdk/overlay";
 
@@ -8,6 +8,7 @@ import {ComponentType} from "@angular/cdk/overlay";
 
 export class DialogService {
   state: string = '';
+
   constructor(public dialog: MatDialog) {}
 
   openDialog(component: ComponentType<any>): void {
@@ -17,7 +18,7 @@ export class DialogService {
       exitAnimationDuration: '100ms',
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.state = result;
+      this.state = result
     });
   }
 }

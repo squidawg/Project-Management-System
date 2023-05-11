@@ -13,11 +13,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
+
 import {MatMenuModule} from "@angular/material/menu";
 import {AppRoutingModule} from "./app-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditProfileComponent } from './authentication/edit-profile/edit-profile.component';
 import { BoardComponent } from './board/board.component';
@@ -33,6 +36,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {JwtService} from "./authentication/jwt.service";
+import { CreateBoardComponent } from './board/dialog/create-board/create-board.component';
 
 
 @NgModule({
@@ -50,6 +54,7 @@ import {JwtService} from "./authentication/jwt.service";
     AddTaskFormComponent,
     AddColumnFormComponent,
     DeleteWarningFormComponent,
+    CreateBoardComponent,
 
   ],
     imports: [

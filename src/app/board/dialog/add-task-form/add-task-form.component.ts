@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatDialogRef} from "@angular/material/dialog";
 import {AuthenticationService} from "../../../authentication/authentication.service";
 import {FormControl} from "@angular/forms";
 
@@ -10,9 +9,9 @@ import {FormControl} from "@angular/forms";
 })
 export class AddTaskFormComponent {
 
-  constructor(public dialogRef: MatDialogRef<AddTaskFormComponent>, private formField: AuthenticationService) {
+  constructor(private formField: AuthenticationService) {
     }
     onError(value: FormControl, name:string){
-      return this.formField.getErrorMessage(value, name)
+      return this.formField.getErrorMessage(value, name);
     }
   }

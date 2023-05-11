@@ -16,6 +16,7 @@ interface AuthData {
 @Injectable({
     providedIn: 'root'
 })
+
 export class AuthenticationService{
     user = new BehaviorSubject<User>(null!)
     parsedJwt: JwtPayload | any

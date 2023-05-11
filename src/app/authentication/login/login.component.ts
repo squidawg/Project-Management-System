@@ -8,14 +8,14 @@ import {Router} from "@angular/router";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+
+export class LoginComponent implements OnInit {
   signInForm!: FormGroup;
   isLoading = false;
   hide = true;
   error?:string;
 
-  constructor(private authentication: AuthenticationService, private router: Router) {
-  }
+  constructor(private authentication: AuthenticationService, private router: Router) {}
 
   ngOnInit() {
     this.signInForm = new FormGroup({
@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit{
       'password': new FormControl(null, [Validators.required, Validators.minLength(4)])
     })
   }
-  onSubmit(){
+
+  onSubmit() {
     const login = this.signInForm.value.login;
     const password = this.signInForm.value.password;
 
@@ -31,16 +32,16 @@ export class LoginComponent implements OnInit{
     this.authentication.signIn(login, password)
         .subscribe(resData => {
           this.isLoading = false;
-          this.router.navigate(['/dashboard'])
+          this.router.navigate(['/dashboard']);
 
         }, errRes => {
-          this.error = errRes.error.message
+          this.error = errRes.error.message;
           this.isLoading = false;
         })
-    this.signInForm.reset()
+    this.signInForm.reset();
   }
 
   onError(value: any, valueName: string) {
-    return this.authentication.getErrorMessage(value, valueName)
+    return this.authentication.getErrorMessage(value, valueName);
   }
 }
