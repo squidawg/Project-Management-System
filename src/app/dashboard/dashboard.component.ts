@@ -1,7 +1,9 @@
-import {Component, OnInit,} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {BoardService} from "../board/board.service";
-import {Router} from "@angular/router";
 import {DashboardModel} from "./dashboard.model";
+import {DashboardService} from "./dashboard.service";
+import {DialogService} from "../shared/dialog/dialog.service";
+import {DeleteWarningFormComponent} from "../shared/dialog/delete-warning-form/delete-warning-form.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -9,20 +11,28 @@ import {DashboardModel} from "./dashboard.model";
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit{
-  constructor(private boardService:BoardService, private router: Router) {
-  }
-  boards = this.boardService.columns;
+export class DashboardComponent implements OnInit, DoCheck{
+  constructor(
+      private dialogService: DialogService,
+      private dashboardService: DashboardService,
+      private boardService: BoardService) {}
+
+  boards!: DashboardModel[];
 
   ngOnInit() {
+    this.onFetch();
   }
 
-  onDeleteBoard(i:number){
-    this.boards.splice(i,1)
+  ngDoCheck() {
+    this.boards = this.boardService.getBoards();
   }
 
-  onLoadBoard(i:number){
-    this.router.navigate(['board', i])
+  onFetch(){
+    this.dashboardService.fetchBoards();
   }
 
+  onDelete(id: number){
+    this.dashboardService.boardId = this.boards[id]._id;
+    this.dialogService.openDialog(DeleteWarningFormComponent);
+  }
 }

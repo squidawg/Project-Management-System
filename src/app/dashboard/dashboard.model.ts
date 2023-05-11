@@ -1,6 +1,7 @@
-import {BoardModel} from "../board/board.model";
-
 export class DashboardModel {
-    constructor(public id:number, public boardTitle: string, public boardContent: BoardModel[]) {
-    }
+    constructor(
+        public _id: string,
+        public title: string,
+        public owner: string,
+        public user: string[]){}
 }
