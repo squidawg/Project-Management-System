@@ -1,14 +1,20 @@
-<h1 mat-dialog-title>Add another list</h1>
-<div mat-dialog-content>
-    <mat-form-field appearance="fill">
-        <mat-label>Enter a title</mat-label>
-        <input matInput   required>
-        <mat-error></mat-error>
-    </mat-form-field>
-</div>
-<div mat-dialog-actions>
-    <button mat-button mat-dialog-close cdkFocusInitial color="primary" (click)="onOkClick()">Add</button>
-    <button mat-icon-button mat-dialog-close aria-label="Example icon button with a home icon" (click)="onNoClick()">
-        <mat-icon>close</mat-icon>
-    </button>
-</div>
+<form [formGroup]="createColumnForm">
+    <h1 mat-dialog-title>Create Column</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a title</mat-label>
+            <input
+                    matInput
+                    required
+                    formControlName="columnTitle"
+            >
+            <mat-error></mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close cdkFocusInitial color="primary" (click)="onSubmit()">Submit</button>
+        <button mat-icon-button mat-dialog-close aria-label="Example icon button with a home icon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</form>

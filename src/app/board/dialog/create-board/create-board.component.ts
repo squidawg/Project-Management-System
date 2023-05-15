@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {DashboardService} from "../../../dashboard/dashboard.service";
-import {User} from "../../../authentication/user.model";
+import {DashboardStorageService} from "../../../dashboard/dashboard-storage.service";
 import {AuthenticationService} from "../../../authentication/authentication.service";
 
 @Component({
@@ -14,7 +13,8 @@ export class CreateBoardComponent implements OnInit{
   createBoardForm!: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<CreateBoardComponent>,
-              private dashboardService: DashboardService, private user: AuthenticationService
+              private dashboardService: DashboardStorageService,
+              private user: AuthenticationService
               ) {}
 
   ngOnInit() {
@@ -27,8 +27,7 @@ export class CreateBoardComponent implements OnInit{
   onSubmit() {
     const user = this.user.user.value.id;
     const title = this.createBoardForm.value.titleBoard;
-    this.dialogRef.close();
-    this.dashboardService.createBoard(title, user).subscribe()
+    this.dashboardService.createBoard(title, user)
     this.createBoardForm.reset()
   }
 }

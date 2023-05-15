@@ -3,5 +3,5 @@ export class DashboardModel {
         public _id: string,
         public title: string,
         public owner: string,
-        public user: string[]){}
+        public users: string[]){}
 }
