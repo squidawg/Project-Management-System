@@ -18,8 +18,8 @@ interface AuthData {
 })
 
 export class AuthenticationService{
-    user = new BehaviorSubject<User>(null!)
-    parsedJwt: JwtPayload | any
+    user = new BehaviorSubject<User>(null!);
+    parsedJwt: JwtPayload | any;
     constructor(private http: HttpClient, private jwt: JwtService) {}
 
     getErrorMessage(value: any, name:string) {

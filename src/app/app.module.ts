@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -24,12 +24,11 @@ import {MatDividerModule} from "@angular/material/divider";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditProfileComponent } from './authentication/edit-profile/edit-profile.component';
 import { BoardComponent } from './board/board.component';
-import {BoardService} from "./board/board.service";
+import {DashboardService} from "./dashboard/dashboard.service";
 import {DragDropModule} from "@angular/cdk/drag-drop";
-import { DialogComponent } from './shared/dialog/dialog.component';
 import { AddTaskFormComponent } from './board/dialog/add-task-form/add-task-form.component';
 import {DialogService} from "./shared/dialog/dialog.service";
-import { MatDialogClose, MatDialogModule} from "@angular/material/dialog";
+import {MatDialogClose, MatDialogModule} from "@angular/material/dialog";
 import { AddColumnFormComponent } from './board/dialog/add-column-form/add-column-form.component';
 import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/delete-warning-form.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -37,6 +36,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {JwtService} from "./authentication/jwt.service";
 import { CreateBoardComponent } from './board/dialog/create-board/create-board.component';
+import { TasksComponent } from './board/tasks/tasks.component';
 
 
 @NgModule({
@@ -50,11 +50,11 @@ import { CreateBoardComponent } from './board/dialog/create-board/create-board.c
     DashboardComponent,
     EditProfileComponent,
     BoardComponent,
-    DialogComponent,
     AddTaskFormComponent,
     AddColumnFormComponent,
     DeleteWarningFormComponent,
     CreateBoardComponent,
+    TasksComponent,
 
   ],
     imports: [
@@ -74,9 +74,10 @@ import { CreateBoardComponent } from './board/dialog/create-board/create-board.c
         MatDialogModule,
         MatAutocompleteModule,
         HttpClientModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
     ],
-  providers: [BoardService, DialogService, MatDialogClose, JwtService],
+  providers: [DashboardService, DialogService, MatDialogClose, JwtService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
