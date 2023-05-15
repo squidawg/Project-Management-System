@@ -1,26 +1,40 @@
-import { Component } from '@angular/core';
-import {MatDialogRef, MatDialogClose} from "@angular/material/dialog";
+import {Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
+import {MatDialogRef, MatDialogClose, MatDialog} from "@angular/material/dialog";
 import {AuthenticationService} from "../../../authentication/authentication.service";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {BoardStorageService} from "../../board-storage.service";
+import {BoardService} from "../../board.service";
+import {DashboardService} from "../../../dashboard/dashboard.service";
+import {BoardComponent} from "../../board.component";
 
 @Component({
   selector: 'app-add-column-form',
   templateUrl: './add-column-form.component.html',
   styleUrls: ['./add-column-form.component.css']
 })
-export class AddColumnFormComponent {
 
-  constructor(public dialogRef: MatDialogRef<AddColumnFormComponent>, private formField: AuthenticationService, private dialogClose:MatDialogClose) {
+export class AddColumnFormComponent implements OnInit {
+  createColumnForm!: FormGroup;
+  boardId = this.boardService.getBoardId();
+  board = this.dashboardService.getBoards();
+  state = false;
+
+  constructor(private formField: AuthenticationService,
+              private boardStorageService: BoardStorageService,
+              private boardService: BoardService,
+              private dashboardService: DashboardService,
+              public dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.createColumnForm = new FormGroup({
+          "columnTitle": new FormControl(null,
+              [Validators.required, Validators.pattern('[a-zA-Z ]*')])
+        });
   }
 
-  onError(value: FormControl, name:string){
-    return this.formField.getErrorMessage(value, name)
+  onSubmit() {
+    const boardId = this.board[this.boardId]._id;
+    const title = this.createColumnForm.value.columnTitle;
+    this.boardStorageService.postColumns(boardId, title);
   }
-  onOkClick(): void {
-    this.dialogRef.close('ok');
-  }
-  onNoClick(): void {
-    this.dialogRef.close('no');
-  }
-
 }
