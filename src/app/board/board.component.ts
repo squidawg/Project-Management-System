@@ -1,58 +1,75 @@
-import {Component, OnInit} from '@angular/core';
-import {BoardService} from "./board.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DashboardService} from "../dashboard/dashboard.service";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {BoardModel} from "./board.model";
-import {ActivatedRoute} from "@angular/router";
-import {DashboardModel} from "../dashboard/dashboard.model";
 import {DialogService} from "../shared/dialog/dialog.service";
 import {AddTaskFormComponent} from "./dialog/add-task-form/add-task-form.component";
 import {AddColumnFormComponent} from "./dialog/add-column-form/add-column-form.component";
 import {DeleteWarningFormComponent} from "../shared/dialog/delete-warning-form/delete-warning-form.component";
-import {BoardsTaskModel} from "./boards.task.model";
+import {BoardService} from "./board.service";
+import {BoardStorageService, ColumnData} from "./board-storage.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.css'],
 })
 
-export class BoardComponent implements OnInit{
-  constructor(private boardService:BoardService, private route: ActivatedRoute, private dialog:DialogService) {}
+export class BoardComponent implements OnInit, OnDestroy{
+  constructor(
+      private boardService:BoardService,
+      private dialog: DialogService,
+      private dashboardService: DashboardService,
+      private boardStorageService: BoardStorageService,
+  ) {}
 
-  columns: DashboardModel | any;
+  subscription!: Subscription;
+  columns!: ColumnData[];
+  boardId = this.boardService.getBoardId();
+  board = this.dashboardService.getBoards();
+
 
   ngOnInit(){
-    const id = this.route.snapshot.params['id'];
-    //this.columns = this.boardService.getBoard(+id);
+    this.onFetchColumns();
+    this.subscription = this.boardService.boardsChanged
+        .subscribe((columnData:ColumnData[]) => {
+          this.columns = columnData;
+        });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  onFetchColumns(){
+    const boardId = this.board[this.boardId];
+    this.boardStorageService.fetchColumns(boardId._id)
+  }
+
+  onFetchTasks() {}
 
   onAddColumn() {
-    // if(this.dialog.state === 'ok'){
-    //   this.columns.push(new BoardModel('title',[]));
-    // }
-    this.dialog.state = '';
     this.dialog.openDialog(AddColumnFormComponent);
   }
 
   onAddTask() {
     this.dialog.openDialog(AddTaskFormComponent);
+
   }
 
   onDeleteColumn() {
-    this.dialog.openDialog(DeleteWarningFormComponent);
+    // this.dialog.openDialog(DeleteWarningFormComponent);
   }
 
   onDeleteTask() {
     this.dialog.openDialog(DeleteWarningFormComponent);
   }
 
-  dropColumn(event: CdkDragDrop<string[]>) {
-    //moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+  dropColumn(event: CdkDragDrop<ColumnData[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 
   dropTask(event: CdkDragDrop<string[] | any>) {
-
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -64,5 +81,4 @@ export class BoardComponent implements OnInit{
       );
     }
   }
-
 }

@@ -11,23 +11,23 @@
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
-                    <div
-                            cdkDropList
-                            [cdkDropListData]="column.tasks"
-                            class="example-list"
-                            (cdkDropListDropped)="dropTask($event)">
-                        <div class="example-box to_flex test"
-                             *ngFor="let item of column.tasks; let j = index "
-                             cdkDrag>
-                            <div>
-                                <h3>{{item.name}}</h3>
-                                <p>{{item.description}}</p>
-                            </div>
-                            <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" (click)="onDeleteTask()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
+<!--                    <div-->
+<!--                            cdkDropList-->
+<!--                            [cdkDropListData]=""-->
+<!--                            class="example-list"-->
+<!--                            (cdkDropListDropped)="dropTask($event)">-->
+<!--                        <div class="example-box to_flex test"-->
+<!--                             *ngFor="let item of column.tasks; let j = index "-->
+<!--                             cdkDrag>-->
+<!--                            <div>-->
+<!--                                <h3>{{item.name}}</h3>-->
+<!--                                <p>{{item.description}}</p>-->
+<!--                            </div>-->
+<!--                            <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" (click)="onDeleteTask()">-->
+<!--                                <mat-icon>delete</mat-icon>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <button mat-flat-button color="primary" (click)="onAddTask()">Add Task</button>
                 </div>
 

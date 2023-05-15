@@ -1,22 +1,34 @@
-import {DashboardModel} from "../dashboard/dashboard.model";
-import {Injectable} from "@angular/core";
+import { Injectable } from '@angular/core';
+import { ColumnData } from "./board-storage.service";
 import {Subject} from "rxjs";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
 export class BoardService {
-    private columns: DashboardModel[] = [];
-    constructor() {}
 
-    boardsChanged = new Subject<DashboardModel[]>()
+  constructor() { }
 
-    setDashboard(dashboard: DashboardModel[]) {
-        this.columns = dashboard;
-    }
+  private boardId!: number;
+  private columns: ColumnData[] = [];
 
-    getBoards() {
-        return this.columns.slice();
-    }
+  boardsChanged = new Subject<ColumnData[]>();
+
+  setColumns(columns: ColumnData[]){
+    this.columns = columns;
+    this.boardsChanged.next(this.columns.slice());
+  }
+
+  getColumns(){
+    return this.columns.slice();
+  }
+
+  setBoardId(id:number) {
+    this.boardId = id;
+  }
+
+  getBoardId(){
+    return this.boardId;
+  }
 }
