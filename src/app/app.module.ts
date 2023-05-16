@@ -37,6 +37,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {JwtService} from "./authentication/jwt.service";
 import { CreateBoardComponent } from './board/dialog/create-board/create-board.component';
 import { TasksComponent } from './board/tasks/tasks.component';
+import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-column/delete-warning-column.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { TasksComponent } from './board/tasks/tasks.component';
     DeleteWarningFormComponent,
     CreateBoardComponent,
     TasksComponent,
+    DeleteWarningColumnComponent,
 
   ],
     imports: [

@@ -4,10 +4,10 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
 import {DialogService} from "../shared/dialog/dialog.service";
 import {AddTaskFormComponent} from "./dialog/add-task-form/add-task-form.component";
 import {AddColumnFormComponent} from "./dialog/add-column-form/add-column-form.component";
-import {DeleteWarningFormComponent} from "../shared/dialog/delete-warning-form/delete-warning-form.component";
 import {BoardService} from "./board.service";
 import {BoardStorageService, ColumnData} from "./board-storage.service";
 import {Subscription} from "rxjs";
+import {DeleteWarningColumnComponent} from "../shared/dialog/delete-warning-column/delete-warning-column.component";
 
 @Component({
   selector: 'app-board',
@@ -50,8 +50,10 @@ export class BoardComponent implements OnInit, OnDestroy{
     this.dialog.openDialog(AddColumnFormComponent);
   }
 
-  onDeleteColumn() {
-    // this.dialog.openDialog(DeleteWarningFormComponent);
+  onDeleteColumn(index:number) {
+    this.boardStorageService.columnId = this.columns[index]._id;
+    this.boardStorageService.boardId = this.columns[index]._id;
+    this.dialog.openDialog(DeleteWarningColumnComponent);
   }
 
   onAddTask() {
@@ -60,18 +62,17 @@ export class BoardComponent implements OnInit, OnDestroy{
 
 
   onFetchTasks() {}
+
   onDeleteTask() {
     //this.dialog.openDialog(DeleteWarningFormComponent);
   }
 
   dropColumn(event: CdkDragDrop<ColumnData[]>) {
-
     moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
-
     this.columns.forEach((item , i)=> {
       item.order = i;
     });
-    this.boardStorageService.patchColumns(this.columns.slice())
+    this.boardStorageService.patchColumns(this.columns);
   }
 
   dropTask(event: CdkDragDrop<string[] | any>) {

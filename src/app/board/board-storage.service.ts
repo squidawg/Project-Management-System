@@ -4,7 +4,7 @@ import {AuthenticationService} from "../authentication/authentication.service";
 import {BoardService} from "./board.service";
 
 export interface ColumnData {
-   _id?: string,
+   _id: string,
   title?: string,
   order: number,
   boardId?: string
@@ -18,8 +18,10 @@ export class BoardStorageService {
   constructor(private http: HttpClient,
               private userData: AuthenticationService, private boardService: BoardService
               ) {
-
   }
+
+  columnId = '';
+  boardId = '';
   columns!: ColumnData[]
   bearerToken = new HttpHeaders()
       .set('Authorization', `Bearer ${this.userData.user.value.token}`);
@@ -44,8 +46,7 @@ export class BoardStorageService {
           .subscribe(resData=> {
             this.columns.push(resData);
             this.boardService.setColumns(this.columns.slice());
-            this.boardService.boardsChanged.next(this.columns.slice());
-      })
+      });
   }
 
   patchColumns(columns: ColumnData[]){
@@ -59,7 +60,18 @@ export class BoardStorageService {
         columnsCopy, { headers: this.bearerToken })
          .subscribe(resData => {
             this.boardService.setColumns(resData);
-            this.boardService.boardsChanged.next(resData.slice());
          })
+  }
+
+  deleteColumns(boardId:string, columnId:string) {
+    this.http.delete<ColumnData>(`https://final-task-backend-test.up.railway.app/boards/${boardId}/columns/${columnId}`,
+        { headers: this.bearerToken })
+        .subscribe((resData: ColumnData) => {
+            this.columns = this.boardService.getColumns();
+
+            const index = this.columns.map( obj=> obj._id).indexOf(resData._id)
+            this.columns.splice(index,1);
+            this.boardService.setColumns(this.columns.slice());
+        })
   }
 }

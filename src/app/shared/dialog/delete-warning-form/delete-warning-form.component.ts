@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {DashboardStorageService} from "../../../dashboard/dashboard-storage.service";
-import {DashboardService} from "../../../dashboard/dashboard.service";
-import {DialogService} from "../dialog.service";
+
 
 @Component({
   selector: 'app-delete-warning-form',
@@ -10,14 +9,12 @@ import {DialogService} from "../dialog.service";
 })
 export class DeleteWarningFormComponent{
 
-  constructor(private boardService: DashboardService,
-              private dashboardService: DashboardStorageService,
-              public dialog: DialogService) {}
+  constructor(private dashboardService: DashboardStorageService) {}
 
   boardId = '';
 
   onSubmit(){
-    this.boardId = this.dashboardService.boardId
-    this.dashboardService.deleteBoard(this.boardId)
+    this.boardId = this.dashboardService.boardId;
+    this.dashboardService.deleteBoard(this.boardId);
   }
 }

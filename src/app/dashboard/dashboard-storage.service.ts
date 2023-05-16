@@ -35,7 +35,6 @@ export class DashboardStorageService {
           .subscribe( resData => {
               this.boards.push(resData);
               this.dashboardService.setBoards(this.boards.slice())
-              this.dashboardService.boardsChanged.next(this.boards.slice())
         })
 
     }
@@ -48,7 +47,6 @@ export class DashboardStorageService {
             const index = this.boards.indexOf(resData)
             this.boards.splice(index,1)
             this.dashboardService.setBoards(this.boards.slice())
-            this.dashboardService.boardsChanged.next(this.boards.slice())
     });
   }
 }
