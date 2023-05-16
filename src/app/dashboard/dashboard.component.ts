@@ -42,7 +42,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/board']);
   }
 
-  onDelete(id: number) {
+  onDelete(id: number, event: Event) {
+    event.stopPropagation();
     this.dashboardStorageService.boardId = this.boards[id]._id;
     this.dialogService.openDialog(DeleteWarningFormComponent);
   }

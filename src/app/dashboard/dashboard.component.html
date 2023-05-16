@@ -8,14 +8,12 @@
         </div>
         <div class="row" *ngFor="let board of boards; let i = index">
 
-            <div class="block_frame to_flex board_card" >
-                <div >
-                    <h2 class="card_title" (click)="onLoadBoard(i)">{{board.title}}</h2>
-                </div>
+            <div class="block_frame to_flex board_card" (click)="onLoadBoard(i)">
+                    <h2 class="card_title">{{board.title}}</h2>
                 <button
                         mat-icon-button
                         color="primary"
-                        (click)="onDelete(i)">
+                        (click)="onDelete(i,$event)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
