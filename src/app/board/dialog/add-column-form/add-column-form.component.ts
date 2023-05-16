@@ -1,11 +1,9 @@
-import {Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
-import {MatDialogRef, MatDialogClose, MatDialog} from "@angular/material/dialog";
+import {Component, OnInit, } from '@angular/core';
 import {AuthenticationService} from "../../../authentication/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BoardStorageService} from "../../board-storage.service";
 import {BoardService} from "../../board.service";
 import {DashboardService} from "../../../dashboard/dashboard.service";
-import {BoardComponent} from "../../board.component";
 
 @Component({
   selector: 'app-add-column-form',
@@ -19,11 +17,9 @@ export class AddColumnFormComponent implements OnInit {
   board = this.dashboardService.getBoards();
   state = false;
 
-  constructor(private formField: AuthenticationService,
-              private boardStorageService: BoardStorageService,
+  constructor(private boardStorageService: BoardStorageService,
               private boardService: BoardService,
-              private dashboardService: DashboardService,
-              public dialog: MatDialog) {}
+              private dashboardService: DashboardService,) {}
 
   ngOnInit() {
     this.createColumnForm = new FormGroup({
