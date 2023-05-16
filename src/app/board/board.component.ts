@@ -46,27 +46,32 @@ export class BoardComponent implements OnInit, OnDestroy{
     this.boardStorageService.fetchColumns(boardId._id)
   }
 
-  onFetchTasks() {}
-
   onAddColumn() {
     this.dialog.openDialog(AddColumnFormComponent);
-  }
-
-  onAddTask() {
-    this.dialog.openDialog(AddTaskFormComponent);
-
   }
 
   onDeleteColumn() {
     // this.dialog.openDialog(DeleteWarningFormComponent);
   }
 
+  onAddTask() {
+    //this.dialog.openDialog(AddTaskFormComponent);
+  }
+
+
+  onFetchTasks() {}
   onDeleteTask() {
-    this.dialog.openDialog(DeleteWarningFormComponent);
+    //this.dialog.openDialog(DeleteWarningFormComponent);
   }
 
   dropColumn(event: CdkDragDrop<ColumnData[]>) {
+
     moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+
+    this.columns.forEach((item , i)=> {
+      item.order = i;
+    });
+    this.boardStorageService.patchColumns(this.columns.slice())
   }
 
   dropTask(event: CdkDragDrop<string[] | any>) {
