@@ -5,6 +5,7 @@ import {tap} from "rxjs/operators";
 import {JwtService} from "./jwt.service";
 import {BehaviorSubject} from "rxjs";
 import {JwtPayload} from "jwt-decode";
+import {Router} from "@angular/router";
 
 interface AuthData {
     name:string,
@@ -20,7 +21,9 @@ interface AuthData {
 export class AuthenticationService{
     user = new BehaviorSubject<User>(null!);
     parsedJwt: JwtPayload | any;
-    constructor(private http: HttpClient, private jwt: JwtService) {}
+    constructor(private http: HttpClient,
+                private jwt: JwtService,
+                private router: Router) {}
 
     getErrorMessage(value: any, name:string) {
         if (value.hasError('required')) {
@@ -46,6 +49,11 @@ export class AuthenticationService{
             this.parsedJwt = this.jwt.DecodeToken(resData.token);
             this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp);
         }));
+    }
+
+    logout(){
+        this.user.next(null!);
+        this.router.navigate(['/login'])
     }
 
     private handleAuth(login:string, userId: string, token: string, expiresIn:Date) {
