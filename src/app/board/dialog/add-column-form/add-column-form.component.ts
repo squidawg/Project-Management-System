@@ -1,5 +1,4 @@
 import {Component, OnInit, } from '@angular/core';
-import {AuthenticationService} from "../../../authentication/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BoardStorageService} from "../../board-storage.service";
 import {BoardService} from "../../board.service";
@@ -15,7 +14,6 @@ export class AddColumnFormComponent implements OnInit {
   createColumnForm!: FormGroup;
   boardId = this.boardService.getBoardId();
   board = this.dashboardService.getBoards();
-  state = false;
 
   constructor(private boardStorageService: BoardStorageService,
               private boardService: BoardService,

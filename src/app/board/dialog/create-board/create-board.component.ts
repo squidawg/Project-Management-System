@@ -27,7 +27,7 @@ export class CreateBoardComponent implements OnInit{
   onSubmit() {
     const user = this.user.user.value.id;
     const title = this.createBoardForm.value.titleBoard;
-    this.dashboardService.createBoard(title, user)
+    this.dashboardService.postBoard(title, user)
     this.createBoardForm.reset()
   }
 }
