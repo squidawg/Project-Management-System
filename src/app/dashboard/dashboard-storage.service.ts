@@ -14,24 +14,21 @@ export class DashboardStorageService {
               private userData: AuthenticationService) {}
     boards!: DashboardModel[]
     boardId = '';
-    bearerToken = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.userData.user.value.token}`);
 
     fetchBoards() {
-    this.http.get<DashboardModel[]>('https://final-task-backend-test.up.railway.app/boards',
-        { headers: this.bearerToken })
+    this.http.get<DashboardModel[]>('https://final-task-backend-test.up.railway.app/boards')
         .subscribe(resData => {
             this.dashboardService.setBoards(resData);
         });
     }
 
-    createBoard(title:string, owner:string) {
+    postBoard(title:string, owner:string) {
       this.boards = this.dashboardService.getBoards();
       this.http.post<DashboardModel>('https://final-task-backend-test.up.railway.app/boards',{
           title: title,
           owner: owner,
           users: []
-      }, { headers: this.bearerToken } )
+      })
           .subscribe( resData => {
               this.boards.push(resData);
               this.dashboardService.setBoards(this.boards.slice())
@@ -40,12 +37,11 @@ export class DashboardStorageService {
     }
 
     deleteBoard(id:string) {
-        this.boards = this.dashboardService.getBoards();
-        return this.http.delete<DashboardModel>(`https://final-task-backend-test.up.railway.app/boards/${id}`,
-            {headers: this.bearerToken})
+        return this.http.delete<DashboardModel>(`https://final-task-backend-test.up.railway.app/boards/${id}`)
         .subscribe( resData => {
-            const index = this.boards.indexOf(resData)
-            this.boards.splice(index,1)
+            this.boards = this.dashboardService.getBoards();
+            const index = this.boards.map( obj => obj._id).indexOf(resData._id)
+            this.boards.splice(index,1);
             this.dashboardService.setBoards(this.boards.slice())
     });
   }

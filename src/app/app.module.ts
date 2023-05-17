@@ -32,12 +32,12 @@ import {MatDialogClose, MatDialogModule} from "@angular/material/dialog";
 import { AddColumnFormComponent } from './board/dialog/add-column-form/add-column-form.component';
 import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/delete-warning-form.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {JwtService} from "./authentication/jwt.service";
 import { CreateBoardComponent } from './board/dialog/create-board/create-board.component';
-import { TasksComponent } from './board/tasks/tasks.component';
 import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-column/delete-warning-column.component';
+import {AuthInterceptorService} from "./authentication/auth-interceptor.service";
 
 
 @NgModule({
@@ -55,7 +55,6 @@ import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-col
     AddColumnFormComponent,
     DeleteWarningFormComponent,
     CreateBoardComponent,
-    TasksComponent,
     DeleteWarningColumnComponent,
 
   ],
@@ -78,7 +77,7 @@ import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-col
         HttpClientModule,
         MatProgressSpinnerModule,
     ],
-  providers: [DashboardService, DialogService, MatDialogClose, JwtService],
+  providers: [DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 
