@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
   hide = true;
   error?:string;
 
-  constructor(private authentication: AuthenticationService, private router: Router) {}
+  constructor(private authentication: AuthenticationService,
+              private router: Router) {}
 
   ngOnInit() {
     this.signInForm = new FormGroup({

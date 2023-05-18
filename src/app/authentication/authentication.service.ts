@@ -29,7 +29,7 @@ export class AuthenticationService{
 
     getErrorMessage(value: any, name:string) {
         if (value.hasError('required')) {
-            return `Please provide a valid input`;
+            return `provide a valid ${name}`;
         }
         return value.hasError(name) ? `Not a valid input` : '';
     }
@@ -51,6 +51,16 @@ export class AuthenticationService{
             this.parsedJwt = this.jwt.DecodeToken(resData.token);
             this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp);
         }));
+    }
+
+    editUser(name:string, login:string, password:string){
+        return this.http.put<AuthData>(`https://final-task-backend-test.up.railway.app/users/${this.user.value.id}`,{
+            name:name,
+            login:login,
+            password:password
+        }).pipe((tap(resData => {
+            this.logout()
+        })))
     }
 
 

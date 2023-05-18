@@ -76,6 +76,7 @@ import {AuthInterceptorService} from "./authentication/auth-interceptor.service"
         MatAutocompleteModule,
         HttpClientModule,
         MatProgressSpinnerModule,
+
     ],
   providers: [DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
