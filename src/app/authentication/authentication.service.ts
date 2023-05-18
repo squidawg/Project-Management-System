@@ -19,8 +19,10 @@ interface AuthData {
 })
 
 export class AuthenticationService{
+
     user = new BehaviorSubject<User>(null!);
     parsedJwt: JwtPayload | any;
+    private isTokenExpired: any;
     constructor(private http: HttpClient,
                 private jwt: JwtService,
                 private router: Router) {}
@@ -51,12 +53,19 @@ export class AuthenticationService{
         }));
     }
 
+
+
     logout(){
         this.user.next(null!);
-        this.router.navigate(['/login'])
+        this.router.navigate(['/login']);
+        localStorage.removeItem('userData');
+        if(this.isTokenExpired){
+            clearTimeout(this.isTokenExpired);
+        }
+        this.isTokenExpired = null;
     }
 
-    private handleAuth(login:string, userId: string, token: string, expiresIn:Date) {
+    private handleAuth(login:string, userId: string, token: string, expiresIn:number) {
         const  expDate = new Date(new Date().getTime() + +expiresIn * 1000);
         const user = new User(
             login,
@@ -65,5 +74,37 @@ export class AuthenticationService{
             expDate
             );
         this.user.next(user);
+        this.autoLogout(expiresIn * 1000)
+        localStorage.setItem('userData', JSON.stringify(user))
+    }
+
+    autoLogin(){
+        const userData:{
+            login:string
+            userId:string
+            _token:string
+            _tokenExp:string
+        } = JSON.parse(localStorage.getItem('userData')!);
+        if(!userData) {
+            return;
+        }
+        const loadedUser = new User(
+            userData.login,
+            userData.userId,
+            userData._token,
+            new Date(userData._tokenExp));
+
+        if (loadedUser.token){
+            const expiresIn = new Date(userData._tokenExp).getTime() - new Date().getTime();
+            this.autoLogout(expiresIn);
+            this.user.next(loadedUser);
+        }
+
+    }
+
+    autoLogout(expiration:number){
+        this.isTokenExpired = setTimeout(()=>{
+            this.logout()
+        }, expiration)
     }
 }
