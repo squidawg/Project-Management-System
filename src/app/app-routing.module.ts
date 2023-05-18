@@ -6,14 +6,15 @@ import {HomeComponent} from "./home/home.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {EditProfileComponent} from "./authentication/edit-profile/edit-profile.component";
 import {BoardComponent} from "./board/board.component";
+import {canActivateChild} from "./authentication/authentication.guard";
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'dashboard', component: DashboardComponent},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [canActivateChild]},
     {path: 'login', component: LoginComponent},
     {path: 'signup', component: SignupComponent},
-    {path: 'edit', component: EditProfileComponent},
-    {path: 'board', component: BoardComponent}
+    {path: 'edit', component: EditProfileComponent, canActivate: [canActivateChild]},
+    {path: 'board', component: BoardComponent, canActivate: [canActivateChild]}
 ]
 
 @NgModule({
