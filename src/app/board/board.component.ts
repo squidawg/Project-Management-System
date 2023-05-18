@@ -8,6 +8,8 @@ import {BoardService} from "./board.service";
 import {BoardStorageService, ColumnData} from "./board-storage.service";
 import {Subscription} from "rxjs";
 import {DeleteWarningColumnComponent} from "../shared/dialog/delete-warning-column/delete-warning-column.component";
+import {TasksStorageService} from "../tasks/tasks-storage.service";
+import {TaskData, TasksService} from "./tasks/tasks.service";
 
 @Component({
   selector: 'app-board',
@@ -21,29 +23,42 @@ export class BoardComponent implements OnInit, OnDestroy{
       private dialog: DialogService,
       private dashboardService: DashboardService,
       private boardStorageService: BoardStorageService,
+      private tasksService: TasksService,
+      private tasksStorageService: TasksStorageService
   ) {}
 
-  subscription!: Subscription;
+  boardsSubscription!: Subscription;
+  tasksSubscription!: Subscription;
+
   columns!: ColumnData[];
+  tasks!: TaskData[];
+
   boardId = this.boardService.getBoardId();
   board = this.dashboardService.getBoards();
 
 
   ngOnInit(){
     this.onFetchColumns();
-    this.subscription = this.boardService.boardsChanged
+    this.onFetchTasks();
+
+    this.boardsSubscription = this.boardService.boardsChanged
         .subscribe((columnData:ColumnData[]) => {
           this.columns = columnData;
+        });
+    this.tasksSubscription = this.tasksService.tasksChanged
+        .subscribe((taskData:TaskData[]) => {
+          this.tasks = taskData;
         });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.boardsSubscription.unsubscribe();
+    this.tasksSubscription.unsubscribe();
   }
 
   onFetchColumns(){
     const boardId = this.board[this.boardId];
-    this.boardStorageService.fetchColumns(boardId._id)
+    this.boardStorageService.fetchColumns(boardId._id);
   }
 
   onAddColumn() {
@@ -51,17 +66,24 @@ export class BoardComponent implements OnInit, OnDestroy{
   }
 
   onDeleteColumn(index:number) {
+    this.boardStorageService.boardId = this.columns[index].boardId;
     this.boardStorageService.columnId = this.columns[index]._id;
-    this.boardStorageService.boardId = this.columns[index]._id;
+
     this.dialog.openDialog(DeleteWarningColumnComponent);
   }
 
-  onAddTask() {
-    //this.dialog.openDialog(AddTaskFormComponent);
+  onAddTask(index:number) {
+    this.tasksStorageService.boardId = this.columns[index].boardId;
+    this.tasksStorageService.columnId = this.columns[index]._id;
+    this.dialog.openDialog(AddTaskFormComponent);
   }
 
 
-  onFetchTasks() {}
+  onFetchTasks() {
+    const boardId = this.board[this.boardId];
+    this.tasksStorageService.fetchTasks(boardId._id);
+
+  }
 
   onDeleteTask() {
     //this.dialog.openDialog(DeleteWarningFormComponent);
@@ -69,10 +91,11 @@ export class BoardComponent implements OnInit, OnDestroy{
 
   dropColumn(event: CdkDragDrop<ColumnData[]>) {
     moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
-    this.columns.forEach((item , i)=> {
+    this.columns.forEach((item , i) => {
       item.order = i;
     });
-    this.boardStorageService.patchColumns(this.columns);
+
+    this.boardStorageService.patchColumns(this.columns.slice());
   }
 
   dropTask(event: CdkDragDrop<string[] | any>) {
