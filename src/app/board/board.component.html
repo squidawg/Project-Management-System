@@ -1,7 +1,7 @@
 <div class="container board_wrapper">
     <div cdkDropList cdkDropListOrientation="horizontal" class="board_wrapper" (cdkDropListDropped)="dropColumn($event)">
         <div cdkDropListGroup class="columns_wrapper" >
-                <div cdkDrag class="block_frame column_wrapper" *ngFor="let column of columns; let i = index">
+                <div cdkDrag class="block_frame column_wrapper" *ngFor="let column of sortedData; let i = index">
                     <div class="column_title-wrapper">
                         <h2>{{column.title}}</h2>
                         <button
@@ -11,26 +11,20 @@
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
-<!--                    <div-->
-<!--                            cdkDropList-->
-<!--                            [cdkDropListData]=""-->
-<!--                            class="example-list"-->
-<!--                            (cdkDropListDropped)="dropTask($event)">-->
-<!--                        <div class="example-box to_flex test"-->
-<!--                             *ngFor="let item of column.tasks; let j = index "-->
-<!--                             cdkDrag>-->
-<!--                            <div>-->
-<!--                                <h3>{{item.name}}</h3>-->
-<!--                                <p>{{item.description}}</p>-->
-<!--                            </div>-->
-<!--                            <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" (click)="onDeleteTask()">-->
-<!--                                <mat-icon>delete</mat-icon>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
+
+                        <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="dropTask($event, i)">
+                            <ng-container *ngFor="let item of column.tasks">
+                                        <div class="example-box to_flex test" cdkDrag >
+                                            <h3>{{ item.title }}</h3>
+                                            <p>{{ item.description }}</p>
+                                            <button mat-icon-button color="primary" aria-label="Delete task" (click)="onDeleteTask()">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </div>
+                            </ng-container>
+                        </div>
                     <button mat-flat-button color="primary" (click)="onAddTask(i)">Add Task</button>
                 </div>
-
         </div>
         <button mat-button color="primary" (click)="onAddColumn()">Add Column</button>
     </div>

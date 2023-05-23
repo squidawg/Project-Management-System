@@ -20,16 +20,15 @@ export class TasksService {
   constructor() { }
 
   private tasks: TaskData[] = [];
-
   tasksChanged = new Subject<TaskData[]>();
 
-  setTasks(tasks: TaskData[]){
+  setTasks(tasks: TaskData[]) {
     this.tasks = tasks;
     this.tasksChanged.next(this.tasks.slice());
   }
 
   getTasks(){
-    return this.tasks.slice()
+    return this.tasks.slice();
   }
 
 }
