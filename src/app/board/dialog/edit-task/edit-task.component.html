@@ -1,0 +1,28 @@
+<form [formGroup]="editTaskForm">
+    <h1 mat-dialog-title>Edit task</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a title</mat-label>
+            <input
+                    matInput
+                    formControlName="taskTitle"
+            >
+            <mat-error></mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea
+                    matInput
+                    formControlName="taskDescription"
+            >
+            </textarea>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close cdkFocusInitial color="primary" (click)="onSubmit()">Submit</button>
+        <button mat-icon-button mat-dialog-close  aria-label="Example icon button with a home icon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</form>
+
