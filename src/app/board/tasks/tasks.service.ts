@@ -18,7 +18,11 @@ export interface TaskData {
 
 export class TasksService {
   constructor() { }
-
+  private taskData!: {
+    columnId:string,
+    boardId:string,
+    taskId?:string
+  }
   private tasks: TaskData[] = [];
   tasksChanged = new Subject<TaskData[]>();
 
@@ -29,6 +33,14 @@ export class TasksService {
 
   getTasks(){
     return this.tasks.slice();
+  }
+
+  setTaskPath(columnId:string, boardId:string, taskId?:string){
+    this.taskData = {columnId, boardId, taskId}
+  }
+
+  getTaskPath(){
+    return this.taskData
   }
 
 }
