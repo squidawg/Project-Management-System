@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {BoardService} from "./board.service";
-import { map, omit } from 'lodash';
+import * as _ from 'lodash';
 import {SortedColumns, SortedDataService} from "./sorted-data.service";
+import {map} from "rxjs/operators";
 
 export interface ColumnData {
    _id: string,
@@ -50,7 +51,7 @@ export class BoardStorageService {
   }
 
   patchColumns(columns: ColumnData[]) {
-    const columnsCopy = map(columns, obj => omit(obj, ['boardId', 'title', 'tasks']));
+    const columnsCopy = _.map(columns, obj => _.omit(obj, ['boardId', 'title', 'tasks']));
     this.http.patch<ColumnData[]>('https://final-task-backend-test.up.railway.app/columnsSet',
         columnsCopy)
          .subscribe(resData => {
@@ -61,7 +62,7 @@ export class BoardStorageService {
 
   deleteColumns(boardId:string, columnId:string) {
     const data = this.sortedDataService.getData();
-    const columnsCopy = map(data, obj => omit(obj, ['tasks']));
+    const columnsCopy = _.map(data, obj => _.omit(obj, ['tasks']));
     this.http.delete<ColumnData>(`https://final-task-backend-test.up.railway.app/boards/${boardId}/columns/${columnId}`)
         .subscribe((resData: ColumnData) => {
             const index = columnsCopy.map( obj=> obj._id).indexOf(resData._id);
@@ -70,5 +71,20 @@ export class BoardStorageService {
             this.boardService.setColumns(columnsCopy.slice());
             this.sortedDataService.setData(data.slice());
         })
+  }
+
+  putColumn(title:string){
+      this.columns = this.boardService.getColumns()
+      const column = this.columns.find(column => column._id === this.columnId)
+      return this.http.put<ColumnData>(`https://final-task-backend-test.up.railway.app/boards/${this.boardId}/columns/${this.columnId}`,
+          {
+              title:title,
+              order: column!.order
+          }).pipe(map( resData => {
+          const columns = this.columns
+              .map((obj) => obj._id === resData._id ? resData : obj)
+          this.boardService.setColumns(columns.slice());
+          this.sortedDataService.setData(columns.slice())
+      }))
   }
 }
