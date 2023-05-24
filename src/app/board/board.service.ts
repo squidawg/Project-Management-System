@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ColumnData } from "./board-storage.service";
 import {Subject} from "rxjs";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class BoardService {
 
   private boardId!: number;
   private columns: ColumnData[] = [];
-
+  columnsNameForm = new FormGroup({})
   boardsChanged = new Subject<ColumnData[]>();
 
   setColumns(columns: ColumnData[]){
@@ -31,4 +32,5 @@ export class BoardService {
   getBoardId(){
     return this.boardId;
   }
+
 }

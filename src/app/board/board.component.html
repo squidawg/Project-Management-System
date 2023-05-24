@@ -3,7 +3,22 @@
         <div cdkDropListGroup class="columns_wrapper" >
                 <div cdkDrag class="block_frame column_wrapper" *ngFor="let column of sortedData; let i = index">
                     <div class="column_title-wrapper">
-                        <h2>{{column.title}}</h2>
+                        <div class="to_flex">
+                            <ng-container *ngIf="!isEditing[i]; else editTemplate" >
+                                <h2 (click)="onTouchColumnTitle(i)" >{{column.title}}</h2></ng-container>
+                            <ng-template #editTemplate >
+                                <input  name="{{column.title}}"
+                                        class="border-0, h5"
+                                        [(ngModel)]="column.title"
+                                        (keyup.enter)="onEditColumn(i, column.title)"
+                                        autofocus
+                                >
+                                <div>
+                                    <button mat-stroked-button (click)="onTouchColumnTitle(i)" >Cancel</button>
+                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column.title)">Submit</button>
+                                </div>
+                            </ng-template>
+                        </div>
                         <button
                                 mat-icon-button color="primary"
                                 aria-label="Example icon button with a home icon" (click)="onDeleteColumn(i)"
@@ -13,11 +28,11 @@
                     </div>
 
                         <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="dropTask($event, i)">
-                            <ng-container *ngFor="let item of column.tasks">
-                                        <div class="example-box to_flex test" cdkDrag >
-                                            <h3>{{ item.title }}</h3>
+                            <ng-container *ngFor="let item of column.tasks; let j = index">
+                                        <div class="example-box to_flex test" cdkDrag (click)="onEditTask(i, j)">
+                                            <h3 >{{ item.title }}</h3>
                                             <p>{{ item.description }}</p>
-                                            <button mat-icon-button color="primary" aria-label="Delete task" (click)="onDeleteTask()">
+                                            <button mat-icon-button color="primary" aria-label="Delete task" (click)="onDeleteTask(i, j, $event)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </div>

@@ -38,6 +38,8 @@ import {JwtService} from "./authentication/jwt.service";
 import { CreateBoardComponent } from './board/dialog/create-board/create-board.component';
 import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-column/delete-warning-column.component';
 import {AuthInterceptorService} from "./authentication/auth-interceptor.service";
+import { EditTaskComponent } from './board/dialog/edit-task/edit-task.component';
+import { DeleteWarningTaskComponent } from './shared/dialog/delete-warning-task/delete-warning-task.component';
 
 
 @NgModule({
@@ -56,6 +58,8 @@ import {AuthInterceptorService} from "./authentication/auth-interceptor.service"
     DeleteWarningFormComponent,
     CreateBoardComponent,
     DeleteWarningColumnComponent,
+    EditTaskComponent,
+    DeleteWarningTaskComponent,
 
   ],
     imports: [
