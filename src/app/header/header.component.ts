@@ -38,4 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.dialogService.openDialog(CreateBoardComponent);
   }
 
+  onBack(){
+    this.router.navigate(['/dashboard'])
+  }
+
 }

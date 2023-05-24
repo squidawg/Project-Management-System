@@ -24,6 +24,12 @@
               </button>
           </ul>
           <ul class="nav nav_btn" *ngIf="isAuth">
+              <button
+                      mat-fab
+                      color="accent"
+                      (click)="onBack()">
+                  <mat-icon>arrow_back</mat-icon>
+              </button>
             <button
                     mat-fab
                     extended
