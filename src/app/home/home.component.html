@@ -1,11 +1,11 @@
 <div class="container window-height">
-  <div class="container">
+  <div class="container col-12 col-sm-12 col-md-12">
     <h1 class="text-center">Intro</h1>
     <p class="text-center">Introducing our project manager app - the ultimate solution for managing your projects and tasks with ease! With our app, you can streamline your workflow, collaborate with your team, and track your progress all in one place.</p>
   </div>
-  <div class="container feature_description">
-    <div class="container to_flex">
-      <div class="row" *ngFor="let content of contents">
+  <div class="container-fluid feature_description">
+    <div class="container-fluid feature_description-wrapper">
+      <div class=" col-12 col-sm-12 col-md-12 " *ngFor="let content of contents">
         <div class="col-sm col-md">
           <div class="block_frame">
             <p class="description">{{content}}
@@ -23,15 +23,15 @@
       </button>
     </div>
   </div>
-  <div class="container">
+  <div class="container ">
     <br>
     <mat-divider></mat-divider>
     <br>
     <h2 class="text-center">Our Team</h2>
-    <div class="container-fluid to_flex">
+    <div class="container-fluid col-12 col-sm-12 col-md-12  teams_card" >
       <div  *ngFor="let card of cardData">
         <div class="col-xs col-sm col-md ">
-          <div class="to_flex teams_card team-member">
+          <div class=" team-member col-xs col-sm col-md">
             <span class="image_duck">
           <img class="duck_temp" [src]='card.img' alt="Person 1">
         </span>

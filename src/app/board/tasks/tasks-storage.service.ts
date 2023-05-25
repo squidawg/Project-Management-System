@@ -20,7 +20,7 @@ export class TasksStorageService {
   private tasks!: TaskData[];
 
   fetchTasks(boardId:string) {
-      this.http.get<TaskData[]>(`https://final-task-backend-test.up.railway.app/tasksSet/${boardId}`)
+      this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet/${boardId}`)
           .pipe(map((objects: TaskData[]) => {
               objects.sort((a, b) => a.columnId > b.columnId? 1 : -1);
               return objects
@@ -34,9 +34,8 @@ export class TasksStorageService {
   postTasks(title:string, description:string) {
       this.tasks = this.tasksService.getTasks();
       const dataId = this.tasksService.getTaskPath()
-
       const sortedTasks = this.tasks.filter( task =>  task.columnId === dataId.columnId? task:[])
-      this.http.post<TaskData>(`https://final-task-backend-test.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks`,
+      this.http.post<TaskData>(`https://quixotic-underwear-production.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks`,
         {
           title: title,
           order: sortedTasks.length === 0? 0: sortedTasks.length,
@@ -46,7 +45,6 @@ export class TasksStorageService {
         })
         .subscribe((resData:TaskData) => {
           this.tasks.push(resData);
-            console.log(this.tasks)
           this.tasksService.setTasks(this.tasks.slice());
         });
   }
@@ -55,7 +53,7 @@ export class TasksStorageService {
     this.tasks = this.tasksService.getTasks();
     const dataId = this.tasksService.getTaskPath()
     const editedTask = this.tasks.find(item => item._id === dataId.taskId);
-    this.http.put<TaskData>(`https://final-task-backend-test.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks/${dataId.taskId}`,
+    this.http.put<TaskData>(`https://quixotic-underwear-production.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks/${dataId.taskId}`,
         {
             title: title,
             order: editedTask!.order,
@@ -80,7 +78,7 @@ export class TasksStorageService {
       const taskData: TaskData[] = [...except, ...container]
       const tasksToPatch = _.map(taskData, obj =>
           omit(obj, [ 'title','description','userId','boardId','users' ]));
-      this.http.patch<TaskData[]>('https://final-task-backend-test.up.railway.app/tasksSet',
+      this.http.patch<TaskData[]>('https://quixotic-underwear-production.up.railway.app/tasksSet',
           tasksToPatch)
           .subscribe(resData => {
           this.tasksService.setTasks(resData.slice());
@@ -90,7 +88,7 @@ export class TasksStorageService {
   deleteTask(){
       console.log('fire')
       const dataId = this.tasksService.getTaskPath()
-      this.http.delete<TaskData>(`https://final-task-backend-test.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks/${dataId.taskId}`)
+      this.http.delete<TaskData>(`https://quixotic-underwear-production.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks/${dataId.taskId}`)
           .subscribe((resData: TaskData) => {
               const index = this.tasks.map( obj=> obj._id).indexOf(resData._id);
               this.tasks.splice(index,1);

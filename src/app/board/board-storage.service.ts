@@ -28,7 +28,7 @@ export class BoardStorageService {
   columns!: SortedColumns[];
 
   fetchColumns(id:string) {
-      this.http.get<ColumnData[]>(`https://final-task-backend-test.up.railway.app/boards/${id}/columns`)
+      this.http.get<ColumnData[]>(`https://quixotic-underwear-production.up.railway.app/boards/${id}/columns`)
           .subscribe(resData => {
             const columnData = resData.sort( (a,b) => a.order - b.order);
             this.boardService.setColumns(columnData);
@@ -38,7 +38,7 @@ export class BoardStorageService {
 
   postColumns(id:string, title: string) {
       this.columns = this.sortedDataService.getData();
-      this.http.post<ColumnData>(`https://final-task-backend-test.up.railway.app/boards/${id}/columns`,
+      this.http.post<ColumnData>(`https://quixotic-underwear-production.up.railway.app/boards/${id}/columns`,
           {
             title: title,
             order: this.columns.length === 0 ? 0: this.columns.length,
@@ -52,7 +52,7 @@ export class BoardStorageService {
 
   patchColumns(columns: ColumnData[]) {
     const columnsCopy = _.map(columns, obj => _.omit(obj, ['boardId', 'title', 'tasks']));
-    this.http.patch<ColumnData[]>('https://final-task-backend-test.up.railway.app/columnsSet',
+    this.http.patch<ColumnData[]>('https://quixotic-underwear-production.up.railway.app/columnsSet',
         columnsCopy)
          .subscribe(resData => {
             this.boardService.setColumns(resData);
@@ -63,7 +63,7 @@ export class BoardStorageService {
   deleteColumns(boardId:string, columnId:string) {
     const data = this.sortedDataService.getData();
     const columnsCopy = _.map(data, obj => _.omit(obj, ['tasks']));
-    this.http.delete<ColumnData>(`https://final-task-backend-test.up.railway.app/boards/${boardId}/columns/${columnId}`)
+    this.http.delete<ColumnData>(`https://quixotic-underwear-production.up.railway.app/boards/${boardId}/columns/${columnId}`)
         .subscribe((resData: ColumnData) => {
             const index = columnsCopy.map( obj=> obj._id).indexOf(resData._id);
             columnsCopy.splice(index,1);
@@ -76,7 +76,7 @@ export class BoardStorageService {
   putColumn(title:string){
       this.columns = this.boardService.getColumns()
       const column = this.columns.find(column => column._id === this.columnId)
-      return this.http.put<ColumnData>(`https://final-task-backend-test.up.railway.app/boards/${this.boardId}/columns/${this.columnId}`,
+      return this.http.put<ColumnData>(`https://quixotic-underwear-production.up.railway.app/boards/${this.boardId}/columns/${this.columnId}`,
           {
               title:title,
               order: column!.order

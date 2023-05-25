@@ -13,15 +13,14 @@ export class LoginComponent implements OnInit {
   signInForm!: FormGroup;
   isLoading = false;
   hide = true;
-  error?:string;
+  error!:string;
 
   constructor(private authentication: AuthenticationService,
               private router: Router) {}
-
   ngOnInit() {
     this.signInForm = new FormGroup({
       'login': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      'password': new FormControl(null, [Validators.required, Validators.minLength(4)])
+      'password': new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*\\W)(?!.*\\s).{4,}$')])
     })
   }
 

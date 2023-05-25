@@ -14,7 +14,6 @@ import {SortedColumns, SortedDataService} from "./sorted-data.service";
 import {Router} from "@angular/router";
 import {EditTaskComponent} from "./dialog/edit-task/edit-task.component";
 import {DeleteWarningTaskComponent} from "../shared/dialog/delete-warning-task/delete-warning-task.component";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -44,6 +43,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   tasks!: TaskData[];
   sortedData!: SortedColumns[];
 
+  isLoading = false;
   isEditing: boolean[] = [];
 
   boardId = this.boardService.getBoardId();
@@ -68,6 +68,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.sortedDataSubscription = this.sortedDataService.sortedDataChanged
         .subscribe((data: SortedColumns[]) => {
+          this.isLoading = false
           this.sortedData = data;
           this.sortedDataService.afterFetch(this.columns, this.tasks);
           this.sortedData = this.sortedDataService.getData();
@@ -78,6 +79,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   onFetchData() {
     const boardId = this.board[this.boardId];
     if (boardId) {
+      this.isLoading = true;
       this.boardStorageService.fetchColumns(boardId._id);
       this.tasksStorageService.fetchTasks(boardId._id);
     } else {

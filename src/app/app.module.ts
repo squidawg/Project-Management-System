@@ -40,6 +40,7 @@ import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-col
 import {AuthInterceptorService} from "./authentication/auth-interceptor.service";
 import { EditTaskComponent } from './board/dialog/edit-task/edit-task.component';
 import { DeleteWarningTaskComponent } from './shared/dialog/delete-warning-task/delete-warning-task.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { DeleteWarningTaskComponent } from './shared/dialog/delete-warning-task/
         MatAutocompleteModule,
         HttpClientModule,
         MatProgressSpinnerModule,
+        MatTooltipModule,
 
     ],
   providers: [DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],

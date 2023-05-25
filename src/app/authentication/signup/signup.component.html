@@ -1,5 +1,5 @@
 <div class="container window-height">
-    <div class="col-md-4 offset-md-4 justify-content-center">
+    <div class="col-6 offset-3 col-sm-6 offset-sm-3 col-md-4 offset-md-4 justify-content-center">
         <div class="alert alert-danger" *ngIf="error">
             <p>{{error}}</p>
         </div>
@@ -7,13 +7,13 @@
             <mat-spinner ></mat-spinner>
         </div>
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
-            <div class="container row justify-content-center text-center">
+            <div class="container form-title-wrapper">
                 <h2>Registration </h2>
-                <h4>Already have an account? <a style="cursor: pointer" routerLink="/login">Sign in</a></h4>
+                <h4 class="form-title-description">Already have an account? <a style="cursor: pointer" routerLink="/login">Sign in</a></h4>
             </div>
             <div class="example-container">
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter your name</mat-label>
+                    <mat-label>Name</mat-label>
                     <input
                             matInput
                             formControlName="name">
@@ -21,7 +21,7 @@
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter your login</mat-label>
+                    <mat-label>Login</mat-label>
                     <input
                             matInput
                             formControlName="login"
@@ -30,7 +30,7 @@
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter your password</mat-label>
+                    <mat-label>Password</mat-label>
                     <input
                             matInput
                             [type]="hide ? 'password' : 'text'"
@@ -41,13 +41,16 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-                <button
-                        mat-raised-button
-                        color="primary"
-                        [disabled]="!signUpForm.valid"
-                >
-                    Sign up
-                </button>
+                <div class="btn_auth_wrapper">
+                    <button
+                            mat-raised-button
+                            color="primary"
+                            [disabled]="!signUpForm.valid"
+                    >
+                        Sign up
+                    </button>
+                </div>
+
             </div>
         </form>
     </div>

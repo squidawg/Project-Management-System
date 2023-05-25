@@ -11,8 +11,15 @@
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
-        <button mat-button mat-dialog-close cdkFocusInitial color="primary" (click)="onSubmit()">Submit</button>
-        <button mat-icon-button mat-dialog-close aria-label="Example icon button with a home icon">
+        <button mat-button
+                mat-dialog-close
+                [disabled]="!createColumnForm.valid"
+                color="primary"
+                (click)="onSubmit()">Submit</button>
+        <button
+                mat-icon-button
+                mat-dialog-close
+                aria-label="Example icon button with a close icon">
             <mat-icon>close</mat-icon>
         </button>
     </div>

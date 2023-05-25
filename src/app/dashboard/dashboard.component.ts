@@ -24,17 +24,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
   boards!: DashboardModel[];
+  isLoading = false;
+  error!:string;
 
   ngOnInit() {
     this.onFetch();
     this.subscription = this.dashboardService.boardsChanged
         .subscribe((columnData: DashboardModel[] ) => {
           this.boards = columnData;
+        }, errRes => {
+          this.error = errRes.error.message;
+          this.isLoading = false;
         });
   }
 
   onFetch(){
-    this.dashboardStorageService.fetchBoards();
+    this.isLoading = true;
+    this.dashboardStorageService.fetchBoards().subscribe(resData => {
+      this.isLoading = false;
+    });
   }
 
   onLoadBoard(i:number){
@@ -49,6 +57,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
 }

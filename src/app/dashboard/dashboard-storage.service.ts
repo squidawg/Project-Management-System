@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {DashboardModel} from "./dashboard.model";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {DashboardService} from "./dashboard.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,16 @@ export class DashboardStorageService {
     boardId = '';
 
     fetchBoards() {
-    this.http.get<DashboardModel[]>('https://final-task-backend-test.up.railway.app/boards')
-        .subscribe(resData => {
+    return this.http.get<DashboardModel[]>('https://quixotic-underwear-production.up.railway.app/boards')
+        .pipe(map(resData => {
             this.dashboardService.setBoards(resData);
-        });
+        }))
+
     }
 
     postBoard(title:string, owner:string) {
       this.boards = this.dashboardService.getBoards();
-      this.http.post<DashboardModel>('https://final-task-backend-test.up.railway.app/boards',{
+      this.http.post<DashboardModel>('https://quixotic-underwear-production.up.railway.app/boards',{
           title: title,
           owner: owner,
           users: []
@@ -37,7 +39,7 @@ export class DashboardStorageService {
     }
 
     deleteBoard(id:string) {
-        return this.http.delete<DashboardModel>(`https://final-task-backend-test.up.railway.app/boards/${id}`)
+        return this.http.delete<DashboardModel>(`https://quixotic-underwear-production.up.railway.app/boards/${id}`)
         .subscribe( resData => {
             this.boards = this.dashboardService.getBoards();
             const index = this.boards.map( obj => obj._id).indexOf(resData._id)

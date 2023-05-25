@@ -6,3 +6,8 @@
     font-size: 36px;
     color: purple;
 }
+
+.mdc-fab--mini {
+     width: 45px !important;
+    height: 45px !important;
+}

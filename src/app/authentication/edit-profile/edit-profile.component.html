@@ -1,15 +1,16 @@
 <div class="container window-height">
-    <div class="row col-md-4 offset-md-4 justify-content-center">
+    <div class="col-6 offset-3 col-sm-6 offset-sm-3 col-md-4 offset-md-4 justify-content-center">
         <div class="container justify-content-center text-center to_flex" *ngIf="isLoading">
             <mat-spinner></mat-spinner>
         </div>
         <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
-            <div class="container row justify-content-center text-center">
+            <div class="container  justify-content-center text-center ">
                 <h2>Edit Profile </h2>
+                <h4>Provide new info</h4>
             </div>
             <div class="example-container">
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter your name</mat-label>
+                    <mat-label>Name</mat-label>
                     <input
                             matInput
                             placeholder="name"
@@ -18,7 +19,7 @@
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter your Login</mat-label>
+                    <mat-label>Login</mat-label>
                     <input
                             matInput
                             formControlName="login"
@@ -26,7 +27,7 @@
                     <mat-error *ngIf="!editUserForm.get('login')!.valid">{{onError(editUserForm.get('login'),'login')}}</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter new password</mat-label>
+                    <mat-label>Password</mat-label>
                     <input matInput [type]="hide ? 'password' : 'text'"
                            formControlName="password">
                     <mat-error *ngIf="!editUserForm.get('password')!.valid">{{onError(editUserForm.get('password'),'password')}}</mat-error>
@@ -35,7 +36,7 @@
                     </button>
                 </mat-form-field>
             </div>
-            <div class="container row justify-content-center">
+            <div class="container  btn_auth_wrapper">
                 <button
                         mat-raised-button
                         color="primary"

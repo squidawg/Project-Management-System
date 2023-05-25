@@ -1,4 +1,4 @@
-import {Injectable, } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "./user.model";
 import {tap} from "rxjs/operators";
@@ -31,11 +31,12 @@ export class AuthenticationService{
         if (value.hasError('required')) {
             return `provide a valid ${name}`;
         }
+        console.log(value)
         return value.hasError(name) ? `Not a valid input` : '';
     }
 
     signUp(name:string, login:string, password:string){
-        return this.http.post<AuthData>('https://final-task-backend-test.up.railway.app/auth/signup', {
+        return this.http.post<AuthData>('https://quixotic-underwear-production.up.railway.app/auth/signup', {
             name: name,
             login: login,
             password: password
@@ -44,7 +45,7 @@ export class AuthenticationService{
     }
 
     signIn(login:string, password:string) {
-        return this.http.post<AuthData>('https://final-task-backend-test.up.railway.app/auth/signin', {
+        return this.http.post<AuthData>('https://quixotic-underwear-production.up.railway.app/auth/signin', {
             login: login,
             password: password
         }).pipe(tap(resData => {
@@ -54,7 +55,7 @@ export class AuthenticationService{
     }
 
     editUser(name:string, login:string, password:string){
-        return this.http.put<AuthData>(`https://final-task-backend-test.up.railway.app/users/${this.user.value.id}`,{
+        return this.http.put<AuthData>(`https://quixotic-underwear-production.up.railway.app/users/${this.user.value.id}`,{
             name:name,
             login:login,
             password:password
@@ -98,6 +99,7 @@ export class AuthenticationService{
         if(!userData) {
             return;
         }
+
         const loadedUser = new User(
             userData.login,
             userData.userId,

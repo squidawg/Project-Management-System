@@ -6,56 +6,116 @@
       <div>
         <div class="nav_btn" >
           <ul class="nav nav_btn" *ngIf="!isAuth">
-              <button
-                      mat-fab
-                      extended
-                      color="primary"
-                      routerLink="/login">
-                  <mat-icon>login</mat-icon>
-                  Sign In
-              </button>
-              <button
-                      mat-fab
-                      extended
-                      color="accent"
-                      routerLink="/signup">
-                  <mat-icon>app_registration</mat-icon>
-                  Sign Up
-              </button>
+              <div *ngIf="screenWidth > 700">
+                  <button
+                          mat-fab
+                          extended
+                          color="primary"
+                          routerLink="/login">
+                      <mat-icon>login</mat-icon>
+                      Sign In
+                  </button>
+                  <button
+                          mat-fab
+                          extended
+                          color="accent"
+                          routerLink="/signup">
+                      <mat-icon>app_registration</mat-icon>
+                      Sign Up
+                  </button>
+              </div>
+              <div *ngIf="screenWidth <= 700">
+                  <button mat-mini-fab
+                          color="primary"
+                          [matMenuTriggerFor]="menu"
+                          aria-label="Example icon-button with a menu">
+                      <mat-icon>expand_more</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                      <button mat-menu-item
+                              routerLink="/login">
+                          <mat-icon>login</mat-icon>
+                          <span>Sign In</span>
+                      </button>
+                      <button mat-menu-item
+                              routerLink="/signup">
+                          <mat-icon>app_registration</mat-icon>
+                          <span>Sign Up</span>
+                      </button>
+                  </mat-menu>
+
+              </div>
+
           </ul>
-          <ul class="nav nav_btn" *ngIf="isAuth">
-              <button
-                      mat-fab
-                      color="accent"
-                      (click)="onBack()">
-                  <mat-icon>arrow_back</mat-icon>
-              </button>
-            <button
-                    mat-fab
-                    extended
-                    color="primary"
-                    (click)="onCreateBoard()">
-                <mat-icon>add_circle_outline</mat-icon>
-                Create Board
-            </button>
-            <button
-                    mat-fab
-                    extended
-                    color="accent"
-                    routerLink="/edit">
-                <mat-icon>edit</mat-icon>
-                Edit profile
-            </button>
-            <button
-                    mat-fab
-                    extended
-                    color="accent"
-                    (click)="onLogout()">
-                <mat-icon>logout</mat-icon>
-                Log out
-            </button>
+            <ul class="nav nav_btn" *ngIf="isAuth">
+                <div>
+                    <button
+                            mat-mini-fab
+                            color="accent"
+                            (click)="onBack()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="screenWidth <= 700">
+                    <button mat-mini-fab
+                            color="primary"
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Example icon-button with a menu">
+                        <mat-icon>expand_more</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item
+                                (click)="onCreateBoard()">
+                            <mat-icon>add_circle_outline</mat-icon>
+                            <span>Create Board</span>
+                        </button>
+                        <button mat-menu-item
+                                routerLink="/edit">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit profile</span>
+                        </button>
+                        <button mat-menu-item
+                                (click)="onLogout()">
+                            <mat-icon>logout</mat-icon>
+                            <span>Log out</span>
+                        </button>
+                    </mat-menu>
+
+                </div>
             </ul>
-            <button mat-fab color="primary" aria-label="Example icon button with a delete icon" [matMenuTriggerFor]="menu">
+            <div *ngIf="screenWidth > 700">
+                <ul class="nav nav_btn" *ngIf="isAuth">
+                    <button
+                            mat-fab
+                            extended
+                            color="primary"
+                            (click)="onCreateBoard()">
+                        <mat-icon>add_circle_outline</mat-icon>
+                        Create Board
+                    </button>
+                    <button
+                            mat-fab
+                            extended
+                            color="accent"
+                            routerLink="/edit">
+                        <mat-icon>edit</mat-icon>
+                        Edit profile
+                    </button>
+                    <button
+                            mat-fab
+                            extended
+                            color="accent"
+                            (click)="onLogout()">
+                        <mat-icon>logout</mat-icon>
+                        Log out
+                    </button>
+                </ul>
+            </div>
+
+            <button
+                    mat-mini-fab
+                    color="primary"
+                    aria-label="Example icon button with a delete icon" [matMenuTriggerFor]="menu">
                 <mat-icon>language</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
