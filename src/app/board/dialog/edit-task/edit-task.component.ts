@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TasksStorageService} from "../../tasks/tasks-storage.service";
+import {AuthenticationService} from "../../../authentication/authentication.service";
 
 @Component({
   selector: 'app-edit-task',
@@ -8,7 +9,7 @@ import {TasksStorageService} from "../../tasks/tasks-storage.service";
   styleUrls: ['./edit-task.component.css']
 })
 export class EditTaskComponent {
-  constructor(private tasksStorageService:TasksStorageService) {
+  constructor(private tasksStorageService:TasksStorageService, private authentication: AuthenticationService,) {
   }
   editTaskForm!: FormGroup;
 
@@ -23,5 +24,9 @@ export class EditTaskComponent {
     const title: string = this.editTaskForm.value.taskTitle;
     const description: string = this.editTaskForm.value.taskDescription;
     this.tasksStorageService.putTask(title, description);
+  }
+
+  onError(value: any, valueName: string){
+    return this.authentication.getErrorMessage(value, valueName)
   }
 }

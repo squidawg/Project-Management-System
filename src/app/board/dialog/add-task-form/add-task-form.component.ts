@@ -13,7 +13,7 @@ export class AddTaskFormComponent implements OnInit{
   createTaskForm!: FormGroup;
 
   constructor(private tasksStorageService: TasksStorageService,
-              private userData: AuthenticationService) {}
+              private authentication: AuthenticationService) {}
 
   ngOnInit() {
     this.createTaskForm = new FormGroup({
@@ -26,5 +26,9 @@ export class AddTaskFormComponent implements OnInit{
     const title: string = this.createTaskForm.value.taskTitle;
     const description: string = this.createTaskForm.value.taskDescription;
     this.tasksStorageService.postTasks(title, description);
+  }
+
+  onError(value: any, valueName: string){
+    return this.authentication.getErrorMessage(value, valueName)
   }
 }

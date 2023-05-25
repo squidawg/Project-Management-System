@@ -26,7 +26,7 @@
                             matInput
                             formControlName="login"
                     >
-                    <mat-error *ngIf="!signUpForm.get('login')!.valid">Invalid input</mat-error>
+                    <mat-error *ngIf="!signUpForm.get('login')!.valid">{{onError(signUpForm.get('login'), 'login')}}</mat-error>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
@@ -36,7 +36,7 @@
                             [type]="hide ? 'password' : 'text'"
                             formControlName="password"
                     >
-                    <mat-error *ngIf="!signUpForm.get('password')!.valid">Invalid input</mat-error>
+                    <mat-error *ngIf="!signUpForm.get('password')!.valid">{{onError(signUpForm.get('password'), 'password')}}</mat-error>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>

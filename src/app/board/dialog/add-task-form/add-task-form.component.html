@@ -7,6 +7,7 @@
                     matInput
                     formControlName="taskTitle"
             >
+            <mat-error *ngIf="!createTaskForm.get('taskTitle')!.valid">{{onError(createTaskForm.get('taskTitle'), 'taskTitle')}}</mat-error>
             <mat-error></mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
@@ -16,11 +17,19 @@
                     formControlName="taskDescription"
             >
             </textarea>
+            <mat-error *ngIf="!createTaskForm.get('taskDescription')!.valid">{{onError(createTaskForm.get('taskDescription'), 'taskDescription')}}</mat-error>
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
-        <button mat-button mat-dialog-close [disabled]="!createTaskForm.valid" color="primary" (click)="onSubmit()">Add</button>
-        <button mat-icon-button mat-dialog-close  aria-label="Example icon button with a home icon">
+        <button
+                mat-button
+                mat-dialog-close
+                [disabled]="!createTaskForm.valid"
+                color="primary" (click)="onSubmit()">Add</button>
+        <button
+                mat-icon-button
+                mat-dialog-close
+                aria-label="Example icon button with a home icon">
             <mat-icon>close</mat-icon>
         </button>
     </div>

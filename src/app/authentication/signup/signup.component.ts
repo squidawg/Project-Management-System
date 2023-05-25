@@ -13,7 +13,8 @@ export class SignupComponent implements OnInit{
   signUpForm!: FormGroup;
   hide = true;
   error?:string;
-  constructor(private authentication: AuthenticationService, private router: Router) {
+  constructor(private authentication: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit() {

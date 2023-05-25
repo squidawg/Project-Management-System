@@ -29,10 +29,9 @@ export class AuthenticationService{
 
     getErrorMessage(value: any, name:string) {
         if (value.hasError('required')) {
-            return `provide a valid ${name}`;
+            return 'this is required';
         }
-        console.log(value)
-        return value.hasError(name) ? `Not a valid input` : '';
+        return value.status === 'INVALID' ? `Not valid pattern` : '';
     }
 
     signUp(name:string, login:string, password:string){

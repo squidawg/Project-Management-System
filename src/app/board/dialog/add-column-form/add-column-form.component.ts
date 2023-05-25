@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BoardStorageService} from "../../board-storage.service";
 import {BoardService} from "../../board.service";
 import {DashboardService} from "../../../dashboard/dashboard.service";
+import {AuthenticationService} from "../../../authentication/authentication.service";
 
 @Component({
   selector: 'app-add-column-form',
@@ -17,7 +18,8 @@ export class AddColumnFormComponent implements OnInit {
 
   constructor(private boardStorageService: BoardStorageService,
               private boardService: BoardService,
-              private dashboardService: DashboardService,) {}
+              private dashboardService: DashboardService,
+              private authentication: AuthenticationService) {}
 
   ngOnInit() {
     this.createColumnForm = new FormGroup({
@@ -30,5 +32,9 @@ export class AddColumnFormComponent implements OnInit {
     const boardId = this.board[this.boardId]._id;
     const title = this.createColumnForm.value.columnTitle;
     this.boardStorageService.postColumns(boardId, title);
+  }
+
+  onError(value: any, valueName: string){
+    return this.authentication.getErrorMessage(value, valueName)
   }
 }
