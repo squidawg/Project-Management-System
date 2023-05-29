@@ -31,7 +31,7 @@ export class TasksStorageService {
           });
   }
 
-  postTasks(title:string, description:string) {
+  postTasks(title:string, description:string, users:string[]) {
       this.tasks = this.tasksService.getTasks();
       const dataId = this.tasksService.getTaskPath()
       const sortedTasks = this.tasks.filter( task =>  task.columnId === dataId.columnId? task:[])
@@ -41,7 +41,7 @@ export class TasksStorageService {
           order: sortedTasks.length === 0? 0: sortedTasks.length,
           description: description,
           userId: this.userData.user.value.id,
-          users: [],
+          users: users,
         })
         .subscribe((resData:TaskData) => {
           this.tasks.push(resData);
@@ -49,7 +49,7 @@ export class TasksStorageService {
         });
   }
 
-  putTask(title: string, description:string){
+  putTask(title: string, description:string, users:string[]){
     this.tasks = this.tasksService.getTasks();
     const dataId = this.tasksService.getTaskPath()
     const editedTask = this.tasks.find(item => item._id === dataId.taskId);
@@ -60,7 +60,7 @@ export class TasksStorageService {
             description: description,
             columnId: dataId.columnId,
             userId: this.userData.user.value.id,
-            users: []
+            users: users
         })
         .subscribe((resData => {
             const newTask = this.tasks
