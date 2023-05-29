@@ -1,21 +1,50 @@
 <form [formGroup]="createBoardForm" >
 <h1 mat-dialog-title>Create Board</h1>
 <div mat-dialog-content>
-        <mat-form-field appearance="fill">
-            <mat-label>Enter a title</mat-label>
+     <mat-form-field appearance="fill">
+        <mat-label>Enter a title</mat-label>
             <input
                     matInput
                     formControlName="titleBoard"
             >
-            <mat-error></mat-error>
-        </mat-form-field>
+        <mat-error></mat-error>
+     </mat-form-field>
+    <mat-form-field class="example-chip-list">
+        <mat-label>User selection</mat-label>
+        <mat-chip-grid #chipGrid aria-label="User selection">
+            <mat-chip-row
+                    *ngFor="let user of selected; let i = index"
+                    (removed)="onDeleteUser(user._id)">
+                {{user.name}}
+                <button
+                        matChipRemove
+                        [attr.aria-label]="'remove ' + user">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+        </mat-chip-grid>
+        <input placeholder="Add user..."
+               #userInput
+               [formControl]="userCtrl"
+               [matChipInputFor]="chipGrid"
+               [matAutocomplete]="auto"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               (matChipInputTokenEnd)="onAddUser($event)"/>
+        <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="onSelectUser($event)">
+            <mat-option *ngFor="let filteredUser of filteredUsers | async" [value]="filteredUser._id">
+                {{filteredUser.name}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
 </div>
 <div mat-dialog-actions>
     <button
             mat-button
             mat-dialog-close
             (click)="onSubmit()"
-            [disabled]="!createBoardForm.valid"
+            [disabled]="!createBoardForm.valid && !userCtrl.valid"
             color="primary">Submit</button>
     <button
             mat-icon-button

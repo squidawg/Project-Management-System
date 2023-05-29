@@ -6,8 +6,9 @@ import {JwtService} from "./jwt.service";
 import {BehaviorSubject} from "rxjs";
 import {JwtPayload} from "jwt-decode";
 import {Router} from "@angular/router";
+import {UserAssignService} from "../shared/user-assign.service";
 
-interface AuthData {
+export interface AuthData {
     name:string,
     login:string,
     '_id': string,
@@ -25,7 +26,15 @@ export class AuthenticationService{
     private isTokenExpired: any;
     constructor(private http: HttpClient,
                 private jwt: JwtService,
-                private router: Router) {}
+                private router: Router,
+                private userAssignService: UserAssignService) {}
+
+    getUsers(){
+        this.http.get<AuthData[]>('https://quixotic-underwear-production.up.railway.app/users')
+            .subscribe(resData => {
+                this.userAssignService.setUsers(resData)
+            })
+    }
 
     getErrorMessage(value: any, name:string) {
         if (value.hasError('required')) {
@@ -62,8 +71,6 @@ export class AuthenticationService{
             this.logout()
         })))
     }
-
-
 
     logout(){
         this.user.next(null!);

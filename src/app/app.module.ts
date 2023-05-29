@@ -41,6 +41,8 @@ import {AuthInterceptorService} from "./authentication/auth-interceptor.service"
 import { EditTaskComponent } from './board/dialog/edit-task/edit-task.component';
 import { DeleteWarningTaskComponent } from './shared/dialog/delete-warning-task/delete-warning-task.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -82,6 +84,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         HttpClientModule,
         MatProgressSpinnerModule,
         MatTooltipModule,
+        MatChipsModule,
+        MatSelectModule,
 
     ],
   providers: [DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],

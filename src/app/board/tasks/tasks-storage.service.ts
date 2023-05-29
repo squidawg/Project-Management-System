@@ -86,7 +86,6 @@ export class TasksStorageService {
   }
 
   deleteTask(){
-      console.log('fire')
       const dataId = this.tasksService.getTaskPath()
       this.http.delete<TaskData>(`https://quixotic-underwear-production.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks/${dataId.taskId}`)
           .subscribe((resData: TaskData) => {

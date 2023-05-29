@@ -12,7 +12,7 @@
 
 .board_wrapper{
     margin: 2rem;
-    height: auto;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     overflow-x: auto;

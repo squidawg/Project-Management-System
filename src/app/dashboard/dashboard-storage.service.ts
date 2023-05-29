@@ -24,12 +24,12 @@ export class DashboardStorageService {
 
     }
 
-    postBoard(title:string, owner:string) {
+    postBoard(title:string, owner:string, users:string[]) {
       this.boards = this.dashboardService.getBoards();
       this.http.post<DashboardModel>('https://quixotic-underwear-production.up.railway.app/boards',{
           title: title,
           owner: owner,
-          users: []
+          users: users
       })
           .subscribe( resData => {
               this.boards.push(resData);
