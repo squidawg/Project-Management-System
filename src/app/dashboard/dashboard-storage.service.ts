@@ -4,6 +4,7 @@ import {DashboardModel} from "./dashboard.model";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {DashboardService} from "./dashboard.service";
 import {map} from "rxjs/operators";
+import {TaskData} from "../board/tasks/tasks.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class DashboardStorageService {
   constructor(private dashboardService: DashboardService,
               private http: HttpClient,
               private userData: AuthenticationService) {}
-    boards!: DashboardModel[]
+
+    boards!: DashboardModel[];
     boardId = '';
 
     fetchBoards() {
@@ -38,8 +40,8 @@ export class DashboardStorageService {
 
     }
 
-    deleteBoard(id:string) {
-        return this.http.delete<DashboardModel>(`https://quixotic-underwear-production.up.railway.app/boards/${id}`)
+    deleteBoard() {
+        return this.http.delete<DashboardModel>(`https://quixotic-underwear-production.up.railway.app/boards/${this.boardId}`)
         .subscribe( resData => {
             this.boards = this.dashboardService.getBoards();
             const index = this.boards.map( obj => obj._id).indexOf(resData._id)
@@ -47,4 +49,10 @@ export class DashboardStorageService {
             this.dashboardService.setBoards(this.boards.slice())
     });
   }
+  searchTask(search: string){
+        const userId = this.userData.user.value
+         return this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet?${userId}=USERID&search=${search}`)
+
+  }
+
 }

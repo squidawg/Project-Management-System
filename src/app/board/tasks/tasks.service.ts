@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 export interface TaskData {
   _id: string
@@ -17,6 +18,8 @@ export interface TaskData {
 })
 
 export class TasksService {
+  searchCtrl = new FormControl(null)
+
   constructor() { }
   private taskData!: {
     columnId:string,

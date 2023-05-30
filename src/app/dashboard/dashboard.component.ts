@@ -7,6 +7,7 @@ import {DeleteWarningFormComponent} from "../shared/dialog/delete-warning-form/d
 import {BoardService} from "../board/board.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {TaskData, TasksService} from "../board/tasks/tasks.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,11 +21,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       private dashboardStorageService: DashboardStorageService,
       private dashboardService: DashboardService,
       private boardService: BoardService,
-      private router: Router) {}
+      private router: Router,
+      private taskService: TasksService) {}
+
+  searchCtrl = this.taskService.searchCtrl;
+
+  filteredTasks: TaskData[]= [];
 
   subscription!: Subscription;
+
   boards!: DashboardModel[];
+
+  isSearchLoad = false;
   isLoading = false;
+  isShow = false;
+
   error!:string;
 
   ngOnInit() {
@@ -34,26 +45,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.boards = columnData;
         }, errRes => {
           this.error = errRes.error.message;
-          this.isLoading = false;
+          this.isLoading = !this.isLoading;
         });
   }
 
   onFetch(){
-    this.isLoading = true;
+    this.isLoading = !this.isLoading;
     this.dashboardStorageService.fetchBoards().subscribe(resData => {
-      this.isLoading = false;
+      this.isLoading = !this.isLoading;
     });
   }
 
-  onLoadBoard(i:number){
-    this.boardService.setBoardId(i);
+  onLoadBoard(boardId:string){
+    this.dashboardStorageService.boardId = boardId;
     this.router.navigate(['/board']);
   }
 
-  onDelete(id: number, event: Event) {
+  onDelete(event: Event, boardId:string) {
     event.stopPropagation();
-    this.dashboardStorageService.boardId = this.boards[id]._id;
+    this.dashboardStorageService.boardId = boardId;
     this.dialogService.openDialog(DeleteWarningFormComponent);
+  }
+
+  onSearch(){
+    this.isSearchLoad = !this.isSearchLoad
+    this.dashboardStorageService.searchTask(this.searchCtrl.value!)
+        .subscribe(resdata => {
+          this.isSearchLoad = !this.isSearchLoad
+          this.filteredTasks = resdata;
+        })
+    this.isShow = true;
+
   }
 
   ngOnDestroy() {
