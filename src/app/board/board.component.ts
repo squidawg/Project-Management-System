@@ -15,6 +15,9 @@ import {Router} from "@angular/router";
 import {EditTaskComponent} from "./dialog/edit-task/edit-task.component";
 import {DeleteWarningTaskComponent} from "../shared/dialog/delete-warning-task/delete-warning-task.component";
 
+import {UserAssignService} from "../shared/user-assign.service";
+import {DashboardStorageService} from "../dashboard/dashboard-storage.service";
+
 
 @Component({
   selector: 'app-board',
@@ -27,11 +30,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       private boardService: BoardService,
       private dialog: DialogService,
       private dashboardService: DashboardService,
+      private dashboardStorageService: DashboardStorageService,
       private boardStorageService: BoardStorageService,
       private tasksService: TasksService,
       private tasksStorageService: TasksStorageService,
       private sortedDataService: SortedDataService,
-      private router: Router
+      private router: Router,
+      private userAssignService: UserAssignService
   ) {
   }
 
@@ -45,9 +50,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   isEditing: boolean[] = [];
-
-  boardId = this.boardService.getBoardId();
-  board = this.dashboardService.getBoards();
 
 
   ngOnInit() {
@@ -77,11 +79,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   onFetchData() {
-    const boardId = this.board[this.boardId];
+    const boardId = this.dashboardStorageService.boardId
     if (boardId) {
       this.isLoading = true;
-      this.boardStorageService.fetchColumns(boardId._id);
-      this.tasksStorageService.fetchTasks(boardId._id);
+      this.boardStorageService.fetchColumns(boardId);
+      this.tasksStorageService.fetchTasks(boardId);
     } else {
       this.router.navigate(['/dashboard']);
     }
@@ -97,9 +99,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.dialog.openDialog(AddColumnFormComponent);
   }
 
-  onDeleteColumn(index: number) {
-    this.boardStorageService.boardId = this.columns[index].boardId;
-    this.boardStorageService.columnId = this.columns[index]._id;
+  onDeleteColumn(columnId:string, boardId:string) {
+    this.boardStorageService.boardId = boardId
+    this.boardStorageService.columnId = columnId
     this.dialog.openDialog(DeleteWarningColumnComponent);
   }
 
@@ -115,13 +117,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.isEditing[index] = !this.isEditing[index];
   }
 
-  onEditColumn(index:number, title:string|undefined){
-    this.boardStorageService.columnId = this.columns[index]._id
-    this.boardStorageService.putColumn(title!).subscribe(resData => {
+  onEditColumn(index:number, column: ColumnData){
+    this.boardStorageService.columnId = column._id
+    this.boardStorageService.putColumn(column.title!).subscribe(resData => {
       this.isEditing[index] = !this.isEditing[index];
     })
-
-
   }
 
   onAddTask(index: number) {
@@ -132,21 +132,21 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.dialog.openDialog(AddTaskFormComponent);
   }
 
-  onEditTask(index:number, taskIndex:number) {
+  onEditTask( task:TaskData) {
     this.tasksService.setTaskPath(
-        this.sortedData[index]._id,
-        this.sortedData[index].boardId,
-        this.sortedData[index].tasks![taskIndex]._id
+        task.columnId,
+        task.boardId,
+        task._id
         );
     this.dialog.openDialog(EditTaskComponent);
   }
 
-  onDeleteTask(index: number, taskIndex:number, event: Event) {
+  onDeleteTask(event: Event, task:TaskData) {
     event.stopPropagation();
     this.tasksService.setTaskPath(
-        this.sortedData[index].boardId,
-        this.sortedData[index]._id,
-        this.sortedData[index].tasks![taskIndex]._id
+        task.boardId,
+        task.columnId,
+        task._id
     );
     this.dialog.openDialog(DeleteWarningTaskComponent);
   }

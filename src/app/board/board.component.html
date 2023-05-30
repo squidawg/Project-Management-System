@@ -2,38 +2,51 @@
     <div class=" justify-content-center text-center to_flex align-items-center" style="height: 100vh" *ngIf="isLoading">
         <mat-spinner></mat-spinner>
     </div>
-    <div cdkDropList cdkDropListOrientation="horizontal" class="board_wrapper" (cdkDropListDropped)="dropColumn($event)" *ngIf="!isLoading">
+    <div class="d-flex mt-3 justify-content-between">
+        <button
+                mat-mini-fab
+                color="accent"
+                routerLink="/dashboard">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+    </div>
+    <div
+            cdkDropList
+            cdkDropListOrientation="horizontal"
+            class="board_wrapper"
+            (cdkDropListDropped)="dropColumn($event)"
+            *ngIf="!isLoading">
         <div cdkDropListGroup class="columns_wrapper" >
                 <div cdkDrag class="block_frame column_wrapper" *ngFor="let column of sortedData; let i = index" >
                     <div class="column_title-wrapper" >
                         <div class="column_title_input ">
                             <ng-container *ngIf="!isEditing[i]; else editTemplate" >
-                                <h2 (click)="onTouchColumnTitle(i)" >{{column.title}}</h2></ng-container>
+                                <h2 (mouseenter)="onTouchColumnTitle(i)" >{{column.title}}</h2></ng-container>
                             <ng-template #editTemplate >
                                 <input
                                         name="{{column.title}}"
                                         class=" h5 column_input"
                                         [(ngModel)]="column.title"
-                                        (keyup.enter)="onEditColumn(i, column.title)"
+                                        (keyup.enter)="onEditColumn(i, column)"
                                         autofocus
                                 >
                                 <div class="column_input-btn_wrapper">
                                     <button mat-stroked-button (click)="onTouchColumnTitle(i)" >Cancel</button>
-                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column.title)">Submit</button>
+                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column)">Submit</button>
                                 </div>
                             </ng-template>
                         </div>
                         <button
                                 mat-icon-button color="primary"
                                 matTooltip="Delete column"
-                                aria-label="Example icon button with a home icon" (click)="onDeleteColumn(i)"
+                                aria-label="Example icon button with a home icon" (click)="onDeleteColumn(column._id, column.boardId)"
                         >
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
                     <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="dropTask($event, i)">
-                            <ng-container *ngFor="let item of column.tasks; let j = index">
-                                        <div class="example-box task_wrapper" cdkDrag (click)="onEditTask(i, j)">
+                            <ng-container *ngFor="let item of column.tasks">
+                                        <div class="example-box task_wrapper" cdkDrag (click)="onEditTask(item)">
                                             <div class="task_card_wrapper">
                                                 <h3 class="task_title">{{ item.title }}</h3>
                                                 <p class="task_description">{{ item.description }}</p>
@@ -43,7 +56,7 @@
                                                     matTooltip="Delete task"
                                                     color="primary"
                                                     aria-label="Delete task"
-                                                    (click)="onDeleteTask(i, j, $event)">
+                                                    (click)="onDeleteTask($event, item)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </div>

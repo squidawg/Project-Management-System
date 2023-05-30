@@ -4,6 +4,7 @@ import {BoardStorageService} from "../../board-storage.service";
 import {BoardService} from "../../board.service";
 import {DashboardService} from "../../../dashboard/dashboard.service";
 import {AuthenticationService} from "../../../authentication/authentication.service";
+import {DashboardStorageService} from "../../../dashboard/dashboard-storage.service";
 
 @Component({
   selector: 'app-add-column-form',
@@ -13,13 +14,13 @@ import {AuthenticationService} from "../../../authentication/authentication.serv
 
 export class AddColumnFormComponent implements OnInit {
   createColumnForm!: FormGroup;
-  boardId = this.boardService.getBoardId();
-  board = this.dashboardService.getBoards();
+
 
   constructor(private boardStorageService: BoardStorageService,
               private boardService: BoardService,
               private dashboardService: DashboardService,
-              private authentication: AuthenticationService) {}
+              private authentication: AuthenticationService,
+              private dashboardStorageService: DashboardStorageService) {}
 
   ngOnInit() {
     this.createColumnForm = new FormGroup({
@@ -29,7 +30,7 @@ export class AddColumnFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const boardId = this.board[this.boardId]._id;
+    const boardId = this.dashboardStorageService.boardId;
     const title = this.createColumnForm.value.columnTitle;
     this.boardStorageService.postColumns(boardId, title);
   }

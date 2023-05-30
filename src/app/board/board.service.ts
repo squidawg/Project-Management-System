@@ -11,9 +11,9 @@ export class BoardService {
 
   constructor() { }
 
-  private boardId!: number;
+
   private columns: ColumnData[] = [];
-  columnsNameForm = new FormGroup({})
+
   boardsChanged = new Subject<ColumnData[]>();
 
   setColumns(columns: ColumnData[]){
@@ -24,13 +24,4 @@ export class BoardService {
   getColumns(){
     return this.columns.slice();
   }
-
-  setBoardId(id:number) {
-    this.boardId = id;
-  }
-
-  getBoardId(){
-    return this.boardId;
-  }
-
 }

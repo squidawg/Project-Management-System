@@ -37,7 +37,6 @@ export class CreateBoardComponent implements OnInit{
     this.authentication.getUsers();
     this.createBoardForm = new FormGroup({
       "titleBoard": new FormControl(null,[Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      "users": new FormControl(null, [Validators.required])
     });
   }
 

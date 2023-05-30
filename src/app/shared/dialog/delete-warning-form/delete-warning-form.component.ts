@@ -11,10 +11,8 @@ export class DeleteWarningFormComponent{
 
   constructor(private dashboardService: DashboardStorageService) {}
 
-  boardId = '';
 
   onSubmit(){
-    this.boardId = this.dashboardService.boardId;
-    this.dashboardService.deleteBoard(this.boardId);
+    this.dashboardService.deleteBoard();
   }
 }
