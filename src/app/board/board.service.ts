@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ColumnData } from "./board-storage.service";
 import {Subject} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'

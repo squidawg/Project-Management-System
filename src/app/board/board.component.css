@@ -96,7 +96,6 @@
 .column_title_input{
     display: flex;
     flex-direction: column;
-    height: 4rem;
 
 }
 .column_input{
