@@ -5,6 +5,7 @@ import {AuthenticationService} from "../authentication/authentication.service";
 import {DashboardService} from "./dashboard.service";
 import {map} from "rxjs/operators";
 import {TaskData} from "../board/tasks/tasks.service";
+import {SnackbarService} from "../shared/snackbar.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,13 @@ import {TaskData} from "../board/tasks/tasks.service";
 export class DashboardStorageService {
   constructor(private dashboardService: DashboardService,
               private http: HttpClient,
-              private userData: AuthenticationService) {}
+              private userData: AuthenticationService,
+              private snackBar: SnackbarService) {}
 
     boards!: DashboardModel[];
     boardId = '';
+    error!:string;
+
 
     fetchBoards() {
     return this.http.get<DashboardModel[]>('https://quixotic-underwear-production.up.railway.app/boards')
@@ -36,7 +40,10 @@ export class DashboardStorageService {
           .subscribe( resData => {
               this.boards.push(resData);
               this.dashboardService.setBoards(this.boards.slice())
-        })
+        }, errRes => {
+              this.error = errRes.error.message;
+              this.snackBar.openSnackBar(this.error);
+          })
 
     }
 
@@ -47,7 +54,10 @@ export class DashboardStorageService {
             const index = this.boards.map( obj => obj._id).indexOf(resData._id)
             this.boards.splice(index,1);
             this.dashboardService.setBoards(this.boards.slice())
-    });
+    }, errRes => {
+            this.error = errRes.error.message;
+            this.snackBar.openSnackBar(this.error);
+        });
   }
   searchTask(search: string){
         const userId = this.userData.user.value

@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DashboardService} from "./dashboard.service";
 import {DashboardModel} from "./dashboard.model";
 import {DashboardStorageService} from "./dashboard-storage.service";
@@ -8,6 +8,7 @@ import {BoardService} from "../board/board.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {TaskData, TasksService} from "../board/tasks/tasks.service";
+import {SnackbarService} from "../shared/snackbar.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       private dashboardService: DashboardService,
       private boardService: BoardService,
       private router: Router,
-      private taskService: TasksService) {}
+      private taskService: TasksService,
+      private snackBar: SnackbarService) {}
 
   searchCtrl = this.taskService.searchCtrl;
 
@@ -53,6 +55,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isLoading = !this.isLoading;
     this.dashboardStorageService.fetchBoards().subscribe(resData => {
       this.isLoading = !this.isLoading;
+    }, errRes => {
+      this.error = errRes.error.message;
+      this.snackBar.openSnackBar(this.error);
+      this.isLoading = !this.isLoading;
+
     });
   }
 
@@ -73,9 +80,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .subscribe(resdata => {
           this.isSearchLoad = !this.isSearchLoad
           this.filteredTasks = resdata;
+        }, errRes => {
+          this.error = errRes.error.message;
+          this.snackBar.openSnackBar(this.error);
         })
     this.isShow = true;
 
+  }
+
+  onBlur(){
+    setTimeout(() =>{
+      this.isShow = false
+    }, 200)
   }
 
   ngOnDestroy() {

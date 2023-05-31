@@ -17,6 +17,7 @@ import {DeleteWarningTaskComponent} from "../shared/dialog/delete-warning-task/d
 
 import {UserAssignService} from "../shared/user-assign.service";
 import {DashboardStorageService} from "../dashboard/dashboard-storage.service";
+import {SnackbarService} from "../shared/snackbar.service";
 
 
 @Component({
@@ -36,7 +37,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       private tasksStorageService: TasksStorageService,
       private sortedDataService: SortedDataService,
       private router: Router,
-      private userAssignService: UserAssignService
+      private userAssignService: UserAssignService,
+      private snackBar: SnackbarService
   ) {
   }
 
@@ -50,6 +52,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   isEditing: boolean[] = [];
+  error!: string
 
 
   ngOnInit() {
@@ -63,17 +66,20 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.tasksSubscription = this.tasksService.tasksChanged
         .subscribe((taskData: TaskData[]) => {
           this.tasks = taskData;
-          this.tasks.sort((a,b) => a.order - b.order)
-          this.sortedDataService.afterFetch(this.columns, this.tasks)
-          this.sortedData = this.sortedDataService.getData()
+          this.tasks.sort((a,b) => a.order - b.order);
+          this.sortedDataService.afterFetch(this.columns, this.tasks);
+          this.sortedData = this.sortedDataService.getData();
         });
 
     this.sortedDataSubscription = this.sortedDataService.sortedDataChanged
         .subscribe((data: SortedColumns[]) => {
-          this.isLoading = false
+          this.isLoading = false;
           this.sortedData = data;
           this.sortedDataService.afterFetch(this.columns, this.tasks);
           this.sortedData = this.sortedDataService.getData();
+        }, errRes => {
+          this.error = errRes.error.message;
+          this.snackBar.openSnackBar(this.error);
         })
 
   }
@@ -100,8 +106,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   onDeleteColumn(columnId:string, boardId:string) {
-    this.boardStorageService.boardId = boardId
-    this.boardStorageService.columnId = columnId
+    this.boardStorageService.boardId = boardId;
+    this.boardStorageService.columnId = columnId;
     this.dialog.openDialog(DeleteWarningColumnComponent);
   }
 
@@ -121,6 +127,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardStorageService.columnId = column._id
     this.boardStorageService.putColumn(column.title!).subscribe(resData => {
       this.isEditing[index] = !this.isEditing[index];
+    }, errRes => {
+      this.error = errRes.error.message;
+      this.snackBar.openSnackBar(this.error);
     })
   }
 

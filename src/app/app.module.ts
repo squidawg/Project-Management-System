@@ -43,6 +43,7 @@ import { DeleteWarningTaskComponent } from './shared/dialog/delete-warning-task/
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatSelectModule} from "@angular/material/select";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -87,8 +88,9 @@ import {MatSelectModule} from "@angular/material/select";
         MatChipsModule,
         MatSelectModule,
 
+
     ],
-  providers: [DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [MatSnackBar, DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 

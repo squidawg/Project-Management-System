@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {AuthenticationService} from "../authentication.service";
 import {Router} from "@angular/router";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Component({
   selector: 'app-signup',
@@ -12,9 +13,10 @@ export class SignupComponent implements OnInit{
   isLoading = false;
   signUpForm!: FormGroup;
   hide = true;
-  error?:string;
+  error!:string;
   constructor(private authentication: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private snackBar: SnackbarService) {
   }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class SignupComponent implements OnInit{
 
     }, errRes => {
           this.error = errRes.error.message
+          this.snackBar.openSnackBar(this.error)
           this.isLoading = false;
     })
     this.signUpForm.reset();

@@ -5,6 +5,7 @@ import {BoardService} from "./board.service";
 import * as _ from 'lodash';
 import {SortedColumns, SortedDataService} from "./sorted-data.service";
 import {map} from "rxjs/operators";
+import {SnackbarService} from "../shared/snackbar.service";
 
 export interface ColumnData {
    _id: string,
@@ -21,19 +22,25 @@ export class BoardStorageService {
   constructor(private http: HttpClient,
               private userData: AuthenticationService,
               private boardService: BoardService,
-              private sortedDataService: SortedDataService) { }
+              private sortedDataService: SortedDataService,
+              private snackBar: SnackbarService) { }
 
   columnId = '';
   boardId!: string;
   columns!: SortedColumns[];
+  error!:string;
 
-  fetchColumns(id:string) {
+
+    fetchColumns(id:string) {
       this.http.get<ColumnData[]>(`https://quixotic-underwear-production.up.railway.app/boards/${id}/columns`)
           .subscribe(resData => {
             const columnData = resData.sort( (a,b) => a.order - b.order);
             this.boardService.setColumns(columnData);
             this.sortedDataService.setData(columnData);
-    });
+    }, errRes => {
+              this.error = errRes.error.message;
+              this.snackBar.openSnackBar(this.error);
+          });
   }
 
   postColumns(id:string, title: string) {
@@ -47,22 +54,31 @@ export class BoardStorageService {
             this.columns.push(resData);
             this.boardService.setColumns(this.columns);
             this.sortedDataService.setData(this.columns.slice());
-      });
+      }, errRes => {
+              this.error = errRes.error.message;
+              this.snackBar.openSnackBar(this.error);
+          });
   }
 
   patchColumns(columns: ColumnData[]) {
-    const columnsCopy = _.map(columns, obj => _.omit(obj, ['boardId', 'title', 'tasks']));
+    const columnsCopy  = columns.map(obj=> _.omit(obj,['boardId', 'title', 'tasks']))
     this.http.patch<ColumnData[]>('https://quixotic-underwear-production.up.railway.app/columnsSet',
         columnsCopy)
          .subscribe(resData => {
             this.boardService.setColumns(resData);
             this.sortedDataService.setData(columns);
+         }, errRes => {
+             this.error = errRes.error.message;
+             this.snackBar.openSnackBar(this.error);
          })
   }
 
   deleteColumns(boardId:string, columnId:string) {
     const data = this.sortedDataService.getData();
-    const columnsCopy = _.map(data, obj => _.omit(obj, ['tasks']));
+      const columnsTest = data.map(obj => _.omit(obj,['tasks']));
+
+      const columnsCopy = _.map(data, obj => _.omit(obj, ['tasks']));
+      console.log('columnsCopy', columnsCopy, 'columnsTest',columnsTest, )
     this.http.delete<ColumnData>(`https://quixotic-underwear-production.up.railway.app/boards/${boardId}/columns/${columnId}`)
         .subscribe((resData: ColumnData) => {
             const index = columnsCopy.map( obj=> obj._id).indexOf(resData._id);
@@ -70,6 +86,9 @@ export class BoardStorageService {
             data.splice(index, 1)
             this.boardService.setColumns(columnsCopy.slice());
             this.sortedDataService.setData(data.slice());
+        }, errRes => {
+            this.error = errRes.error.message;
+            this.snackBar.openSnackBar(this.error);
         })
   }
 

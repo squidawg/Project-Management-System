@@ -4,8 +4,8 @@ import {AuthenticationService} from "../../authentication/authentication.service
 import {TaskData, TasksService} from "./tasks.service";
 import * as _ from 'lodash';
 import Enumerable from "linq";
-import {omit} from "lodash";
 import {map} from "rxjs/operators";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,11 @@ export class TasksStorageService {
   constructor(private http: HttpClient,
               private userData: AuthenticationService,
               private tasksService: TasksService,
+              private snackBar: SnackbarService
               ) { }
 
   private tasks!: TaskData[];
+  private error!: string
 
   fetchTasks(boardId:string) {
       this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet/${boardId}`)
@@ -46,6 +48,9 @@ export class TasksStorageService {
         .subscribe((resData:TaskData) => {
           this.tasks.push(resData);
           this.tasksService.setTasks(this.tasks.slice());
+        }, errRes => {
+            this.error = errRes.error.message;
+            this.snackBar.openSnackBar(this.error);
         });
   }
 
@@ -62,11 +67,14 @@ export class TasksStorageService {
             userId: this.userData.user.value.id,
             users: users
         })
-        .subscribe((resData => {
+        .subscribe(resData => {
             const newTask = this.tasks
                 .map((obj) =>  obj._id === resData._id ? resData : obj)
             this.tasksService.setTasks(newTask.slice());
-        }));
+        }, errRes => {
+            this.error = errRes.error.message;
+            this.snackBar.openSnackBar(this.error);
+        });
   }
 
   patchTasks(container:TaskData[]){
@@ -76,13 +84,16 @@ export class TasksStorageService {
           .except(Enumerable.from(container), obj => obj._id)
           .toArray();
       const taskData: TaskData[] = [...except, ...container]
-      const tasksToPatch = _.map(taskData, obj =>
-          omit(obj, [ 'title','description','userId','boardId','users' ]));
+      const tasksToPatch = taskData.map(obj =>
+          _.omit(obj, [ 'title','description','userId','boardId','users' ]));
       this.http.patch<TaskData[]>('https://quixotic-underwear-production.up.railway.app/tasksSet',
           tasksToPatch)
           .subscribe(resData => {
           this.tasksService.setTasks(resData.slice());
-      })
+      }, errRes => {
+              this.error = errRes.error.message;
+              this.snackBar.openSnackBar(this.error);
+          })
   }
 
   deleteTask(){
@@ -92,6 +103,9 @@ export class TasksStorageService {
               const index = this.tasks.map( obj=> obj._id).indexOf(resData._id);
               this.tasks.splice(index,1);
               this.tasksService.setTasks(this.tasks)
+          }, errRes => {
+              this.error = errRes.error.message;
+              this.snackBar.openSnackBar(this.error);
           })
   }
 }

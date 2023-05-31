@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   error!:string;
 
   constructor(private authentication: AuthenticationService,
-              private router: Router) {}
+              private router: Router,
+              private snackBar: SnackbarService) {}
   ngOnInit() {
     this.signInForm = new FormGroup({
       'login': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
 
         }, errRes => {
           this.error = errRes.error.message;
+          this.snackBar.openSnackBar(this.error)
           this.isLoading = false;
         })
     this.signInForm.reset();
