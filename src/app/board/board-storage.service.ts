@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {BoardService} from "./board.service";
-import * as _ from 'lodash';
 import {SortedColumns, SortedDataService} from "./sorted-data.service";
 import {map} from "rxjs/operators";
 import {SnackbarService} from "../shared/snackbar.service";
+import {omit} from "lodash";
 
 export interface ColumnData {
    _id: string,
@@ -32,15 +32,26 @@ export class BoardStorageService {
 
 
     fetchColumns(id:string) {
-      this.http.get<ColumnData[]>(`https://quixotic-underwear-production.up.railway.app/boards/${id}/columns`)
+        this.http.get<ColumnData[]>(`https://quixotic-underwear-production.up.railway.app/boards/${id}/columns`)
           .subscribe(resData => {
-            const columnData = resData.sort( (a,b) => a.order - b.order);
-            this.boardService.setColumns(columnData);
-            this.sortedDataService.setData(columnData);
-    }, errRes => {
+              const columnData = resData.sort( (a,b) => a.order - b.order);
+              this.boardService.setColumns(columnData);
+              this.sortedDataService.setData(columnData);
+          }, errRes => {
               this.error = errRes.error.message;
               this.snackBar.openSnackBar(this.error);
           });
+        // .pipe(map(resData => {
+        //     const columnData = resData.sort( (a,b) => a.order - b.order);
+        //     this.boardService.setColumns(columnData);
+        //     this.sortedDataService.setData(columnData);
+        // }, (errRes:any) => {
+        //     this.error = errRes.error.message;
+        //     this.snackBar.openSnackBar(this.error);
+        // }))
+
+
+
   }
 
   postColumns(id:string, title: string) {
@@ -61,7 +72,7 @@ export class BoardStorageService {
   }
 
   patchColumns(columns: ColumnData[]) {
-    const columnsCopy  = columns.map(obj=> _.omit(obj,['boardId', 'title', 'tasks']))
+    const columnsCopy  = columns.map(obj=> omit(obj,['boardId', 'title', 'tasks']))
     this.http.patch<ColumnData[]>('https://quixotic-underwear-production.up.railway.app/columnsSet',
         columnsCopy)
          .subscribe(resData => {
@@ -73,13 +84,10 @@ export class BoardStorageService {
          })
   }
 
-  deleteColumns(boardId:string, columnId:string) {
+  deleteColumns() {
     const data = this.sortedDataService.getData();
-      const columnsTest = data.map(obj => _.omit(obj,['tasks']));
-
-      const columnsCopy = _.map(data, obj => _.omit(obj, ['tasks']));
-      console.log('columnsCopy', columnsCopy, 'columnsTest',columnsTest, )
-    this.http.delete<ColumnData>(`https://quixotic-underwear-production.up.railway.app/boards/${boardId}/columns/${columnId}`)
+    const columnsCopy = data.map(obj => omit(obj,['tasks']));
+    this.http.delete<ColumnData>(`https://quixotic-underwear-production.up.railway.app/boards/${this.boardId}/columns/${this.columnId}`)
         .subscribe((resData: ColumnData) => {
             const index = columnsCopy.map( obj=> obj._id).indexOf(resData._id);
             columnsCopy.splice(index,1);

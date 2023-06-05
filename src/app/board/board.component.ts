@@ -1,24 +1,26 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DashboardService} from "../dashboard/dashboard.service";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {DialogService} from "../shared/dialog/dialog.service";
-import {AddTaskFormComponent} from "./dialog/add-task-form/add-task-form.component";
-import {AddColumnFormComponent} from "./dialog/add-column-form/add-column-form.component";
+import {DialogService} from "../dialog/dialog.service";
+import {AddTaskFormComponent} from "../dialog/add-task-form/add-task-form.component";
+import {AddColumnFormComponent} from "../dialog/add-column-form/add-column-form.component";
 import {BoardService} from "./board.service";
 import {BoardStorageService, ColumnData} from "./board-storage.service";
-import {Subscription} from "rxjs";
-import {DeleteWarningColumnComponent} from "../shared/dialog/delete-warning-column/delete-warning-column.component";
+import {forkJoin, Observable, Subscription, combineLatest} from "rxjs";
+import {DeleteWarningColumnComponent} from "../dialog/delete-warning-column/delete-warning-column.component";
 import {TasksStorageService} from "./tasks/tasks-storage.service";
 import {TaskData, TasksService} from "./tasks/tasks.service";
 import {SortedColumns, SortedDataService} from "./sorted-data.service";
 import {Router} from "@angular/router";
-import {EditTaskComponent} from "./dialog/edit-task/edit-task.component";
-import {DeleteWarningTaskComponent} from "../shared/dialog/delete-warning-task/delete-warning-task.component";
+import {EditTaskComponent} from "../dialog/edit-task/edit-task.component";
+import {DeleteWarningTaskComponent} from "../dialog/delete-warning-task/delete-warning-task.component";
 
 import {UserAssignService} from "../shared/user-assign.service";
 import {DashboardStorageService} from "../dashboard/dashboard-storage.service";
 import {SnackbarService} from "../shared/snackbar.service";
-
+import {combineAll, mergeAll, withLatestFrom} from "rxjs/operators";
+import {mergeMap} from "rxjs-compat/operator/mergeMap";
+import {switchMap} from "rxjs-compat/operator/switchMap";
 
 @Component({
   selector: 'app-board',
@@ -27,6 +29,7 @@ import {SnackbarService} from "../shared/snackbar.service";
 })
 
 export class BoardComponent implements OnInit, OnDestroy {
+
   constructor(
       private boardService: BoardService,
       private dialog: DialogService,
@@ -39,8 +42,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       private router: Router,
       private userAssignService: UserAssignService,
       private snackBar: SnackbarService
-  ) {
-  }
+  ) {}
 
   boardsSubscription!: Subscription;
   tasksSubscription!: Subscription;
@@ -52,7 +54,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   isEditing: boolean[] = [];
-  error!: string
+  error!: string;
 
 
   ngOnInit() {
@@ -60,13 +62,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardsSubscription = this.boardService.boardsChanged
         .subscribe((columnData: ColumnData[]) => {
           this.columns = columnData;
-
         });
 
     this.tasksSubscription = this.tasksService.tasksChanged
         .subscribe((taskData: TaskData[]) => {
           this.tasks = taskData;
-          this.tasks.sort((a,b) => a.order - b.order);
+          this.tasks.sort((a, b) => a.order - b.order);
           this.sortedDataService.afterFetch(this.columns, this.tasks);
           this.sortedData = this.sortedDataService.getData();
         });
@@ -81,15 +82,16 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.error = errRes.error.message;
           this.snackBar.openSnackBar(this.error);
         })
-
   }
 
   onFetchData() {
     const boardId = this.dashboardStorageService.boardId
     if (boardId) {
       this.isLoading = true;
+
       this.boardStorageService.fetchColumns(boardId);
       this.tasksStorageService.fetchTasks(boardId);
+
     } else {
       this.router.navigate(['/dashboard']);
     }
@@ -98,7 +100,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.boardsSubscription.unsubscribe();
     this.tasksSubscription.unsubscribe();
-    this.sortedDataSubscription.unsubscribe();
+     this.sortedDataSubscription.unsubscribe();
   }
 
   onAddColumn() {

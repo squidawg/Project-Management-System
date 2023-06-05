@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {DashboardStorageService} from "../../../dashboard/dashboard-storage.service";
+import {DashboardStorageService} from "../../dashboard/dashboard-storage.service";
 
 
 @Component({

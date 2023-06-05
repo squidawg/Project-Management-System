@@ -1,10 +1,10 @@
 import {Component, OnInit, } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BoardStorageService} from "../../board-storage.service";
-import {BoardService} from "../../board.service";
-import {DashboardService} from "../../../dashboard/dashboard.service";
-import {AuthenticationService} from "../../../authentication/authentication.service";
-import {DashboardStorageService} from "../../../dashboard/dashboard-storage.service";
+import {BoardStorageService} from "../../board/board-storage.service";
+import {BoardService} from "../../board/board.service";
+import {DashboardService} from "../../dashboard/dashboard.service";
+import {AuthenticationService} from "../../authentication/authentication.service";
+import {DashboardStorageService} from "../../dashboard/dashboard-storage.service";
 
 @Component({
   selector: 'app-add-column-form',

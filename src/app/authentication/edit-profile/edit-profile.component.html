@@ -1,25 +1,24 @@
 <div class="container window-height">
-    <div class="col-6 offset-3 col-sm-6 offset-sm-3 col-md-4 offset-md-4 justify-content-center">
+    <div class="col-9 offset-2  col-sm-6 offset-sm-3 col-md-4 offset-md-4 justify-content-center">
         <div class="container justify-content-center text-center to_flex" *ngIf="isLoading">
             <mat-spinner></mat-spinner>
         </div>
-        <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
-            <div class="container  justify-content-center text-center ">
-                <h2>Edit Profile </h2>
-                <h4>Provide new info</h4>
+        <form [formGroup]="editUserForm" *ngIf="!isLoading">
+            <div class="text-center ">
+                <h2 i18n >Edit Profile </h2>
+                <h4 i18n >Provide new info</h4>
             </div>
             <div class="example-container">
                 <mat-form-field appearance="fill">
-                    <mat-label>Name</mat-label>
+                    <mat-label i18n >Name</mat-label>
                     <input
                             matInput
-                            placeholder="name"
                             formControlName="name">
                     <mat-error *ngIf="!editUserForm.get('name')!.valid">{{onError(editUserForm.get('name'),'name')}}</mat-error>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
-                    <mat-label>Login</mat-label>
+                    <mat-label i18n >Login</mat-label>
                     <input
                             matInput
                             formControlName="login"
@@ -27,22 +26,25 @@
                     <mat-error *ngIf="!editUserForm.get('login')!.valid">{{onError(editUserForm.get('login'),'login')}}</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'"
-                           formControlName="password">
+                    <mat-label i18n >Password</mat-label>
+                    <input
+                            matInput
+                            [type]="hide ? 'password' : 'text'"
+                            formControlName="password"
+                    >
                     <mat-error *ngIf="!editUserForm.get('password')!.valid">{{onError(editUserForm.get('password'),'password')}}</mat-error>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
             </div>
-            <div class="container  btn_auth_wrapper">
-                <button
+            <div class="btn_auth_wrapper">
+                <button i18n
                         mat-raised-button
                         color="primary"
-                        [disabled]="!editUserForm.valid">Confirm</button>
+                        [disabled]="!editUserForm.valid"  (click)="onSubmit()">Confirm</button>
+                <button mat-raised-button color="warn" (click)="onDeleteUser()"><span i18n>Delete</span></button>
             </div>
         </form>
-
     </div>
 </div>

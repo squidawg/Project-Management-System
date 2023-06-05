@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {TasksStorageService} from "../../../board/tasks/tasks-storage.service";
+import {TasksStorageService} from "../../board/tasks/tasks-storage.service";
 
 @Component({
   selector: 'app-delete-warning-task',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {BoardStorageService} from "../../../board/board-storage.service";
+import {BoardStorageService} from "../../board/board-storage.service";
 
 @Component({
   selector: 'app-delete-warning-column',
@@ -11,8 +11,6 @@ export class DeleteWarningColumnComponent {
   }
 
   onSubmit(){
-    const boardId = this.boardStorageService.boardId;
-    const columnId = this.boardStorageService.columnId;
-    this.boardStorageService.deleteColumns(boardId, columnId);
+    this.boardStorageService.deleteColumns();
   }
 }

@@ -1,8 +1,8 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../authentication/authentication.service";
 import {Subscription} from "rxjs";
-import {DialogService} from "../shared/dialog/dialog.service";
-import {CreateBoardComponent} from "../board/dialog/create-board/create-board.component";
+import {DialogService} from "../dialog/dialog.service";
+import {CreateBoardComponent} from "../dialog/create-board/create-board.component";
 import {Router} from "@angular/router";
 
 @Component({

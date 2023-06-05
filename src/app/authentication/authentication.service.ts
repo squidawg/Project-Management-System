@@ -58,7 +58,7 @@ export class AuthenticationService{
             password: password
         }).pipe(tap(resData => {
             this.parsedJwt = this.jwt.DecodeToken(resData.token);
-            this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp);
+            this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp, this.parsedJwt.iat);
         }));
     }
 
@@ -72,9 +72,15 @@ export class AuthenticationService{
         })))
     }
 
+    deleteUser(){
+        this.http.delete<AuthData>(`https://quixotic-underwear-production.up.railway.app/users/${this.user.value.id}`).subscribe(resData => {
+            this.logout()
+        })
+    }
+
     logout(){
         this.user.next(null!);
-        this.router.navigate(['/login']);
+        this.router.navigate(['']);
         localStorage.removeItem('userData');
         if(this.isTokenExpired){
             clearTimeout(this.isTokenExpired);
@@ -82,8 +88,8 @@ export class AuthenticationService{
         this.isTokenExpired = null;
     }
 
-    private handleAuth(login:string, userId: string, token: string, expiresIn:number) {
-        const  expDate = new Date(new Date().getTime() + +expiresIn * 1000);
+    private handleAuth(login:string, userId: string, token: string, expiresIn:number, iat:number) {
+        const  expDate = new Date(expiresIn * 1000);
         const user = new User(
             login,
             userId,
@@ -91,7 +97,7 @@ export class AuthenticationService{
             expDate
             );
         this.user.next(user);
-        this.autoLogout(expiresIn * 1000)
+        this.autoLogout(expiresIn)
         localStorage.setItem('userData', JSON.stringify(user))
     }
 

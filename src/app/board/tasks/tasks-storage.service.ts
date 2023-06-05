@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import Enumerable from "linq";
 import {map} from "rxjs/operators";
 import {SnackbarService} from "../../shared/snackbar.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -19,18 +20,21 @@ export class TasksStorageService {
               ) { }
 
   private tasks!: TaskData[];
-  private error!: string
+  private error!: string;
 
-  fetchTasks(boardId:string) {
+  fetchTasks(boardId:string){
       this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet/${boardId}`)
-          .pipe(map((objects: TaskData[]) => {
-              objects.sort((a, b) => a.columnId > b.columnId? 1 : -1);
-              return objects
-          }))
-          .subscribe(resData => {
-              this.tasks = resData;
-              this.tasksService.setTasks(this.tasks.slice());
-          });
+      .subscribe(resData => {
+          this.tasks = resData;
+          this.tasksService.setTasks(this.tasks.slice());
+      }, errRes => {
+          this.error = errRes.error.message;
+          this.snackBar.openSnackBar(this.error);
+      });
+      // .pipe(map((resData: TaskData[]) => {
+      //         this.tasks = resData;
+      //         this.tasksService.setTasks(this.tasks.slice());
+      // }))
   }
 
   postTasks(title:string, description:string, users:string[]) {
@@ -49,7 +53,7 @@ export class TasksStorageService {
           this.tasks.push(resData);
           this.tasksService.setTasks(this.tasks.slice());
         }, errRes => {
-            this.error = errRes.error.message;
+            this.error = errRes.error.message || 'Undefined error';
             this.snackBar.openSnackBar(this.error);
         });
   }
@@ -58,6 +62,7 @@ export class TasksStorageService {
     this.tasks = this.tasksService.getTasks();
     const dataId = this.tasksService.getTaskPath()
     const editedTask = this.tasks.find(item => item._id === dataId.taskId);
+
     this.http.put<TaskData>(`https://quixotic-underwear-production.up.railway.app/boards/${dataId.boardId}/columns/${dataId.columnId}/tasks/${dataId.taskId}`,
         {
             title: title,

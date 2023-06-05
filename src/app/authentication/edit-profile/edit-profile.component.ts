@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../authentication.service";
 import {SnackbarService} from "../../shared/snackbar.service";
+import {DialogService} from "../../dialog/dialog.service";
+import {DeleteWarningUserComponent} from "../../dialog/delete-warning-user/delete-warning-user.component";
 
 @Component({
   selector: 'app-edit-profile',
@@ -9,8 +11,10 @@ import {SnackbarService} from "../../shared/snackbar.service";
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit{
+
   constructor(private authentication: AuthenticationService,
-              private snackBar: SnackbarService) {
+              private snackBar: SnackbarService,
+              private dialog: DialogService) {
   }
   isLoading = false;
   editUserForm!: FormGroup;
@@ -42,5 +46,8 @@ export class EditProfileComponent implements OnInit{
           this.snackBar.openSnackBar(this.error)
           this.isLoading = false;
         });
+  }
+  onDeleteUser(){
+    this.dialog.openDialog(DeleteWarningUserComponent)
   }
 }

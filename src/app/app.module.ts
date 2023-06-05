@@ -26,24 +26,25 @@ import { EditProfileComponent } from './authentication/edit-profile/edit-profile
 import { BoardComponent } from './board/board.component';
 import {DashboardService} from "./dashboard/dashboard.service";
 import {DragDropModule} from "@angular/cdk/drag-drop";
-import { AddTaskFormComponent } from './board/dialog/add-task-form/add-task-form.component';
-import {DialogService} from "./shared/dialog/dialog.service";
+import { AddTaskFormComponent } from './dialog/add-task-form/add-task-form.component';
+import {DialogService} from "./dialog/dialog.service";
 import {MatDialogClose, MatDialogModule} from "@angular/material/dialog";
-import { AddColumnFormComponent } from './board/dialog/add-column-form/add-column-form.component';
-import { DeleteWarningFormComponent } from './shared/dialog/delete-warning-form/delete-warning-form.component';
+import { AddColumnFormComponent } from './dialog/add-column-form/add-column-form.component';
+import { DeleteWarningFormComponent } from './dialog/delete-warning-form/delete-warning-form.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {JwtService} from "./authentication/jwt.service";
-import { CreateBoardComponent } from './board/dialog/create-board/create-board.component';
-import { DeleteWarningColumnComponent } from './shared/dialog/delete-warning-column/delete-warning-column.component';
+import { CreateBoardComponent } from './dialog/create-board/create-board.component';
+import { DeleteWarningColumnComponent } from './dialog/delete-warning-column/delete-warning-column.component';
 import {AuthInterceptorService} from "./authentication/auth-interceptor.service";
-import { EditTaskComponent } from './board/dialog/edit-task/edit-task.component';
-import { DeleteWarningTaskComponent } from './shared/dialog/delete-warning-task/delete-warning-task.component';
+import { EditTaskComponent } from './dialog/edit-task/edit-task.component';
+import { DeleteWarningTaskComponent } from './dialog/delete-warning-task/delete-warning-task.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatSelectModule} from "@angular/material/select";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { DeleteWarningUserComponent } from './dialog/delete-warning-user/delete-warning-user.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     DeleteWarningColumnComponent,
     EditTaskComponent,
     DeleteWarningTaskComponent,
+    DeleteWarningUserComponent,
 
   ],
     imports: [

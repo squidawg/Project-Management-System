@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DashboardService} from "./dashboard.service";
 import {DashboardModel} from "./dashboard.model";
 import {DashboardStorageService} from "./dashboard-storage.service";
-import {DialogService} from "../shared/dialog/dialog.service";
-import {DeleteWarningFormComponent} from "../shared/dialog/delete-warning-form/delete-warning-form.component";
+import {DialogService} from "../dialog/dialog.service";
+import {DeleteWarningFormComponent} from "../dialog/delete-warning-form/delete-warning-form.component";
 import {BoardService} from "../board/board.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
@@ -28,10 +28,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   searchCtrl = this.taskService.searchCtrl;
 
-  filteredTasks: TaskData[]= [];
-
+  filteredTasks: TaskData[] = [];
   subscription!: Subscription;
-
   boards!: DashboardModel[];
 
   isSearchLoad = false;
@@ -63,7 +61,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLoadBoard(boardId:string){
+  onLoadBoard(boardId:string) {
     this.dashboardStorageService.boardId = boardId;
     this.router.navigate(['/board']);
   }
@@ -78,7 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isSearchLoad = !this.isSearchLoad
     this.dashboardStorageService.searchTask(this.searchCtrl.value!)
         .subscribe(resdata => {
-          this.isSearchLoad = !this.isSearchLoad
+          this.isSearchLoad = !this.isSearchLoad;
           this.filteredTasks = resdata;
         }, errRes => {
           this.error = errRes.error.message;

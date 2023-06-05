@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {DashboardStorageService} from "../../../dashboard/dashboard-storage.service";
-import {AuthData, AuthenticationService} from "../../../authentication/authentication.service";
-import {UserAssignService} from "../../../shared/user-assign.service";
+import {DashboardStorageService} from "../../dashboard/dashboard-storage.service";
+import {AuthData, AuthenticationService} from "../../authentication/authentication.service";
+import {UserAssignService} from "../../shared/user-assign.service";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 

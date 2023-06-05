@@ -48,7 +48,7 @@ export class DashboardStorageService {
     }
 
     deleteBoard() {
-        return this.http.delete<DashboardModel>(`https://quixotic-underwear-production.up.railway.app/boards/${this.boardId}`)
+        this.http.delete<DashboardModel>(`https://quixotic-underwear-production.up.railway.app/boards/${this.boardId}`)
         .subscribe( resData => {
             this.boards = this.dashboardService.getBoards();
             const index = this.boards.map( obj => obj._id).indexOf(resData._id)
@@ -62,7 +62,5 @@ export class DashboardStorageService {
   searchTask(search: string){
         const userId = this.userData.user.value
          return this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet?${userId}=USERID&search=${search}`)
-
   }
-
 }
