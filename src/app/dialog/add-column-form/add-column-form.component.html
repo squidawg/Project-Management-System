@@ -1,8 +1,8 @@
 <form [formGroup]="createColumnForm">
-    <h1 mat-dialog-title>Create Column</h1>
+    <h1 mat-dialog-title>{{'shared.add'|translate}} {{'shared.column'|translate}}</h1>
     <div mat-dialog-content>
         <mat-form-field appearance="fill">
-            <mat-label>Enter a title</mat-label>
+            <mat-label>{{'modal.desc' | translate}}</mat-label>
             <input
                     matInput
                     formControlName="columnTitle"
@@ -16,7 +16,7 @@
                 mat-dialog-close
                 [disabled]="!createColumnForm.valid"
                 color="primary"
-                (click)="onSubmit()">Submit</button>
+                (click)="onSubmit()">{{'btn.submit' | translate}}</button>
         <button
                 mat-icon-button
                 mat-dialog-close

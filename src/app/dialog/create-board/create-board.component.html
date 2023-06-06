@@ -1,8 +1,8 @@
 <form [formGroup]="createBoardForm" >
-<h1 mat-dialog-title>Create Board</h1>
+<h1 mat-dialog-title>{{'btn.CreateBoard' | translate}}</h1>
 <div mat-dialog-content>
      <mat-form-field appearance="fill">
-        <mat-label>Enter a title</mat-label>
+        <mat-label>{{'modal.desc' | translate}}</mat-label>
             <input
                     matInput
                     formControlName="titleBoard"
@@ -10,7 +10,7 @@
         <mat-error></mat-error>
      </mat-form-field>
     <mat-form-field class="example-chip-list">
-        <mat-label>User selection</mat-label>
+        <mat-label>{{'modal.users' | translate}}</mat-label>
         <mat-chip-grid #chipGrid aria-label="User selection">
             <mat-chip-row
                     *ngFor="let user of selected; let i = index"
@@ -23,7 +23,7 @@
                 </button>
             </mat-chip-row>
         </mat-chip-grid>
-        <input placeholder="Assign user..."
+        <input
                #userInput
                [formControl]="userCtrl"
                [matChipInputFor]="chipGrid"
@@ -45,7 +45,7 @@
             mat-dialog-close
             (click)="onSubmit()"
             [disabled]="!createBoardForm.valid && !userCtrl.valid"
-            color="primary">Submit</button>
+            color="primary">{{'btn.submit' | translate}}</button>
     <button
             mat-icon-button
             mat-dialog-close

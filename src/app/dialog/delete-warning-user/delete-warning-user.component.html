@@ -1,8 +1,8 @@
-<h1 i18n mat-dialog-title>Delete Profile</h1>
-<div i18n mat-dialog-content>
-    Would you like to delete your profile?
+<h1 mat-dialog-title>{{'modal_delete.title' | translate}}</h1>
+<div mat-dialog-content>
+    {{'modal_delete.user_delete' | translate}}
 </div>
 <div mat-dialog-actions>
-    <button mat-button mat-dialog-close="false"><span i18n>I Doubt</span></button>
-    <button mat-button mat-dialog-close="true" cdkFocusInitial (click)="onSubmit()"><span i18n>Sure</span></button>
+    <button mat-button mat-dialog-close="false">{{'btn.cancel' | translate}}</button>
+    <button mat-button mat-dialog-close="true" cdkFocusInitial (click)="onSubmit()">{{'btn.submit' | translate}}</button>
 </div>

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -45,8 +45,13 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatSelectModule} from "@angular/material/select";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import { DeleteWarningUserComponent } from './dialog/delete-warning-user/delete-warning-user.component';
+import { TranslatePipe } from './translate/translate.pipe';
+import {TranslateService} from "./translate/translate.service";
 
-
+export function setupTranslateServiceFactory(
+    service: TranslateService): Function {
+    return () => service.use('en');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +71,7 @@ import { DeleteWarningUserComponent } from './dialog/delete-warning-user/delete-
     EditTaskComponent,
     DeleteWarningTaskComponent,
     DeleteWarningUserComponent,
+    TranslatePipe,
 
   ],
     imports: [
@@ -92,7 +98,23 @@ import { DeleteWarningUserComponent } from './dialog/delete-warning-user/delete-
 
 
     ],
-  providers: [MatSnackBar, DashboardService, DialogService, MatDialogClose, JwtService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [
+      MatSnackBar,
+      DashboardService,
+      DialogService,
+      MatDialogClose,
+      JwtService,
+      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+
+      TranslateService,
+      {
+          provide: APP_INITIALIZER,
+          useFactory: setupTranslateServiceFactory,
+          deps: [
+              TranslateService
+          ],
+          multi: true
+      }],
   bootstrap: [AppComponent]
 })
 

@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {DialogService} from "../dialog/dialog.service";
 import {CreateBoardComponent} from "../dialog/create-board/create-board.component";
 import {Router} from "@angular/router";
+import {TranslateService} from "../translate/translate.service";
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   constructor(private authService: AuthenticationService,
               private dialogService: DialogService,
-              private router: Router) {}
+              private router: Router, private translateService: TranslateService) {}
 
 
   ngOnInit() {
@@ -33,6 +34,10 @@ export class HeaderComponent implements OnInit, OnDestroy{
   @HostListener('window:resize', ['$event'])
   onResize(event:Event) {
     this.screenWidth = window.innerWidth;
+  }
+
+  setLang(language: string){
+    this.translateService.use(language);
   }
 
   onLogout(){

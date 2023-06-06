@@ -13,7 +13,7 @@
                           color="primary"
                           routerLink="/login">
                       <mat-icon>login</mat-icon>
-                      Sign In
+                      {{"btn.signIn" | translate}}
                   </button>
                   <button
                           mat-fab
@@ -21,7 +21,7 @@
                           color="accent"
                           routerLink="/signup">
                       <mat-icon>app_registration</mat-icon>
-                      Sign Up
+                      {{"btn.signUp" | translate}}
                   </button>
               </div>
               <div *ngIf="screenWidth <= 700">
@@ -35,12 +35,12 @@
                       <button mat-menu-item
                               routerLink="/login">
                           <mat-icon>login</mat-icon>
-                          <span>Sign In</span>
+                          {{"btn.signIn" | translate}}
                       </button>
                       <button mat-menu-item
                               routerLink="/signup">
                           <mat-icon>app_registration</mat-icon>
-                          <span>Sign Up</span>
+                          {{"btn.signUp" | translate}}
                       </button>
                   </mat-menu>
               </div>
@@ -58,20 +58,19 @@
                         <button mat-menu-item
                                 (click)="onCreateBoard()">
                             <mat-icon>add_circle_outline</mat-icon>
-                            <span>Create Board</span>
+                            <span>{{"btn.CreateBoard" | translate}}</span>
                         </button>
                         <button mat-menu-item
                                 routerLink="/edit">
                             <mat-icon>edit</mat-icon>
-                            <span>Edit profile</span>
+                            <span>{{"btn.EditProfile" | translate}}</span>
                         </button>
                         <button mat-menu-item
                                 (click)="onLogout()">
                             <mat-icon>logout</mat-icon>
-                            <span>Log out</span>
+                            <span>{{"btn.LogOut" | translate}}</span>
                         </button>
                     </mat-menu>
-
                 </div>
             </ul>
             <div *ngIf="screenWidth > 700">
@@ -82,7 +81,7 @@
                             color="primary"
                             (click)="onCreateBoard()">
                         <mat-icon>add_circle_outline</mat-icon>
-                        Create Board
+                        {{"btn.CreateBoard" | translate}}
                     </button>
                     <button
                             mat-fab
@@ -90,7 +89,7 @@
                             color="accent"
                             routerLink="/edit">
                         <mat-icon>edit</mat-icon>
-                        Edit profile
+                        {{"btn.EditProfile" | translate}}
                     </button>
                     <button
                             mat-fab
@@ -98,7 +97,7 @@
                             color="accent"
                             (click)="onLogout()">
                         <mat-icon>logout</mat-icon>
-                        Log out
+                        {{"btn.LogOut" | translate}}
                     </button>
                 </ul>
             </div>
@@ -110,8 +109,8 @@
                 <mat-icon>language</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>en</button>
-                <button mat-menu-item>ru</button>
+                <button mat-menu-item (click)="setLang('en')">en</button>
+                <button mat-menu-item (click)="setLang('ru')">ru</button>
             </mat-menu>
         </div>
       </div>

@@ -1,8 +1,9 @@
-<h1 mat-dialog-title>Delete Column</h1>
+<h1 mat-dialog-title>{{'modal_delete.title'| translate}}</h1>
 <div mat-dialog-content>
-    Would you like to delete this column?
+    {{'modal_delete.warning' | translate}}
+    {{'shared.column' | translate | lowercase}}
 </div>
 <div mat-dialog-actions>
-    <button mat-button mat-dialog-close="false">I Doubt</button>
-    <button mat-button mat-dialog-close="true" cdkFocusInitial (click)="onSubmit()">Sure</button>
+    <button mat-button mat-dialog-close="false">{{'btn.cancel' | translate}}</button>
+    <button mat-button mat-dialog-close="true" cdkFocusInitial (click)="onSubmit()">{{'btn.submit' | translate}}</button>
 </div>

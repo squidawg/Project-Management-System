@@ -6,13 +6,17 @@
         </div>
         <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
             <div class="container  form-title-wrapper">
-                <h2 i18n >Login</h2>
-                <h4 class="form-title-description" i18n >Don't have an account? <a style="cursor: pointer" routerLink="/signup" >Sign up</a></h4>
+                <h2  >{{ "form.login" | translate}}</h2>
+                <h4 class="form-title-description"  >{{"form.login_desc"|translate}}
+                    <a
+                        style="cursor: pointer"
+                        routerLink="/signup"
+                >{{"btn.signUp"|translate}}</a></h4>
             </div>
 
             <div class="example-container">
                 <mat-form-field appearance="fill">
-                    <mat-label i18n >Login</mat-label>
+                    <mat-label  >{{"form.login" | translate}}</mat-label>
                     <input
                             matInput
                             formControlName="login"
@@ -21,7 +25,7 @@
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
-                    <mat-label i18n >Password</mat-label>
+                    <mat-label  >{{"form.password" | translate}}</mat-label>
                     <input
                             matInput [type]="hide ? 'password' : 'text'"
                             formControlName="password"
@@ -36,7 +40,7 @@
                             mat-raised-button
                             color="primary"
                             [disabled]="!signInForm.valid"
-                    ><span i18n>Sign In</span>
+                    ><span >{{"btn.signIn" | translate}}</span>
                     </button>
                 </div>
             </div>

@@ -1,8 +1,10 @@
 <form [formGroup]="createTaskForm">
-    <h1 mat-dialog-title>Add a card</h1>
+    <h1 mat-dialog-title>
+        {{'shared.add'|translate}}
+        {{'shared.task'|translate}}</h1>
     <div mat-dialog-content>
         <mat-form-field appearance="fill">
-            <mat-label>Enter a title</mat-label>
+            <mat-label>{{'modal.desc' | translate}}</mat-label>
             <input
                     matInput
                     formControlName="taskTitle"
@@ -11,7 +13,7 @@
             <mat-error></mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Description</mat-label>
+            <mat-label>{{'modal.description' | translate}}</mat-label>
             <textarea
                     matInput
                     formControlName="taskDescription"
@@ -20,7 +22,7 @@
             <mat-error *ngIf="!createTaskForm.get('taskDescription')!.valid">{{onError(createTaskForm.get('taskDescription'), 'taskDescription')}}</mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>User selection</mat-label>
+            <mat-label>{{'modal.users' | translate}}</mat-label>
             <mat-chip-grid #chipGrid aria-label="User selection">
                 <mat-chip-row
                         *ngFor="let user of selected; let i = index"
@@ -33,7 +35,7 @@
                     </button>
                 </mat-chip-row>
             </mat-chip-grid>
-            <input placeholder="Assign user..."
+            <input
                    #userInput
                    [formControl]="userCtrl"
                    [matChipInputFor]="chipGrid"

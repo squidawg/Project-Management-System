@@ -6,6 +6,7 @@
         <button
                 mat-mini-fab
                 color="accent"
+                matTooltip="{{'board.arrow_back' | translate }}"
                 routerLink="/dashboard">
             <mat-icon>arrow_back</mat-icon>
         </button>
@@ -31,14 +32,14 @@
                                         autofocus
                                 >
                                 <div class="column_input-btn_wrapper">
-                                    <button mat-stroked-button (click)="onTouchColumnTitle(i)" >Cancel</button>
-                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column)">Submit</button>
+                                    <button mat-stroked-button (click)="onTouchColumnTitle(i)" >{{'btn.cancel'|translate}}</button>
+                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column)">{{'btn.submit'|translate}}</button>
                                 </div>
                             </ng-template>
                         </div>
                         <button
                                 mat-icon-button color="primary"
-                                matTooltip="Delete column"
+                                matTooltip="{{'shared.delete'|translate}} {{'shared.column'|translate}}"
                                 aria-label="Example icon button with a home icon" (click)="onDeleteColumn(column._id, column.boardId)"
                         >
                             <mat-icon>delete</mat-icon>
@@ -53,7 +54,7 @@
                                             </div>
                                             <button
                                                     mat-icon-button
-                                                    matTooltip="Delete task"
+                                                    matTooltip="{{'shared.delete'|translate}} {{'shared.task'|translate}}"
                                                     color="primary"
                                                     aria-label="Delete task"
                                                     (click)="onDeleteTask($event, item)">
@@ -63,11 +64,11 @@
                             </ng-container>
                     </div>
                     <div class="btn_wrapper">
-                        <button mat-flat-button color="primary" (click)="onAddTask(i)">Add Task</button>
+                        <button mat-flat-button color="primary" (click)="onAddTask(i)">{{'btn.add_task' |translate}}</button>
                     </div>
                 </div>
             <div class="btn-wrapper">
-                <button matTooltip="Add Column"
+                <button matTooltip="{{'shared.add'|translate}} {{'shared.column'|translate}}"
                         mat-fab
                         color="primary" (click)="onAddColumn()"
                 ><mat-icon>add</mat-icon></button>
