@@ -35,7 +35,7 @@ export class AddColumnFormComponent implements OnInit {
     this.boardStorageService.postColumns(boardId, title);
   }
 
-  onError(value: any, valueName: string){
-    return this.authentication.getErrorMessage(value, valueName)
+  onError(value: any){
+    return this.authentication.getErrorMessage(value)
   }
 }

@@ -2,9 +2,9 @@
     <div class="position-relative">
         <mat-form-field appearance="outline" class="w-100 example-list">
             <mat-label>{{'search.title'| translate}}</mat-label>
-            <input  type="search"
+            <input
                     matInput
-                    (keyup.enter)="onSearch()"
+                    (keyup)="onSearch()"
                     [formControl]="searchCtrl"
                     (blur)="isShow = false"
             >

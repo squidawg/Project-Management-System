@@ -57,7 +57,7 @@ export class EditTaskComponent {
     this.tasksStorageService.putTask(title, description, users);
   }
 
-  onError(value: any, valueName: string){
-    return this.authentication.getErrorMessage(value, valueName)
+  onError(value: any){
+    return this.authentication.getErrorMessage(value)
   }
 }

@@ -40,7 +40,7 @@
                                 </div>
                             </ng-template>
                         </div>
-                        <button
+                        <button *ngIf="!isEditing[i]"
                                 mat-icon-button color="primary"
                                 matTooltip="{{'shared.delete'|translate}} {{'shared.column'|translate}}"
                                 aria-label="Example icon button with a home icon" (click)="onDeleteColumn(column._id, column.boardId)"

@@ -30,7 +30,7 @@ export class EditProfileComponent implements OnInit{
   }
 
   onError(value: any, valueName: string) {
-    return this.authentication.getErrorMessage(value, valueName);
+    return this.authentication.getErrorMessage(value);
   }
 
   onSubmit(){

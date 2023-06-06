@@ -60,7 +60,7 @@ export class AddTaskFormComponent implements OnInit{
     this.tasksStorageService.postTasks(title, description, users);
   }
 
-  onError(value: any, valueName: string){
-    return this.authentication.getErrorMessage(value, valueName)
+  onError(value: any){
+    return this.authentication.getErrorMessage(value)
   }
 }
