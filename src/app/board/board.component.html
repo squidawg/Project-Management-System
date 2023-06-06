@@ -22,18 +22,21 @@
                     <div class="column_title-wrapper" >
                         <div class="column_title_input ">
                             <ng-container *ngIf="!isEditing[i]; else editTemplate" >
-                                <h2 (mouseenter)="onTouchColumnTitle(i)" >{{column.title}}</h2></ng-container>
+                                <h2 (click)="onTouchColumnTitle(i)" >{{column.title}}</h2>
+                            </ng-container>
                             <ng-template #editTemplate >
-                                <input
-                                        name="{{column.title}}"
-                                        class=" h5 column_input"
-                                        [(ngModel)]="column.title"
-                                        (keyup.enter)="onEditColumn(i, column)"
-                                        autofocus
-                                >
+                                <mat-form-field appearance="outline">
+                                    <mat-label >{{'form.edit_title' | translate}}</mat-label>
+                                    <input matInput name="{{column.title}}"
+                                           class=" h5 column_input"
+                                           [(ngModel)]="column.title"
+                                           (keydown.enter)="onEditColumn(i, column)"
+                                           autofocus
+                                    >
+                                </mat-form-field>
                                 <div class="column_input-btn_wrapper">
-                                    <button mat-stroked-button (click)="onTouchColumnTitle(i)" >{{'btn.cancel'|translate}}</button>
-                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column)">{{'btn.submit'|translate}}</button>
+                                    <button mat-stroked-button (click)="onTouchColumnTitle(i)" ><span >{{'btn.cancel' | translate}}</span></button>
+                                    <button mat-stroked-button color="primary" (click)="onEditColumn(i, column)"><span >{{'btn.submit' | translate}}</span></button>
                                 </div>
                             </ng-template>
                         </div>
