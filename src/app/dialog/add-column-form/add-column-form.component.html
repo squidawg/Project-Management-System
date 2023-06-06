@@ -7,7 +7,7 @@
                     matInput
                     formControlName="columnTitle"
             >
-            <mat-error *ngIf="!createColumnForm.get('columnTitle')!.valid">{{onError(createColumnForm.get('columnTitle'), 'columnTitle')}}</mat-error>
+            <mat-error *ngIf="!createColumnForm.get('columnTitle')!.valid">{{onError(createColumnForm.get('columnTitle')) | translate}}</mat-error>
             <mat-error></mat-error>
         </mat-form-field>
     </div>

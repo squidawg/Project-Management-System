@@ -11,6 +11,8 @@
 	"btn.submit": "Submit",
 	"dashboard.desc": "You don’t have any boards in this Workspace yet. Boards you create or join will show up here.",
 	"dashboard.title": "My Boards:",
+	"error_handler.invalid": "Not a valid pattern",
+	"error_handler.required": "this is required",
 	"form.edit_desc": "Provide new info",
 	"form.edit_title": "Edit title...",
 	"form.login": "Login",

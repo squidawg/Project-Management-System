@@ -7,7 +7,7 @@
                     matInput
                     formControlName="taskTitle"
             >
-            <mat-error *ngIf="!editTaskForm.get('taskTitle')!.valid">{{onError(editTaskForm.get('taskTitle'), 'taskTitle')}}</mat-error>
+            <mat-error *ngIf="!editTaskForm.get('taskTitle')!.valid">{{onError(editTaskForm.get('taskTitle'))}}</mat-error>
             <mat-error></mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
@@ -17,7 +17,7 @@
                     formControlName="taskDescription"
             >
             </textarea>
-            <mat-error *ngIf="!editTaskForm.get('taskDescription')!.valid">{{onError(editTaskForm.get('taskDescription'), 'taskDescription')}}</mat-error>
+            <mat-error *ngIf="!editTaskForm.get('taskDescription')!.valid">{{onError(editTaskForm.get('taskDescription'))  | translate}}</mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>User selection</mat-label>

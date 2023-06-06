@@ -14,7 +14,7 @@
                     <input
                             matInput
                             formControlName="name">
-                    <mat-error *ngIf="!editUserForm.get('name')!.valid">{{onError(editUserForm.get('name'),'name')}}</mat-error>
+                    <mat-error *ngIf="!editUserForm.get('name')!.valid">{{onError(editUserForm.get('name'),'name')  | translate}}</mat-error>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
@@ -23,7 +23,7 @@
                             matInput
                             formControlName="login"
                     >
-                    <mat-error *ngIf="!editUserForm.get('login')!.valid">{{onError(editUserForm.get('login'),'login')}}</mat-error>
+                    <mat-error *ngIf="!editUserForm.get('login')!.valid">{{onError(editUserForm.get('login'),'login') | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label  >{{"form.password" | translate}}</mat-label>
@@ -32,7 +32,7 @@
                             [type]="hide ? 'password' : 'text'"
                             formControlName="password"
                     >
-                    <mat-error *ngIf="!editUserForm.get('password')!.valid">{{onError(editUserForm.get('password'),'password')}}</mat-error>
+                    <mat-error *ngIf="!editUserForm.get('password')!.valid">{{onError(editUserForm.get('password'),'password') | translate}}</mat-error>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>

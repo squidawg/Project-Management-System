@@ -7,7 +7,7 @@ import {BehaviorSubject} from "rxjs";
 import {JwtPayload} from "jwt-decode";
 import {Router} from "@angular/router";
 import {UserAssignService} from "../shared/user-assign.service";
-
+import {TranslateService} from "@ngstack/translate";
 export interface AuthData {
     name:string,
     login:string,
@@ -24,10 +24,18 @@ export class AuthenticationService{
     user = new BehaviorSubject<User>(null!);
     parsedJwt: JwtPayload | any;
     private isTokenExpired: any;
+
+    messageRequired!: string;
+    messageInvalid!: string;
+
     constructor(private http: HttpClient,
                 private jwt: JwtService,
                 private router: Router,
-                private userAssignService: UserAssignService) {}
+                private userAssignService: UserAssignService,
+                private translate: TranslateService) {
+        this.messageRequired = this.translate.get('error_handler.required');
+        this.messageInvalid = this.translate.get('error_handler.invalid');
+    }
 
     getUsers(){
         this.http.get<AuthData[]>('https://quixotic-underwear-production.up.railway.app/users')
@@ -36,11 +44,12 @@ export class AuthenticationService{
             })
     }
 
-    getErrorMessage(value: any, name:string) {
+    getErrorMessage(value: any) {
         if (value.hasError('required')) {
-            return 'this is required';
+            return this.messageRequired;
         }
-        return value.status === 'INVALID' ? `Not valid pattern` : '';
+
+        return value.status === 'INVALID' ? this.messageInvalid : '';
     }
 
     signUp(name:string, login:string, password:string){
