@@ -6,7 +6,7 @@
                     matInput
                     (keyup)="onSearch()"
                     [formControl]="searchCtrl"
-                    (blur)="isShow = false"
+                    (blur)="onBlur()"
             >
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>

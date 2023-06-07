@@ -9,6 +9,8 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {TaskData, TasksService} from "../board/tasks/tasks.service";
 import {SnackbarService} from "../shared/snackbar.service";
+import {AuthenticationService} from "../authentication/authentication.service";
+import {UserAssignService} from "../shared/user-assign.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +26,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       private boardService: BoardService,
       private router: Router,
       private taskService: TasksService,
-      private snackBar: SnackbarService) {}
+      private snackBar: SnackbarService,
+      private authentication: AuthenticationService,
+      private userAssignService: UserAssignService) {}
 
   searchCtrl = this.taskService.searchCtrl;
 
@@ -39,6 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   error!:string;
 
   ngOnInit() {
+    this.onFetchUsers();
     this.onFetch();
     this.subscription = this.dashboardService.boardsChanged
         .subscribe((columnData: DashboardModel[] ) => {
@@ -49,15 +54,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
         });
   }
 
-  onFetch(){
+  onFetchUsers(){
+    this.authentication.getUsers().subscribe(resData => {
+      const filteredUsers = resData.filter(obj => obj._id !== this.authentication.user.value.id);
+      this.userAssignService.setUsers(filteredUsers)
+    });
+  }
+
+  onFetch() {
     this.isLoading = !this.isLoading;
-    this.dashboardStorageService.fetchBoards().subscribe(resData => {
+    this.dashboardStorageService.fetchBoards().subscribe(() => {
       this.isLoading = !this.isLoading;
     }, errRes => {
       this.error = errRes.error.message;
       this.snackBar.openSnackBar(this.error);
       this.isLoading = !this.isLoading;
-
     });
   }
 
@@ -73,11 +84,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onSearch(){
-    this.isSearchLoad = !this.isSearchLoad
+    this.isSearchLoad = !this.isSearchLoad;
     this.dashboardStorageService.searchTask(this.searchCtrl.value!)
-        .subscribe(resdata => {
+        .subscribe(resData => {
           this.isSearchLoad = !this.isSearchLoad;
-          this.filteredTasks = resdata;
+          this.filteredTasks = resData.filter(obj => obj.users.includes(this.authentication.user.value.id));
         }, errRes => {
           this.error = errRes.error.message;
           this.snackBar.openSnackBar(this.error);

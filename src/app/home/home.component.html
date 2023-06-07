@@ -1,44 +1,37 @@
 <div class="container window-height">
-  <div class="container col-12 col-sm-12 col-md-12">
-    <h1 class="text-center">{{"home.title" | translate}}</h1>
-    <p class="text-center">{{"home.description" | translate}}</p>
+  <div class="d-flex justify-content-center mb-4">
+    <div class="d-flex flex-column justify-content-center">
+      <h1 class="text-center">{{"home.title" | translate}}</h1>
+      <h3 class="text-center">{{"home.description" | translate}}</h3>
+      <div class="btn_size">
+        <button
+                mat-raised-button
+                color="primary"
+                routerLink="/signup">{{"home.btn_try" | translate}}
+        </button>
+      </div>
+    </div>
+    <div class="promo_img_wrapper" *ngIf="screenWidth > 770">
+      <img src="../../assets/promo_img.png" alt="promo_img" class="promo_img">
+    </div>
   </div>
   <div class="container-fluid feature_description">
-    <div class="container-fluid feature_description-wrapper">
-      <div class=" col-12 col-sm-12 col-md-12 " *ngFor="let content of contents">
-        <div class="col-sm col-md">
-          <div class="block_frame">
-            <p class="description">{{content}}
-            </p>
-          </div>
-      </div>
-      </div>
-    </div>
-    <br>
-    <div class="btn_size">
-      <button
-              mat-raised-button
-              color="primary"
-              routerLink="/signup">{{"home.btn_try" | translate}}
-      </button>
-    </div>
+    <div class="container-fluid feature_description-wrapper"></div>
+    <mat-divider></mat-divider>
   </div>
   <div class="container ">
-    <br>
     <mat-divider></mat-divider>
-    <br>
     <h2 class="text-center">{{"home.team_title" | translate}}</h2>
-    <div class="container-fluid col-12 col-sm-12 col-md-12  teams_card" >
-      <div  *ngFor="let card of cardData">
-        <div class="col-xs col-sm col-md ">
-          <div class=" team-member col-xs col-sm col-md">
-            <span class="image_duck">
-          <img class="duck_temp" [src]='card.img' alt="Person 1">
-        </span>
-            <h2 class="text-center">{{card.name}}</h2>
-            <p class="text-center">{{card.description}}</p>
-          </div>
+    <div class="container-fluid   teams_card" [ngClass]="screenWidth < 500? 'flex-wrap':''">
+      <div *ngFor="let card  of cardData" class="team-member">
+         <div class="image_wrapper" >
+          <img class="team_img" [src]='card.img' alt="Person 1">
         </div>
+        <div class="d-flex flex-column justify-content-between">
+          <h2 class="text-center">{{card.name}}</h2>
+          <p class="text-center p-3">{{card.description}}</p>
+        </div>
+
       </div>
     </div>
   </div>

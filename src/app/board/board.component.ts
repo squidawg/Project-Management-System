@@ -6,7 +6,7 @@ import {AddTaskFormComponent} from "../dialog/add-task-form/add-task-form.compon
 import {AddColumnFormComponent} from "../dialog/add-column-form/add-column-form.component";
 import {BoardService} from "./board.service";
 import {BoardStorageService, ColumnData} from "./board-storage.service";
-import {forkJoin, Observable, Subscription, combineLatest} from "rxjs";
+import {Subscription} from "rxjs";
 import {DeleteWarningColumnComponent} from "../dialog/delete-warning-column/delete-warning-column.component";
 import {TasksStorageService} from "./tasks/tasks-storage.service";
 import {TaskData, TasksService} from "./tasks/tasks.service";
@@ -18,9 +18,8 @@ import {DeleteWarningTaskComponent} from "../dialog/delete-warning-task/delete-w
 import {UserAssignService} from "../shared/user-assign.service";
 import {DashboardStorageService} from "../dashboard/dashboard-storage.service";
 import {SnackbarService} from "../shared/snackbar.service";
-import {combineAll, mergeAll, withLatestFrom} from "rxjs/operators";
-import {mergeMap} from "rxjs-compat/operator/mergeMap";
-import {switchMap} from "rxjs-compat/operator/switchMap";
+
+import {AuthenticationService} from "../authentication/authentication.service";
 
 @Component({
   selector: 'app-board',
@@ -41,7 +40,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       private sortedDataService: SortedDataService,
       private router: Router,
       private userAssignService: UserAssignService,
-      private snackBar: SnackbarService
+      private snackBar: SnackbarService,
+      private authentication: AuthenticationService
   ) {}
 
   boardsSubscription!: Subscription;
@@ -58,6 +58,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.onFetchUsers();
     this.onFetchData();
     this.boardsSubscription = this.boardService.boardsChanged
         .subscribe((columnData: ColumnData[]) => {
@@ -82,6 +83,12 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.error = errRes.error.message;
           this.snackBar.openSnackBar(this.error);
         })
+  }
+
+  onFetchUsers() {
+    this.authentication.getUsers().subscribe(resData => {
+      this.userAssignService.setUsers(resData);
+    });
   }
 
   onFetchData() {
@@ -121,13 +128,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardStorageService.patchColumns(this.sortedData);
   }
 
-  onTouchColumnTitle(index:number){
+  onTouchColumnTitle(index:number) {
     this.isEditing[index] = !this.isEditing[index];
   }
 
-  onEditColumn(index:number, column: ColumnData){
+  onEditColumn(index:number, column: ColumnData) {
     this.boardStorageService.columnId = column._id
-    this.boardStorageService.putColumn(column.title!).subscribe(resData => {
+    this.boardStorageService.putColumn(column.title!).subscribe(() => {
       this.isEditing[index] = !this.isEditing[index];
     }, errRes => {
       this.error = errRes.error.message;

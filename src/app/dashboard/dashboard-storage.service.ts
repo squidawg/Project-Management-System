@@ -25,12 +25,15 @@ export class DashboardStorageService {
     fetchBoards() {
     return this.http.get<DashboardModel[]>('https://quixotic-underwear-production.up.railway.app/boards')
         .pipe(map(resData => {
-            this.dashboardService.setBoards(resData);
+            const filtered = resData.filter(obj => obj.users.includes(this.userData.user.value.id))
+            this.dashboardService.setBoards(filtered);
+
         }))
 
     }
 
     postBoard(title:string, owner:string, users:string[]) {
+      users.push(this.userData.user.value.id)
       this.boards = this.dashboardService.getBoards();
       this.http.post<DashboardModel>('https://quixotic-underwear-production.up.railway.app/boards',{
           title: title,

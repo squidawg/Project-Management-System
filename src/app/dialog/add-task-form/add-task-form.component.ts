@@ -30,7 +30,6 @@ export class AddTaskFormComponent implements OnInit{
               private userAssignService: UserAssignService,) {}
 
   ngOnInit() {
-    this.authentication.getUsers();
     this.createTaskForm = new FormGroup({
       "taskTitle": new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       "taskDescription": new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')])

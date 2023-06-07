@@ -29,7 +29,7 @@ export class UserAssignService {
   }
 
   setUsers(users: AuthData[]){
-    this.allUsers = users
+    this.allUsers = users;
   }
 
   getUsers(){
@@ -66,7 +66,7 @@ export class UserAssignService {
   }
 
    private _filter(value: string): AuthData[] {
-   const filterValue = value.toLowerCase();
-   return this.allUsers.filter(obj=> obj.name.toLowerCase().includes(filterValue));
+    const filterValue = value.toLowerCase();
+    return this.allUsers.filter(obj=> obj.name.toLowerCase().includes(filterValue));
   }
 }

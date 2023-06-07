@@ -37,11 +37,11 @@ export class AuthenticationService{
         this.messageInvalid = this.translate.get('error_handler.invalid');
     }
 
-    getUsers(){
-        this.http.get<AuthData[]>('https://quixotic-underwear-production.up.railway.app/users')
-            .subscribe(resData => {
-                this.userAssignService.setUsers(resData)
-            })
+    getUsers() {
+        return this.http.get<AuthData[]>('https://quixotic-underwear-production.up.railway.app/users')
+            .pipe(tap( () => {
+            }))
+
     }
 
     getErrorMessage(value: any) {
@@ -52,7 +52,7 @@ export class AuthenticationService{
         return value.status === 'INVALID' ? this.messageInvalid : '';
     }
 
-    signUp(name:string, login:string, password:string){
+    signUp(name:string, login:string, password:string) {
         return this.http.post<AuthData>('https://quixotic-underwear-production.up.railway.app/auth/signup', {
             name: name,
             login: login,
@@ -113,7 +113,7 @@ export class AuthenticationService{
     autoLogin(){
         const userData:{
             login:string
-            userId:string
+            id:string
             _token:string
             _tokenExp:string
         } = JSON.parse(localStorage.getItem('userData')!);
@@ -123,7 +123,7 @@ export class AuthenticationService{
 
         const loadedUser = new User(
             userData.login,
-            userData.userId,
+            userData.id,
             userData._token,
             new Date(userData._tokenExp));
 

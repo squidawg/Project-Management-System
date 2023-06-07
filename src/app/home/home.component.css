@@ -6,33 +6,38 @@
 }
 
 .team-member{
-    background-color: transparent;
-    border: 2px solid #987ece;
+    background-color: rgba(152, 116, 227, 0.55);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 20rem;
+    width: 15rem;
+    padding-top: 1rem;
 }
 .image-round{
     border-radius: 50%;
     overflow: hidden;
 }
 
-.image_duck{
+.promo_img{
+    width: 30rem;
+    height: 23rem;
+
+}
+
+.image_wrapper{
     display: inline-flex;
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
     overflow: hidden;
-    margin: 0.3rem;
-    border: 2px solid #9370DB;
+    border: 1px solid #ffffff;
+    justify-content: center;
 
 }
-.duck_temp{
-    position: relative;
-    top: -3px;
-    left: -30px;
+.team_img{
+    transform: scale(1.7);
 }
 
 

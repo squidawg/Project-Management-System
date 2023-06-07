@@ -8,6 +8,9 @@ export class SnackbarService {
   constructor(private _snackBar: MatSnackBar) {}
 
   openSnackBar(message: string) {
+    if(message === ''){
+      message = 'Unknown error';
+    }
     this._snackBar.open(message, 'ok', {
       duration: 3000
     });

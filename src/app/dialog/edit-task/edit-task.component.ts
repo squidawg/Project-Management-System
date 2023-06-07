@@ -28,7 +28,6 @@ export class EditTaskComponent {
 
 
   ngOnInit() {
-    this.authentication.getUsers();
     this.editTaskForm = new FormGroup({
       "taskTitle": new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       "taskDescription": new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')])

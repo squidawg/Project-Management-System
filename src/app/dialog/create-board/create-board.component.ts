@@ -34,7 +34,6 @@ export class CreateBoardComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.authentication.getUsers();
     this.createBoardForm = new FormGroup({
       "titleBoard": new FormControl(null,[Validators.required, Validators.pattern('[a-zA-Z ]*')]),
     });
