@@ -32,7 +32,8 @@ export class AuthenticationService{
                 private jwt: JwtService,
                 private router: Router,
                 private userAssignService: UserAssignService,
-                private translate: TranslateService) {
+                private translate: TranslateService)
+    {
         this.messageRequired = this.translate.get('error_handler.required');
         this.messageInvalid = this.translate.get('error_handler.invalid');
     }
@@ -45,6 +46,7 @@ export class AuthenticationService{
     }
 
     getErrorMessage(value: any) {
+
         if (value.hasError('required')) {
             return this.messageRequired;
         }

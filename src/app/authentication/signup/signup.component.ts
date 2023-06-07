@@ -28,7 +28,7 @@ export class SignupComponent implements OnInit{
   }
 
   onError(value: any) {
-    return this.authentication.getErrorMessage(value)
+    return this.authentication.getErrorMessage(value);
   }
 
   onSubmit(){

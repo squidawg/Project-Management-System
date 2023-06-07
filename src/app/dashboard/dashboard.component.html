@@ -7,10 +7,11 @@
                     (keyup)="onSearch()"
                     [formControl]="searchCtrl"
                     (blur)="onBlur()"
+
             >
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <div  *ngIf="isShow" class="position-absolute block_frame  col-sm-8 col-12 col-md-8 col-lg-8 w-100 z-3" style="background-color: white">
+        <div  *ngIf="isShow" class=" search_result-wrapper block_frame  col-sm-8 col-12 col-md-8 col-lg-8 w-100 z-3" style="background-color: white">
             <div  *ngIf="isSearchLoad"
                   class="
                   container
@@ -24,14 +25,13 @@
             </div>
             <div *ngIf="!isSearchLoad">
                 <div *ngFor="let item of filteredTasks" >
-                    <div (click)="onLoadBoard(item.boardId)" class="block_frame p-2 m-1" style="cursor: pointer">
+                    <div (click)="onLoadBoard(item.boardId)" class="example-box p-2 m-1" style="cursor: pointer">
                         <h4>{{item.title}}</h4>
                         <p>{{item.description}}</p>
                     </div>
-
                 </div>
                 <div *ngIf="!filteredTasks.length">
-                    <mat-icon color="primary">find_in_page</mat-icon>
+                    <mat-icon color="primary">question_mark</mat-icon>
                 </div>
             </div>
         </div>

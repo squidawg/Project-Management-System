@@ -35,7 +35,7 @@ export class CreateBoardComponent implements OnInit{
 
   ngOnInit() {
     this.createBoardForm = new FormGroup({
-      "titleBoard": new FormControl(null,[Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      "titleBoard": new FormControl(null,[Validators.required, Validators.pattern('^[A-Za-z0-9\\s\\W]+$')]),
     });
   }
 

@@ -93,6 +93,7 @@
     justify-content: space-between;
 
 }
+
 .column_title_input{
     display: flex;
     flex-direction: column;

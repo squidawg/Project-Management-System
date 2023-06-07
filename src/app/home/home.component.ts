@@ -10,10 +10,10 @@ export class HomeComponent implements OnInit{
 
   cardData: HomeModel[] = [
     new HomeModel('John Doe',
-        'John is an experienced developer who has worked on a variety of web projects.',
+        'John is an experienced developer who has worked on a variety of projects.',
         "../../assets/team.jpg") ,
     new HomeModel('Rachel Black',
-        'John is an experienced developer who has worked on a variety of web projects.',
+        'is an experienced team lead with a proven track record of effectively managing.',
         "../../assets/ray.jpeg")]
 
   constructor() {}
