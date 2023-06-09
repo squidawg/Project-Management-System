@@ -3,10 +3,11 @@
     transition: box-shadow 0.3s ease-in-out;
     align-items: center;
     justify-content: flex-end;
-    flex: 1 0 calc(25% - 10px); /* set the width of each item to 25% of the container minus 10px */
+    flex: 1 0 calc(25% - 10px);
     margin: 1rem;
     cursor: pointer;
 }
+
 .card_wrapper{
     display: flex;
     align-items: center;
@@ -20,11 +21,8 @@
     margin: 0;
     min-width: 50%;
 }
-.board_card:hover{
-    color: purple;
-}
 .board_card:hover {
-    box-shadow: 0 0 20px #9c27b0;
+    box-shadow: 0 0 8px #9c27b0;
 }
 
 .search_result-wrapper{
@@ -39,4 +37,9 @@
 
 .search_wrapper{
     right: 0.3rem
+}
+
+.search_on_hover:hover{
+    background-color: #cd97d7;
+    border-radius: 8px;
 }

@@ -44,6 +44,11 @@
 .mat-mdc-form-field{
   width: 100%;
 }
+
+.mat-mdc-form-field-error {
+  line-height: 1;
+}
+
 .block_frame {
   border: 1px solid purple;
   border-radius: 10px;
@@ -57,6 +62,7 @@
   justify-content: center;
   display: flex;
   gap: 0.5rem;
+  margin-top: 2.5rem;
 }
 
 .form-title-wrapper{
@@ -66,10 +72,6 @@
   text-align: center;
 }
 
-.form-title-description{
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
-}
 
 .mdc-dialog__actions{
 
