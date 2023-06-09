@@ -6,7 +6,7 @@ import {AddTaskFormComponent} from "../dialog/add-task-form/add-task-form.compon
 import {AddColumnFormComponent} from "../dialog/add-column-form/add-column-form.component";
 import {BoardService} from "./board.service";
 import {BoardStorageService, ColumnData} from "./board-storage.service";
-import {Subscription} from "rxjs";
+import {forkJoin, Subscription} from "rxjs";
 import {DeleteWarningColumnComponent} from "../dialog/delete-warning-column/delete-warning-column.component";
 import {TasksStorageService} from "./tasks/tasks-storage.service";
 import {TaskData, TasksService} from "./tasks/tasks.service";
@@ -30,10 +30,10 @@ import {AuthenticationService} from "../authentication/authentication.service";
 export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
-      private boardService: BoardService,
       private dialog: DialogService,
       private dashboardService: DashboardService,
       private dashboardStorageService: DashboardStorageService,
+      private boardService: BoardService,
       private boardStorageService: BoardStorageService,
       private tasksService: TasksService,
       private tasksStorageService: TasksStorageService,
@@ -46,7 +46,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   boardsSubscription!: Subscription;
   tasksSubscription!: Subscription;
-  sortedDataSubscription!: Subscription;
 
   columns!: ColumnData[];
   tasks!: TaskData[];
@@ -54,15 +53,17 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   isEditing: boolean[] = [];
-  error!: string;
 
 
   ngOnInit() {
     this.onFetchUsers();
     this.onFetchData();
+
     this.boardsSubscription = this.boardService.boardsChanged
         .subscribe((columnData: ColumnData[]) => {
           this.columns = columnData;
+          this.sortedDataService.afterFetch(this.columns, this.tasks);
+          this.sortedData = this.sortedDataService.getData();
         });
 
     this.tasksSubscription = this.tasksService.tasksChanged
@@ -72,42 +73,40 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.sortedDataService.afterFetch(this.columns, this.tasks);
           this.sortedData = this.sortedDataService.getData();
         });
-
-    this.sortedDataSubscription = this.sortedDataService.sortedDataChanged
-        .subscribe((data: SortedColumns[]) => {
-          this.isLoading = false;
-          this.sortedData = data;
-          this.sortedDataService.afterFetch(this.columns, this.tasks);
-          this.sortedData = this.sortedDataService.getData();
-        }, errRes => {
-          this.error = errRes.error.message;
-          this.snackBar.openSnackBar(this.error);
-        })
   }
 
   onFetchUsers() {
-    this.authentication.getUsers().subscribe(resData => {
+    this.authentication.getUsers()
+        .subscribe(resData => {
       this.userAssignService.setUsers(resData);
+    }, errMessage => {
+      this.snackBar.openSnackBar(errMessage);
     });
   }
 
   onFetchData() {
-    const boardId = this.dashboardStorageService.boardId
+    const boardId = this.dashboardStorageService.boardId;
     if (boardId) {
       this.isLoading = true;
-
-      this.boardStorageService.fetchColumns(boardId);
-      this.tasksStorageService.fetchTasks(boardId);
-
-    } else {
-      this.router.navigate(['/dashboard']);
+      const columns =  this.boardStorageService.fetchColumns(boardId);
+      const tasks = this.tasksStorageService.fetchTasks(boardId);
+        forkJoin([columns, tasks])
+            .subscribe(([col, task]) => {
+              this.isLoading = false;
+              task.sort((a,b) => a.order - b.order);
+              this.sortedDataService.afterFetch(col, task);
+              this.sortedData = this.sortedDataService.getData();
+            },errMessage => {
+              this.snackBar.openSnackBar(errMessage);
+        });
+      } else {
+        this.router.navigate(['/dashboard']);
     }
   }
 
   ngOnDestroy() {
     this.boardsSubscription.unsubscribe();
     this.tasksSubscription.unsubscribe();
-     this.sortedDataSubscription.unsubscribe();
   }
 
   onAddColumn() {
@@ -125,7 +124,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.sortedData.forEach((item, i) => {
       item.order = i;
     });
-    this.boardStorageService.patchColumns(this.sortedData);
+    this.boardStorageService.patchColumns(this.sortedData)
+        .subscribe(
+        () => {},
+        errMessage => {
+          this.snackBar.openSnackBar(errMessage);
+        });
   }
 
   onTouchColumnTitle(index:number) {
@@ -133,12 +137,12 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   onEditColumn(index:number, column: ColumnData) {
-    this.boardStorageService.columnId = column._id
-    this.boardStorageService.putColumn(column.title!).subscribe(() => {
+    this.boardStorageService.columnId = column._id;
+    this.boardStorageService.putColumn(column.title!)
+        .subscribe(() => {
       this.isEditing[index] = !this.isEditing[index];
-    }, errRes => {
-      this.error = errRes.error.message;
-      this.snackBar.openSnackBar(this.error);
+    }, errMessage => {
+      this.snackBar.openSnackBar(errMessage);
     })
   }
 
@@ -184,7 +188,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     const taskData: TaskData[] = event.container.data;
     taskData.forEach((obj, i) => {
       obj.order = i;
-    })
-    this.tasksStorageService.patchTasks(taskData);
+    });
+    this.tasksStorageService.patchTasks(taskData)
+        .subscribe(
+        () =>{},
+                errMesage => {
+      this.snackBar.openSnackBar(errMesage)
+    });
   }
+
 }
