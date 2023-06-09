@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {DashboardStorageService} from "../../dashboard/dashboard-storage.service";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 
 @Component({
@@ -9,10 +10,15 @@ import {DashboardStorageService} from "../../dashboard/dashboard-storage.service
 })
 export class DeleteWarningFormComponent{
 
-  constructor(private dashboardService: DashboardStorageService) {}
+  constructor(private dashboardService: DashboardStorageService,
+              private snackBar: SnackbarService) {}
 
 
   onSubmit(){
-    this.dashboardService.deleteBoard();
+    this.dashboardService.deleteBoard().subscribe(
+        () => {},
+        errMessage => {
+          this.snackBar.openSnackBar(errMessage)
+        });
   }
 }

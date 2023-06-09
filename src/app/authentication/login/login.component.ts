@@ -11,14 +11,15 @@ import {SnackbarService} from "../../shared/snackbar.service";
 })
 
 export class LoginComponent implements OnInit {
+
   signInForm!: FormGroup;
   isLoading = false;
   hide = true;
-  error!:string;
 
   constructor(private authentication: AuthenticationService,
               private router: Router,
               private snackBar: SnackbarService) {}
+
   ngOnInit() {
     this.signInForm = new FormGroup({
       'login': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -32,19 +33,18 @@ export class LoginComponent implements OnInit {
 
     this.isLoading = true;
     this.authentication.signIn(login, password)
-        .subscribe(resData => {
+        .subscribe(() => {
           this.isLoading = false;
           this.router.navigate(['/dashboard']);
 
-        }, errRes => {
-          this.error = errRes.error.message;
-          this.snackBar.openSnackBar(this.error)
+        }, errMessage => {
+          this.snackBar.openSnackBar(errMessage)
           this.isLoading = false;
         })
     this.signInForm.reset();
   }
 
-  onError(value: any) {
-    return this.authentication.getErrorMessage(value);
+  onError(value: any, state?:boolean) {
+    return this.authentication.getErrorMessage(value, state);
   }
 }

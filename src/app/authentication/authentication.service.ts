@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "./user.model";
-import {tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {JwtService} from "./jwt.service";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, throwError} from "rxjs";
 import {JwtPayload} from "jwt-decode";
 import {Router} from "@angular/router";
 import {UserAssignService} from "../shared/user-assign.service";
 import {TranslateService} from "@ngstack/translate";
+
 export interface AuthData {
     name:string,
     login:string,
@@ -41,16 +42,20 @@ export class AuthenticationService{
     getUsers() {
         return this.http.get<AuthData[]>('https://quixotic-underwear-production.up.railway.app/users')
             .pipe(tap( () => {
+            }), catchError(errRes => {
+                const error = errRes.error?.message || errRes.statusText
+                return throwError(error) ;
             }))
-
     }
 
-    getErrorMessage(value: any) {
-
+    getErrorMessage(value: any, state?:boolean) {
         if (value.hasError('required')) {
             return this.messageRequired;
         }
-
+        if(state){
+            this.messageInvalid = this.translate.get('error_handler.password');
+            return this.messageInvalid
+        }
         return value.status === 'INVALID' ? this.messageInvalid : '';
     }
 
@@ -59,7 +64,9 @@ export class AuthenticationService{
             name: name,
             login: login,
             password: password
-        }).pipe(tap(res => {
+        }).pipe(catchError(errRes => {
+            const error = errRes.error?.message || errRes.statusText
+            return throwError(error) ;
         }))
     }
 
@@ -70,6 +77,9 @@ export class AuthenticationService{
         }).pipe(tap(resData => {
             this.parsedJwt = this.jwt.DecodeToken(resData.token);
             this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp, this.parsedJwt.iat);
+        }), catchError(errRes => {
+            const error = errRes.error?.message || errRes.statusText
+            return throwError(error) ;
         }));
     }
 
@@ -78,15 +88,22 @@ export class AuthenticationService{
             name:name,
             login:login,
             password:password
-        }).pipe((tap(resData => {
+        }).pipe(tap(() => {
             this.logout()
-        })))
+        }), catchError(errRes => {
+            const error = errRes.error?.message || errRes.statusText;
+            return throwError(error) ;
+        }))
     }
 
     deleteUser(){
-        this.http.delete<AuthData>(`https://quixotic-underwear-production.up.railway.app/users/${this.user.value.id}`).subscribe(resData => {
-            this.logout()
-        })
+        return this.http.delete<AuthData>(`https://quixotic-underwear-production.up.railway.app/users/${this.user.value.id}`)
+            .pipe(tap(()=>{
+                this.logout()
+            }), catchError(errRes => {
+                const error = errRes.error?.message || errRes.statusText;
+                return throwError(error) ;
+            }))
     }
 
     logout(){

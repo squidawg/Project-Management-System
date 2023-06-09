@@ -1,10 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TasksStorageService} from "../../board/tasks/tasks-storage.service";
 import {AuthData, AuthenticationService} from "../../authentication/authentication.service";
 import {UserAssignService} from "../../shared/user-assign.service";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Component({
   selector: 'app-add-task-form',
@@ -21,13 +22,14 @@ export class AddTaskFormComponent implements OnInit{
   selected: AuthData[] = [];
 
   separatorKeysCodes = this.userAssignService.separatorKeysCodes;
-  filteredUsers = this.userAssignService.filteredUsers;
+  filteredUsers = this.userAssignService.filteredUsers
 
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
 
   constructor(private tasksStorageService: TasksStorageService,
               private authentication: AuthenticationService,
               private userAssignService: UserAssignService,
+              private snackBar: SnackbarService
               ) {}
 
   ngOnInit() {
@@ -56,10 +58,15 @@ export class AddTaskFormComponent implements OnInit{
     const users = this.selected.map( obj => obj._id);
     const title: string = this.createTaskForm.value.taskTitle;
     const description: string = this.createTaskForm.value.taskDescription;
-    this.tasksStorageService.postTasks(title, description, users);
+    this.tasksStorageService.postTasks(title, description, users).subscribe(
+        () => {},
+        errMessage => {
+          this.snackBar.openSnackBar(errMessage);
+        });
   }
 
   onError(value: any){
     return this.authentication.getErrorMessage(value);
   }
+
 }

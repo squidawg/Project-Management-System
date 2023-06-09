@@ -5,6 +5,7 @@ import {AuthData, AuthenticationService} from "../../authentication/authenticati
 import {UserAssignService} from "../../shared/user-assign.service";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Component({
   selector: 'app-edit-task',
@@ -14,7 +15,8 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 export class EditTaskComponent {
   constructor(private tasksStorageService:TasksStorageService,
               private authentication: AuthenticationService,
-              private userAssignService: UserAssignService,) {
+              private userAssignService: UserAssignService,
+              private snackBar: SnackbarService) {
   }
   editTaskForm!: FormGroup;
 
@@ -38,7 +40,7 @@ export class EditTaskComponent {
     this.userAssignService.add(event,this.selected);
   }
 
-  onDeleteUser(index:string){
+  onRemoveUser(index:string){
     this.userAssignService.remove(index, this.selected);
   }
 
@@ -53,7 +55,11 @@ export class EditTaskComponent {
     const users = this.selected.map( obj => obj._id)
     const title: string = this.editTaskForm.value.taskTitle;
     const description: string = this.editTaskForm.value.taskDescription;
-    this.tasksStorageService.putTask(title, description, users);
+    this.tasksStorageService.putTask(title, description, users).subscribe(
+        () => {},
+        errMessage => {
+          this.snackBar.openSnackBar(errMessage)
+        });
   }
 
   onError(value: any){

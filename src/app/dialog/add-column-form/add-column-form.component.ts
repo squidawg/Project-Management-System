@@ -5,6 +5,7 @@ import {BoardService} from "../../board/board.service";
 import {DashboardService} from "../../dashboard/dashboard.service";
 import {AuthenticationService} from "../../authentication/authentication.service";
 import {DashboardStorageService} from "../../dashboard/dashboard-storage.service";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Component({
   selector: 'app-add-column-form',
@@ -20,7 +21,8 @@ export class AddColumnFormComponent implements OnInit {
               private boardService: BoardService,
               private dashboardService: DashboardService,
               private authentication: AuthenticationService,
-              private dashboardStorageService: DashboardStorageService) {}
+              private dashboardStorageService: DashboardStorageService,
+              private snackBar: SnackbarService) {}
 
   ngOnInit() {
     this.createColumnForm = new FormGroup({
@@ -32,10 +34,15 @@ export class AddColumnFormComponent implements OnInit {
   onSubmit() {
     const boardId = this.dashboardStorageService.boardId;
     const title = this.createColumnForm.value.columnTitle;
-    this.boardStorageService.postColumns(boardId, title);
+    this.boardStorageService.postColumns(boardId, title)
+        .subscribe(
+        () => {},
+        errMessage => {
+          this.snackBar.openSnackBar(errMessage);
+        });
   }
 
   onError(value: any){
-    return this.authentication.getErrorMessage(value)
+    return this.authentication.getErrorMessage(value);
   }
 }

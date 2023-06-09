@@ -40,24 +40,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isLoading = false;
   isShow = false;
 
-  error!:string;
-
   ngOnInit() {
     this.onFetchUsers();
     this.onFetch();
     this.subscription = this.dashboardService.boardsChanged
         .subscribe((columnData: DashboardModel[] ) => {
           this.boards = columnData;
-        }, errRes => {
-          this.error = errRes.error.message;
-          this.isLoading = !this.isLoading;
         });
   }
 
   onFetchUsers(){
     this.authentication.getUsers().subscribe(resData => {
-      const filteredUsers = resData.filter(obj => obj._id !== this.authentication.user.value.id);
+      const filteredUsers = resData
+          .filter(obj => obj._id !== this.authentication.user.value.id);
       this.userAssignService.setUsers(filteredUsers)
+    }, errMessage => {
+      this.snackBar.openSnackBar(errMessage);
     });
   }
 
@@ -65,9 +63,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isLoading = !this.isLoading;
     this.dashboardStorageService.fetchBoards().subscribe(() => {
       this.isLoading = !this.isLoading;
-    }, errRes => {
-      this.error = errRes.error.message;
-      this.snackBar.openSnackBar(this.error);
+    }, errMessage => {
+      this.snackBar.openSnackBar(errMessage);
       this.isLoading = !this.isLoading;
     });
   }
@@ -89,9 +86,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .subscribe(resData => {
           this.isSearchLoad = !this.isSearchLoad;
           this.filteredTasks = resData.filter(obj => obj.users.includes(this.authentication.user.value.id));
-        }, errRes => {
-          this.error = errRes.error.message;
-          this.snackBar.openSnackBar(this.error);
+        }, errMessage => {
+          this.snackBar.openSnackBar(errMessage);
         })
     this.isShow = true;
 

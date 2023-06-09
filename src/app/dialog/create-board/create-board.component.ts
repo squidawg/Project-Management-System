@@ -6,6 +6,7 @@ import {AuthData, AuthenticationService} from "../../authentication/authenticati
 import {UserAssignService} from "../../shared/user-assign.service";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {SnackbarService} from "../../shared/snackbar.service";
 
 @Component({
   selector: 'app-create-board',
@@ -25,10 +26,10 @@ export class CreateBoardComponent implements OnInit{
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
 
   constructor(public dialogRef: MatDialogRef<CreateBoardComponent>,
-              private dashboardService: DashboardStorageService,
+              private dashboardStorageService: DashboardStorageService,
               private user: AuthenticationService,
               private userAssignService: UserAssignService,
-              private authentication: AuthenticationService
+              private snackBar: SnackbarService
               ) {
 
   }
@@ -60,7 +61,12 @@ export class CreateBoardComponent implements OnInit{
     const owner = this.user.user.value.id;
     const title = this.createBoardForm.value.titleBoard;
 
-    this.dashboardService.postBoard(title, owner, users);
+    this.dashboardStorageService.postBoard(title, owner, users)
+        .subscribe(
+        () => {},
+        errMessage => {
+      this.snackBar.openSnackBar(errMessage);
+    });
     this.createBoardForm.reset();
   }
 }

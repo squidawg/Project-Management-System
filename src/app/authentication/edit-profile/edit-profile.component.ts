@@ -12,14 +12,14 @@ import {DeleteWarningUserComponent} from "../../dialog/delete-warning-user/delet
 })
 export class EditProfileComponent implements OnInit{
 
+  isLoading = false;
+  editUserForm!: FormGroup;
+  hide = true;
+
   constructor(private authentication: AuthenticationService,
               private snackBar: SnackbarService,
               private dialog: DialogService) {
   }
-  isLoading = false;
-  editUserForm!: FormGroup;
-  hide = true;
-  error!:string;
 
   ngOnInit() {
     this.editUserForm = new FormGroup({
@@ -29,8 +29,8 @@ export class EditProfileComponent implements OnInit{
     });
   }
 
-  onError(value: any, valueName: string) {
-    return this.authentication.getErrorMessage(value);
+  onError(value: any, state?:boolean) {
+    return this.authentication.getErrorMessage(value, state);
   }
 
   onSubmit(){
@@ -39,11 +39,10 @@ export class EditProfileComponent implements OnInit{
     const password = this.editUserForm.value.password;
     this.isLoading = true;
     this.authentication.editUser(name, login, password)
-        .subscribe(resData => {
+        .subscribe(() => {
       this.isLoading = false;
-    }, errRes => {
-          this.error = errRes.error.message;
-          this.snackBar.openSnackBar(this.error)
+    }, errMessage => {
+          this.snackBar.openSnackBar(errMessage)
           this.isLoading = false;
         });
   }
