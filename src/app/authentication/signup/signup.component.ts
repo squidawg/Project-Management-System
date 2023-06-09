@@ -10,10 +10,11 @@ import {SnackbarService} from "../../shared/snackbar.service";
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit{
+
   isLoading = false;
   signUpForm!: FormGroup;
   hide = true;
-  error!:string;
+
   constructor(private authentication: AuthenticationService,
               private router: Router,
               private snackBar: SnackbarService) {
@@ -27,30 +28,25 @@ export class SignupComponent implements OnInit{
     })
   }
 
-  onError(value: any) {
-    return this.authentication.getErrorMessage(value);
+  onError(value: any, state?:boolean) {
+    return this.authentication.getErrorMessage(value, state);
   }
 
   onSubmit(){
-    if(!this.signUpForm.valid){
-      return;
-    }
+
     const name = this.signUpForm.value.name;
     const login = this.signUpForm.value.login;
     const password = this.signUpForm.value.password;
 
     this.isLoading = true;
     this.authentication.signUp(name, login, password)
-        .subscribe(res => {
+        .subscribe(() => {
           this.isLoading = false;
-          this.router.navigate(['/login']);
-
-    }, errRes => {
-          this.error = errRes.error.message
-          this.snackBar.openSnackBar(this.error)
+          this.router.navigate(['/login'],);
+    }, errMessage => {
+          this.snackBar.openSnackBar(errMessage)
           this.isLoading = false;
     })
     this.signUpForm.reset();
   }
-
 }

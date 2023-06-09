@@ -11,7 +11,7 @@ import {AuthData} from "../authentication/authentication.service";
 @Injectable({
   providedIn: 'root'
 })
-export class UserAssignService {
+export class UserAssignService{
   separatorKeysCodes: number[] = [ENTER];
   userCtrl = new FormControl(null, [Validators.required]);
 
@@ -25,6 +25,7 @@ export class UserAssignService {
          startWith(null),
         map((user: string| null ) =>
             (user ? this._filter(user) : this.allUsers.slice())
+
         ));
   }
 
@@ -69,4 +70,6 @@ export class UserAssignService {
     const filterValue = value.toLowerCase();
     return this.allUsers.filter(obj=> obj.name.toLowerCase().includes(filterValue));
   }
+
+
 }

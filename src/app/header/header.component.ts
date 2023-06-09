@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.router.navigate(['/dashboard'])
       setTimeout(() => {
         this.dialogService.openDialog(CreateBoardComponent);
-      }, 300)
+      }, 600)
     }
     else {
       this.dialogService.openDialog(CreateBoardComponent);

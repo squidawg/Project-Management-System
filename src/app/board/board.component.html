@@ -1,7 +1,4 @@
 <div class="container-fluid ">
-    <div class=" justify-content-center text-center to_flex align-items-center" style="height: 100vh" *ngIf="isLoading">
-        <mat-spinner></mat-spinner>
-    </div>
     <div class="d-flex mt-3 justify-content-between">
         <button
                 mat-mini-fab
@@ -10,6 +7,9 @@
                 routerLink="/dashboard">
             <mat-icon>arrow_back</mat-icon>
         </button>
+    </div>
+    <div class=" justify-content-center text-center to_flex align-items-center" style="height: 100vh" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
     </div>
     <div
             cdkDropList

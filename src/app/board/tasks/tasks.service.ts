@@ -4,13 +4,13 @@ import {FormControl} from "@angular/forms";
 
 export interface TaskData {
   _id: string
-  title:	string,
-  order:	number,
-  columnId: string,
-  boardId: string
-  description:	string,
-  userId:	number,
-  users:	string[],
+  title:string,
+  order:number,
+  columnId:string,
+  boardId:string
+  description:string,
+  userId:number,
+  users:string[],
 }
 
 @Injectable({

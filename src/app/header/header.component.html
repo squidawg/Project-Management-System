@@ -5,8 +5,8 @@
       </div>
       <div>
         <div class="nav_btn" >
-          <ul class="nav nav_btn" *ngIf="!isAuth">
-              <div *ngIf="screenWidth > 700">
+          <div class="nav nav_btn"  *ngIf="!isAuth" >
+              <div *ngIf="screenWidth > 700" class=" nav_btn">
                   <button
                           mat-fab
                           extended
@@ -44,8 +44,7 @@
                       </button>
                   </mat-menu>
               </div>
-
-          </ul>
+          </div>
             <ul class="nav nav_btn" *ngIf="isAuth">
                 <div *ngIf="screenWidth <= 700">
                     <button mat-mini-fab
@@ -101,7 +100,6 @@
                     </button>
                 </ul>
             </div>
-
             <button
                     mat-mini-fab
                     color="primary"

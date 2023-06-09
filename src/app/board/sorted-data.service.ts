@@ -7,7 +7,7 @@ import Enumerable from "linq";
 export interface SortedColumns {
   boardId: string;
   _id: string;
-  title?: string;
+  title: string;
   tasks?: TaskData[];
   order: number;
 }
@@ -18,7 +18,7 @@ export interface SortedColumns {
 
 export class SortedDataService {
 
-  constructor() { }
+  constructor() {}
 
   private sortedData!: SortedColumns[];
 
@@ -33,7 +33,7 @@ export class SortedDataService {
     return this.sortedData.slice();
   }
 
-  afterFetch(columns:ColumnData[], tasks:TaskData[]){
+  afterFetch(columns:ColumnData[], tasks:TaskData[]) {
     this.sortedData =  Enumerable.from(columns)
         .groupJoin(
             Enumerable.from(tasks),

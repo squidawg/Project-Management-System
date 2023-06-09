@@ -24,7 +24,7 @@
             <mat-chip-grid #chipGrid aria-label="User selection">
                 <mat-chip-row
                         *ngFor="let user of selected; let i = index"
-                        (removed)="onDeleteUser(user._id)">
+                        (removed)="onRemoveUser(user._id)">
                     {{user.name}}
                     <button
                             matChipRemove
