@@ -12,7 +12,6 @@ import {TranslateService} from "../translate/translate.service";
   styleUrls: ['./header.component.css']
 })
 
-
 export class HeaderComponent implements OnInit, OnDestroy{
   private userSub!: Subscription;
   isAuth = false;

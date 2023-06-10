@@ -15,19 +15,16 @@
   gap: 1rem
 }
 
-/*change button*/
 .btn_size{
   display: flex;
   justify-content: center;
 }
 
-.window-height{
+.window-wrapper{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 2rem;
-
 }
 
 .icon{
@@ -50,12 +47,11 @@
 }
 
 .block_frame {
-  border: 1px solid purple;
+  border: 1px solid var(--main-bg-color);
   border-radius: 10px;
   padding: 0.5rem;
   text-align: center;
 }
-
 
 .btn_auth_wrapper{
   align-items: center;
@@ -72,7 +68,19 @@
   text-align: center;
 }
 
-
 .mdc-dialog__actions{
 
+}
+:root{
+  --header-bg-primary: #a29bfe;
+  --header-bg-secondary: #0984e3;
+  --footer-bg-link: #9874E38C;
+  --main-bg-color: #9c27b0;
+  --secondary-bg-color: #cd97d7;
+  --box-shadow-black: #00000033;
+  --cdk-drag-bg-primary: #00000023;
+  --cdk-drag-bg-secondary: #0000001E;
+  --black-bg: #000000DD;
+  --white-bg: #FFFFFFFF;
+  --border-light-color: #ccc;
 }

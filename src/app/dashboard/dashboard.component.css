@@ -1,5 +1,5 @@
 .board_card{
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px var(--box-shadow-black);
     transition: box-shadow 0.3s ease-in-out;
     align-items: center;
     justify-content: flex-end;
@@ -14,15 +14,18 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
 .card-title_wrapper{
     margin: 0;
 }
+
 .card_title{
     margin: 0;
     min-width: 50%;
 }
+
 .board_card:hover {
-    box-shadow: 0 0 8px #9c27b0;
+    box-shadow: 0 0 8px var(--main-bg-color);
 }
 
 .search_result-wrapper{
@@ -32,7 +35,6 @@
     position: absolute;
     z-index: 1;
     top: 3.8rem;
-
 }
 
 .search_wrapper{
@@ -40,6 +42,6 @@
 }
 
 .search_on_hover:hover{
-    background-color: #cd97d7;
+    background-color: var(--secondary-bg-color);
     border-radius: 8px;
 }

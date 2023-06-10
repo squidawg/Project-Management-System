@@ -6,7 +6,9 @@
 }
 
 .team-member{
-    background-color: rgba(152, 116, 227, 0.55);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+    background-color: var(--footer-bg-link);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -15,6 +17,7 @@
     width: 15rem;
     padding-top: 1rem;
 }
+
 .image-round{
     border-radius: 50%;
     overflow: hidden;
@@ -32,15 +35,13 @@
     height: 10rem;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--white-bg);
     justify-content: center;
-
 }
+
 .team_img{
     transform: scale(1.7);
 }
-
-
 
 .description {
     margin-bottom: 0;

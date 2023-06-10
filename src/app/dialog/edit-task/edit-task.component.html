@@ -7,7 +7,7 @@
                     matInput
                     formControlName="taskTitle"
             >
-            <mat-error *ngIf="!editTaskForm.get('taskTitle')!.valid">{{onError(editTaskForm.get('taskTitle'))}}</mat-error>
+            <mat-error *ngIf="!editTaskForm.get('taskTitle')!.valid">{{onError(editTaskForm.get('taskTitle')) | translate}}</mat-error>
             <mat-error></mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">

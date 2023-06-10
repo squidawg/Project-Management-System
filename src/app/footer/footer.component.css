@@ -17,9 +17,9 @@
 
 .link_item{
     text-decoration: none;
-    color: black;
+    color: var(--black-bg);
 
 }
 a:hover{
-    color: #523c81;
+    color: var(--footer-bg-link);
 }

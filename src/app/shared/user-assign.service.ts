@@ -70,6 +70,4 @@ export class UserAssignService{
     const filterValue = value.toLowerCase();
     return this.allUsers.filter(obj=> obj.name.toLowerCase().includes(filterValue));
   }
-
-
 }

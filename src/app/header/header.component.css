@@ -1,10 +1,10 @@
 .navbar-color {
-    background: linear-gradient(to right, #a29bfe, #0984e3);
+    background: linear-gradient(to right, var(--header-bg-primary), var(--header-bg-secondary));
 }
 .title {
     font-weight: bold;
     font-size: 36px;
-    color: purple;
+    color: var(--main-bg-color);
 }
 
 .mdc-fab--mini {
