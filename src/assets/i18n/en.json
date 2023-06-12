@@ -36,5 +36,9 @@
 	"shared.board": "Board",
 	"shared.column": "Column",
 	"shared.delete": "Delete",
-	"shared.task": "Task"
+	"shared.task": "Task",
+	"user.dev1.desc": "As a student learning Angular and JavaScript, I am excited to explore their capabilities and build real-world applications.",
+	"user.dev1.name": "Aleksei Kobyzev",
+	"user.dev2.desc": "Rachel is an experienced team lead with a proven track record of effectively managing complex projects",
+	"user.dev2.name": "Rachel Black"
 }

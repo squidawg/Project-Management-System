@@ -25,7 +25,6 @@ export class UserAssignService{
          startWith(null),
         map((user: string| null ) =>
             (user ? this._filter(user) : this.allUsers.slice())
-
         ));
   }
 
@@ -36,6 +35,7 @@ export class UserAssignService{
   getUsers(){
     return this.allUsers.slice();
   }
+
 
   add(event: MatChipInputEvent, users:AuthData[]): void {
     const value = (event.value || '').trim();
@@ -60,7 +60,7 @@ export class UserAssignService{
   selected(event: MatAutocompleteSelectedEvent,
            userInput: ElementRef<HTMLInputElement>,
            users:AuthData[]): void {
-    const user = this.allUsers.find(obj=> obj._id === event.option.value)
+    const user = this.allUsers.find(obj => obj._id === event.option.value);
     users.push(user!);
     userInput.nativeElement.value = '';
     this.userCtrl.setValue(null);

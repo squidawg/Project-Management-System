@@ -13,7 +13,6 @@ export class DeleteWarningFormComponent{
   constructor(private dashboardService: DashboardStorageService,
               private snackBar: SnackbarService) {}
 
-
   onSubmit(){
     this.dashboardService.deleteBoard().subscribe(
         () => {},

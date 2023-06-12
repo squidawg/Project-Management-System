@@ -11,7 +11,7 @@
 }
 
 .board_wrapper{
-    margin: 2rem;
+    padding: 2rem;
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -135,4 +135,8 @@
 .btn_wrapper{
     display: flex;
     justify-content: left;
+}
+
+.mat-chip-wrapper{
+    max-width: 6rem;
 }

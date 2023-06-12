@@ -25,7 +25,7 @@
                 <mat-chip-row
                         *ngFor="let user of selected; let i = index"
                         (removed)="onRemoveUser(user._id)">
-                    {{user.name}}
+                    {{user.name | titlecase}}
                     <button
                             matChipRemove
                             [attr.aria-label]="'remove ' + user">
@@ -44,7 +44,7 @@
                 #auto="matAutocomplete"
                 (optionSelected)="onSelectUser($event)">
                 <mat-option *ngFor="let filteredUser of filteredUsers | async" [value]="filteredUser._id">
-                    {{filteredUser.name}}
+                    {{filteredUser.name | titlecase}}
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>

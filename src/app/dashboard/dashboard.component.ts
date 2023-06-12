@@ -50,13 +50,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onFetchUsers(){
+    const userId = this.authentication.user.value.id
     this.authentication.getUsers().subscribe(resData => {
       const filteredUsers = resData
-          .filter(obj => obj._id !== this.authentication.user.value.id);
+          .filter(obj => obj._id !== userId);
       this.userAssignService.setUsers(filteredUsers)
     }, errMessage => {
       this.snackBar.openSnackBar(errMessage);
     });
+
   }
 
   onFetch() {

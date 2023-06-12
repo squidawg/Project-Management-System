@@ -6,7 +6,7 @@ import Enumerable from "linq";
 
 export interface SortedColumns {
   boardId: string;
-  _id: string;
+  _id?: string;
   title: string;
   tasks?: TaskData[];
   order: number;

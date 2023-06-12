@@ -64,10 +64,11 @@ export class DashboardStorageService {
 
     searchTask(search: string){
         const userId = this.userData.user.value
-         return this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet?${userId}=USERID&search=${search}`)
+         return this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet?userid=${userId}&search=${search}`)
              .pipe(catchError(errRes => {
                  const error = errRes.error?.message || errRes.statusText;
                  return throwError(error) ;
              }))
   }
+
 }
