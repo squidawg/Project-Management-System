@@ -14,6 +14,7 @@
                     <input
                             matInput
                             formControlName="name">
+
                     <mat-error *ngIf="!editUserForm.get('name')!.valid">{{onError(editUserForm.get('name')) | translate}}</mat-error>
                 </mat-form-field>
                 <br>
@@ -21,8 +22,8 @@
                     <mat-label  >{{"form.login" | translate}}</mat-label>
                     <input
                             matInput
-                            formControlName="login"
-                    >
+                            formControlName="login">
+
                     <mat-error *ngIf="!editUserForm.get('login')!.valid">{{onError(editUserForm.get('login')) | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">

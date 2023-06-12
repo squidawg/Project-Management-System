@@ -48,7 +48,16 @@ export class AuthenticationService{
             }))
     }
 
-    getErrorMessage(value: any, state?:boolean) {
+    getUser(id:string) {
+        return this.http.get<AuthData>(`https://quixotic-underwear-production.up.railway.app/users/${id}`)
+            .pipe(tap( () => {
+            }), catchError(errRes => {
+                const error = errRes.error?.message || errRes.statusText
+                return throwError(error) ;
+            }))
+    }
+
+    getErrorMessage(value: any, state:boolean = false) {
         if (value.hasError('required')) {
             return this.messageRequired;
         }
@@ -76,7 +85,7 @@ export class AuthenticationService{
             password: password
         }).pipe(tap(resData => {
             this.parsedJwt = this.jwt.DecodeToken(resData.token);
-            this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp, this.parsedJwt.iat);
+            this.handleAuth(this.parsedJwt.login, this.parsedJwt.id, resData.token, this.parsedJwt.exp);
         }), catchError(errRes => {
             const error = errRes.error?.message || errRes.statusText
             return throwError(error) ;
@@ -116,7 +125,7 @@ export class AuthenticationService{
         this.isTokenExpired = null;
     }
 
-    private handleAuth(login:string, userId: string, token: string, expiresIn:number, iat:number) {
+    private handleAuth(login:string, userId: string, token: string, expiresIn:number) {
         const  expDate = new Date(expiresIn * 1000);
         const user = new User(
             login,
