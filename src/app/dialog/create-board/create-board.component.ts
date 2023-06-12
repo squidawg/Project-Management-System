@@ -7,6 +7,9 @@ import {UserAssignService} from "../../shared/user-assign.service";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {SnackbarService} from "../../shared/snackbar.service";
+import {BoardStorageService} from "../../board/board-storage.service";
+import { concatMap } from 'rxjs/operators';
+import {BoardTemplateModel} from "../../board/board.template/board.template.model";
 
 @Component({
   selector: 'app-create-board',
@@ -14,6 +17,7 @@ import {SnackbarService} from "../../shared/snackbar.service";
   styleUrls: ['./create-board.component.css']
 })
 export class CreateBoardComponent implements OnInit{
+
   createBoardForm!: FormGroup;
   userCtrl = this.userAssignService.userCtrl;
 
@@ -29,7 +33,9 @@ export class CreateBoardComponent implements OnInit{
               private dashboardStorageService: DashboardStorageService,
               private user: AuthenticationService,
               private userAssignService: UserAssignService,
-              private snackBar: SnackbarService
+              private snackBar: SnackbarService,
+              private boardStorageService: BoardStorageService,
+              private authentication: AuthenticationService
               ) {
 
   }
@@ -40,16 +46,15 @@ export class CreateBoardComponent implements OnInit{
     });
   }
 
-  onAddUser(event: MatChipInputEvent){
+  onAddUser(event: MatChipInputEvent) {
     this.userAssignService.add(event,this.selected);
   }
 
-  onDeleteUser(index:string){
+  onDeleteUser(index:string) {
     this.userAssignService.remove(index, this.selected);
-
   }
 
-  onSelectUser(event: MatAutocompleteSelectedEvent){
+  onSelectUser(event: MatAutocompleteSelectedEvent) {
     this.userAssignService.selected(
         event,
         this.userInput,
@@ -57,16 +62,28 @@ export class CreateBoardComponent implements OnInit{
   }
 
   onSubmit() {
-    const users = this.selected.map( obj => obj._id)
+    const users = this.selected.map( obj => obj._id);
     const owner = this.user.user.value.id;
     const title = this.createBoardForm.value.titleBoard;
 
     this.dashboardStorageService.postBoard(title, owner, users)
-        .subscribe(
-        () => {},
+        .pipe(concatMap(resData => {
+          const boardId = resData._id;
+          const template: BoardTemplateModel[] = [
+              new BoardTemplateModel('to do', 0, boardId),
+            new BoardTemplateModel('doing', 1, boardId),
+            new BoardTemplateModel('done', 2, boardId)];
+          return this.boardStorageService.setColumns(template);
+        })).subscribe(
+        () => {
+        },
         errMessage => {
-      this.snackBar.openSnackBar(errMessage);
-    });
+          this.snackBar.openSnackBar(errMessage);
+        });
+
     this.createBoardForm.reset();
+  }
+  onError(value: any){
+    return this.authentication.getErrorMessage(value);
   }
 }
