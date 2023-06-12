@@ -28,6 +28,7 @@ export class AuthenticationService{
 
     messageRequired!: string;
     messageInvalid!: string;
+    messagePassword!: string
 
     constructor(private http: HttpClient,
                 private jwt: JwtService,
@@ -37,6 +38,8 @@ export class AuthenticationService{
     {
         this.messageRequired = this.translate.get('error_handler.required');
         this.messageInvalid = this.translate.get('error_handler.invalid');
+        this.messagePassword = this.translate.get('error_handler.password');
+
     }
 
     getUsers() {
@@ -59,11 +62,10 @@ export class AuthenticationService{
 
     getErrorMessage(value: any, state:boolean = false) {
         if (value.hasError('required')) {
-            return this.messageRequired;
+            return this.messageRequired
         }
         if(state){
-            this.messageInvalid = this.translate.get('error_handler.password');
-            return this.messageInvalid
+            return this.messagePassword
         }
         return value.status === 'INVALID' ? this.messageInvalid : '';
     }
@@ -74,8 +76,8 @@ export class AuthenticationService{
             login: login,
             password: password
         }).pipe(catchError(errRes => {
-            const error = errRes.error?.message || errRes.statusText
-            return throwError(error) ;
+            const error = errRes.error?.message || errRes.statusText;
+            return throwError(error);
         }))
     }
 

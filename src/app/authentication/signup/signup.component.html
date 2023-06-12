@@ -3,7 +3,7 @@
         <div class="container justify-content-center text-center to_flex" *ngIf="isLoading">
             <mat-spinner ></mat-spinner>
         </div>
-        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+        <form [formGroup]="signUpForm" *ngIf="!isLoading">
             <div class="container form-title-wrapper">
                 <h2>{{"btn.signUp" | translate}}</h2>
                 <h4 class="form-title-description">{{"form.signup_desc" | translate}}
@@ -45,6 +45,7 @@
                             mat-raised-button
                             color="primary"
                             [disabled]="!signUpForm.valid"
+                            (click)="onSubmit()"
                     >
                         {{"btn.signUp" | translate}}
                     </button>

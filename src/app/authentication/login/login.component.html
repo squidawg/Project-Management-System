@@ -3,7 +3,7 @@
         <div class="container justify-content-center text-center to_flex" *ngIf="isLoading">
             <mat-spinner></mat-spinner>
         </div>
-        <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+        <form [formGroup]="signInForm"  *ngIf="!isLoading">
             <div class="container  form-title-wrapper">
                 <h2  >{{ "form.login" | translate}}</h2>
                 <h4 class="form-title-description"  >{{"form.login_desc"|translate}}
@@ -39,6 +39,7 @@
                             mat-raised-button
                             color="primary"
                             [disabled]="!signInForm.valid"
+                            (click)="onSubmit()"
                     ><span >{{"btn.signIn" | translate}}</span>
                     </button>
                 </div>
