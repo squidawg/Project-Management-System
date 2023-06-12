@@ -8,7 +8,7 @@ import {omit} from "lodash";
 import {throwError} from "rxjs";
 
 export interface ColumnData {
-   _id: string,
+   _id?: string,
   title: string,
   order: number,
   boardId: string,
@@ -24,7 +24,7 @@ export class BoardStorageService {
               private boardService: BoardService,
               private sortedDataService: SortedDataService) { }
 
-  columnId = '';
+  columnId: string | undefined;
   boardId!: string;
   columns!: SortedColumns[];
 
@@ -104,4 +104,11 @@ export class BoardStorageService {
           return throwError(error);
       }))
   }
+    setColumns(template: ColumnData[]){
+        return this.http.post<ColumnData[]>('https://quixotic-underwear-production.up.railway.app/columnsSet', template)
+            .pipe(catchError(errRes => {
+                const error = errRes.error?.message || errRes.statusText;
+                return throwError(error) ;
+            }))
+    }
 }

@@ -43,17 +43,40 @@
                         <button *ngIf="!isEditing[i]"
                                 mat-icon-button color="primary"
                                 matTooltip="{{'shared.delete'|translate}} {{'shared.column'|translate}}"
-                                aria-label="Example icon button with a home icon" (click)="onDeleteColumn(column._id, column.boardId)"
+                                aria-label="Example icon button with a home icon" (click)="onDeleteColumn(column._id!, column.boardId)"
                         >
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
                     <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="dropTask($event, i)">
-                            <ng-container *ngFor="let item of column.tasks">
+                            <ng-container *ngFor="let item of column.tasks; let j = index">
                                         <div class="example-box task_wrapper" cdkDrag (click)="onEditTask(item)">
                                             <div class="task_card_wrapper">
                                                 <h3 class="task_title">{{ item.title }}</h3>
                                                 <p class="task_description">{{ item.description }}</p>
+                                                <div *ngIf="item.users.length <= 3 " class="d-flex flex-column gap-1">
+                                                    <mat-chip *ngFor="let user of item.users" class="mat-chip-wrapper" (click)="$event.stopPropagation()">
+                                                        <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+                                                        {{ user | transform | titlecase}}
+                                                    </mat-chip>
+                                                </div>
+                                                <div *ngIf="item.users.length > 3">
+                                                    <div *ngIf="!taskIndex[j] && !columnIndex[i]">
+                                                        <mat-chip class="mat-chip-wrapper" (click)="onUserclick($event, j, i)"
+                                                                  matBadge="+{{item.users.length - 1}}"
+                                                                  matBadgePosition="after"
+                                                                  matBadgeColor="accent">
+                                                            <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+                                                            {{ item.users[0] | transform | titlecase}}
+                                                        </mat-chip>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="taskIndex[j] && columnIndex[i]" class="d-flex flex-column gap-1">
+                                                    <mat-chip *ngFor="let user of item.users" class="mat-chip-wrapper " (click)="onUserclick($event, j, i)">
+                                                        <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+                                                        {{ user | transform | titlecase}}
+                                                    </mat-chip>
+                                                </div>
                                             </div>
                                             <button
                                                     mat-icon-button

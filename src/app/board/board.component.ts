@@ -51,6 +51,9 @@ export class BoardComponent implements OnInit, OnDestroy {
   tasks!: TaskData[];
   sortedData!: SortedColumns[];
 
+  taskIndex: boolean[] = [];
+  columnIndex: boolean[] = [];
+
   isLoading = false;
   isEditing: boolean[] = [];
 
@@ -76,12 +79,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   onFetchUsers() {
+
     this.authentication.getUsers()
         .subscribe(resData => {
       this.userAssignService.setUsers(resData);
     }, errMessage => {
       this.snackBar.openSnackBar(errMessage);
     });
+
   }
 
   onFetchData() {
@@ -137,7 +142,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   onEditColumn(index:number, column: ColumnData) {
-    this.boardStorageService.columnId = column._id;
+    this.boardStorageService.columnId = column!._id;
     this.boardStorageService.putColumn(column.title!)
         .subscribe(() => {
       this.isEditing[index] = !this.isEditing[index];
@@ -148,7 +153,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   onAddTask(index: number) {
     this.tasksService.setTaskPath(
-        this.columns[index]._id,
+        this.columns[index]._id!,
         this.columns[index].boardId,
     );
     this.dialog.openDialog(AddTaskFormComponent);
@@ -195,6 +200,12 @@ export class BoardComponent implements OnInit, OnDestroy {
                 errMesage => {
       this.snackBar.openSnackBar(errMesage)
     });
+  }
+
+  onUserclick(event: Event, taskIndex: number, colIndex:number){
+    event.stopPropagation();
+    this.taskIndex[taskIndex] = !this.taskIndex[taskIndex];
+    this.columnIndex[colIndex] = !this.columnIndex[colIndex]
   }
 
 }
