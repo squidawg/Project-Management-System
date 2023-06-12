@@ -11,6 +11,7 @@ import {TaskData, TasksService} from "../board/tasks/tasks.service";
 import {SnackbarService} from "../shared/snackbar.service";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {UserAssignService} from "../shared/user-assign.service";
+import {TasksStorageService} from "../board/tasks/tasks-storage.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       private boardService: BoardService,
       private router: Router,
       private taskService: TasksService,
+      private tasksStorageService: TasksStorageService,
       private snackBar: SnackbarService,
       private authentication: AuthenticationService,
       private userAssignService: UserAssignService) {}
@@ -84,7 +86,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onSearch(){
     this.isSearchLoad = !this.isSearchLoad;
-    this.dashboardStorageService.searchTask(this.searchCtrl.value!)
+    this.tasksStorageService.searchTask(this.searchCtrl.value!)
         .subscribe(resData => {
           this.isSearchLoad = !this.isSearchLoad;
           this.filteredTasks = resData.filter(obj => obj.users.includes(this.authentication.user.value.id));

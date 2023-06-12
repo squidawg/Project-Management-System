@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../authentication.service";
 import {Router} from "@angular/router";
 import {SnackbarService} from "../../shared/snackbar.service";
@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit{
     this.authentication.signUp(name, login, password)
         .subscribe(() => {
           this.isLoading = false;
-          this.router.navigate(['/login'],);
+          this.router.navigate(['/login']);
     }, errMessage => {
           this.snackBar.openSnackBar(errMessage)
           this.isLoading = false;

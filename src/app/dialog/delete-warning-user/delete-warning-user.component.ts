@@ -14,7 +14,7 @@ export class DeleteWarningUserComponent {
    this.authentication.deleteUser()
        .subscribe(()=>{},
        (errorMessage => {
-       this.snackBar.openSnackBar(errorMessage)
+       this.snackBar.openSnackBar(errorMessage);
    }))
  }
 }

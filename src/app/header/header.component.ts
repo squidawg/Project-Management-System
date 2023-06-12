@@ -15,7 +15,7 @@ import {TranslateService} from "../translate/translate.service";
 export class HeaderComponent implements OnInit, OnDestroy{
   private userSub!: Subscription;
   isAuth = false;
-  isTablet = false
+  isTablet = false;
   screenWidth!: number;
 
   constructor(private authService: AuthenticationService,
@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.router.navigate(['/dashboard'])
       setTimeout(() => {
         this.dialogService.openDialog(CreateBoardComponent);
-      }, 600)
+      }, 600);
     }
     else {
       this.dialogService.openDialog(CreateBoardComponent);

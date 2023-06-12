@@ -51,7 +51,7 @@ export class UserAssignService{
   }
 
   remove(id: string, users:AuthData[]): void {
-    const index = users.findIndex(obj=> obj._id === id)
+    const index = users.findIndex(obj=> obj._id === id);
     if (index >= 0) {
       users.splice(index, 1);
     }

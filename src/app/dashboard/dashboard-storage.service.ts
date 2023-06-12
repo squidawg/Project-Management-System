@@ -4,7 +4,6 @@ import {DashboardModel} from "./dashboard.model";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {DashboardService} from "./dashboard.service";
 import {catchError, tap} from "rxjs/operators";
-import {TaskData} from "../board/tasks/tasks.service";
 import {throwError} from "rxjs";
 
 @Injectable({
@@ -59,16 +58,5 @@ export class DashboardStorageService {
                 const error = errRes.error?.message || errRes.statusText;
                 return throwError(error);
             }))
-
   }
-
-    searchTask(search: string){
-        const userId = this.userData.user.value
-         return this.http.get<TaskData[]>(`https://quixotic-underwear-production.up.railway.app/tasksSet?userid=${userId}&search=${search}`)
-             .pipe(catchError(errRes => {
-                 const error = errRes.error?.message || errRes.statusText;
-                 return throwError(error) ;
-             }))
-  }
-
 }

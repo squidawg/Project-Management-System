@@ -14,11 +14,9 @@ import {SortedColumns, SortedDataService} from "./sorted-data.service";
 import {Router} from "@angular/router";
 import {EditTaskComponent} from "../dialog/edit-task/edit-task.component";
 import {DeleteWarningTaskComponent} from "../dialog/delete-warning-task/delete-warning-task.component";
-
 import {UserAssignService} from "../shared/user-assign.service";
 import {DashboardStorageService} from "../dashboard/dashboard-storage.service";
 import {SnackbarService} from "../shared/snackbar.service";
-
 import {AuthenticationService} from "../authentication/authentication.service";
 
 @Component({

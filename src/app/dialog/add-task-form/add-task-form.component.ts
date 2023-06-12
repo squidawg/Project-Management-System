@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TasksStorageService} from "../../board/tasks/tasks-storage.service";
 import {AuthData, AuthenticationService} from "../../authentication/authentication.service";

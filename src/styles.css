@@ -10,15 +10,6 @@
   align-items: center;
 }
 
-.to_flex{
-  display: flex;
-  gap: 1rem
-}
-
-.btn_size{
-  display: flex;
-  justify-content: center;
-}
 
 .window-wrapper{
   min-height: 100vh;
@@ -55,9 +46,6 @@
   text-align: center;
 }
 
-.mat-mdc-fab{
-}
-
 .btn_auth_wrapper{
   align-items: center;
   justify-content: center;
@@ -73,9 +61,6 @@
   text-align: center;
 }
 
-.mdc-dialog__actions{
-
-}
 :root{
   --header-bg-primary: #a29bfe;
   --header-bg-secondary: #0984e3;

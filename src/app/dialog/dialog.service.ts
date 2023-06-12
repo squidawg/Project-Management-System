@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ComponentType} from "@angular/cdk/overlay";
-import {BoardStorageService} from "../board/board-storage.service";
 
 @Injectable({
   providedIn: 'root'

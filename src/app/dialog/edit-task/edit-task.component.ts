@@ -52,17 +52,17 @@ export class EditTaskComponent {
   }
 
   onSubmit(){
-    const users = this.selected.map( obj => obj._id)
+    const users = this.selected.map( obj => obj._id);
     const title: string = this.editTaskForm.value.taskTitle;
     const description: string = this.editTaskForm.value.taskDescription;
     this.tasksStorageService.putTask(title, description, users).subscribe(
         () => {},
         errMessage => {
-          this.snackBar.openSnackBar(errMessage)
+          this.snackBar.openSnackBar(errMessage);
         });
   }
 
   onError(value: any){
-    return this.authentication.getErrorMessage(value)
+    return this.authentication.getErrorMessage(value);
   }
 }
