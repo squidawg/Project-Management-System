@@ -47,6 +47,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import { DeleteWarningUserComponent } from './dialog/delete-warning-user/delete-warning-user.component';
 import { TranslatePipe } from './translate/translate.pipe';
 import {TranslateService} from "./translate/translate.service";
+import {TranformPipe} from "./shared/tranform.pipe";
+import {MatBadgeModule} from "@angular/material/badge";
 
 export function setupTranslateServiceFactory(
     service: TranslateService): Function {
@@ -72,6 +74,7 @@ export function setupTranslateServiceFactory(
     DeleteWarningTaskComponent,
     DeleteWarningUserComponent,
     TranslatePipe,
+    TranformPipe
 
   ],
     imports: [
@@ -95,6 +98,7 @@ export function setupTranslateServiceFactory(
         MatTooltipModule,
         MatChipsModule,
         MatSelectModule,
+        MatBadgeModule,
 
 
     ],
