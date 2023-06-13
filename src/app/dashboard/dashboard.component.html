@@ -1,0 +1,67 @@
+<div class="window-wrapper justify-content-start">
+    <div class="d-flex  justify-content-end mt-2 m-2">
+        <div class="position-relative">
+            <mat-form-field appearance="outline" class="w-100 example-list">
+                <mat-label>{{'search.title'| translate}}</mat-label>
+                <input
+                        matInput
+                        (keyup)="onSearch()"
+                        [formControl]="searchCtrl"
+                        (blur)="onBlur()"
+                >
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <div  *ngIf="isShow" class="search_result-wrapper block_frame  col-sm-8 col-12 col-md-8 col-lg-8 w-100 z-3" style="background-color: white">
+                <div  *ngIf="isSearchLoad"
+                      class="
+                  container
+                  justify-content-center
+                  align-content-center
+                  d-flex " >
+                    <mat-spinner
+                            [diameter]="30"
+                            [strokeWidth]="3"
+                    ></mat-spinner>
+                </div>
+                <div *ngIf="!isSearchLoad">
+                    <div *ngFor="let item of filteredTasks" >
+                        <div (click)="onLoadBoard(item.boardId)" class="example-box p-2 m-1 search_on_hover" style="cursor: pointer">
+                            <h4>{{item.title}}</h4>
+                            <p>{{item.description}}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="!filteredTasks.length">
+                        <mat-icon color="primary">question_mark</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container m-auto">
+        <div class="container">
+            <h1 class="text-center">{{'dashboard.title'| translate}}</h1>
+        </div>
+        <div class="container card_wrapper">
+            <div class="container justify-content-center text-center d-flex gap-3" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <div *ngIf="!isLoading">
+                <div *ngIf="boards.length === 0">
+                    <h3 class="text-center">{{'dashboard.desc'| translate}}</h3>
+                </div>
+                <div class="row" *ngFor="let board of boards">
+                    <div class="block_frame d-flex gap-3 board_card" (click)="onLoadBoard(board._id)">
+                        <h2 class="card_title">{{board.title}}</h2>
+                        <button
+                                mat-icon-button
+                                color="primary"
+                                matTooltip="{{'shared.delete'|translate}} {{'shared.board'|translate}}"
+                                (click)="onDelete($event, board._id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

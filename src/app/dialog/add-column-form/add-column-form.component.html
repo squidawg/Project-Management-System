@@ -1,0 +1,27 @@
+<form [formGroup]="createColumnForm">
+    <h1 mat-dialog-title>{{'shared.add'|translate}} {{'shared.column'|translate}}</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>{{'modal.desc' | translate}}</mat-label>
+            <input
+                    matInput
+                    formControlName="columnTitle"
+            >
+            <mat-error *ngIf="!createColumnForm.get('columnTitle')!.valid">{{onError(createColumnForm.get('columnTitle')) | translate}}</mat-error>
+            <mat-error></mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button
+                mat-dialog-close
+                [disabled]="!createColumnForm.valid"
+                color="primary"
+                (click)="onSubmit()">{{'btn.submit' | translate}}</button>
+        <button
+                mat-icon-button
+                mat-dialog-close
+                aria-label="Example icon button with a close icon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</form>

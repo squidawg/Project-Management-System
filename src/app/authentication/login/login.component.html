@@ -1,0 +1,48 @@
+<div class="container window-wrapper ">
+    <div class="col-8 offset-2 col-sm-6 offset-sm-3 col-md-4 offset-md-4  justify-content-center">
+        <div class="container justify-content-center text-center d-flex gap-3" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <form [formGroup]="signInForm"  *ngIf="!isLoading">
+            <div class="container  form-title-wrapper">
+                <h2  >{{ "form.login" | translate}}</h2>
+                <h4 class="form-title-description"  >{{"form.login_desc"|translate}}
+                    <a
+                        style="cursor: pointer"
+                        routerLink="/signup"
+                >{{"btn.signUp"|translate}}</a></h4>
+            </div>
+            <div class="example-container d-flex flex-column gap-3">
+                <mat-form-field appearance="fill">
+                    <mat-label  >{{"form.login" | translate}}</mat-label>
+                    <input
+                            matInput
+                            formControlName="login"
+                    >
+                    <mat-error *ngIf="!signInForm.get('login')!.valid">{{onError(signInForm.get('login')) | translate}}</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label  >{{"form.password" | translate}}</mat-label>
+                    <input
+                            matInput [type]="hide ? 'password' : 'text'"
+                            formControlName="password"
+                    >
+                    <mat-error *ngIf="!signInForm.get('password')!.valid">{{onError(signInForm.get('password'), true) | translate}}</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div class="container  btn_auth_wrapper">
+                    <button type="button"
+                            mat-raised-button
+                            color="primary"
+                            [disabled]="!signInForm.valid"
+                            (click)="onSubmit()"
+                    ><span >{{"btn.signIn" | translate}}</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

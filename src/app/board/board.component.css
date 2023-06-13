@@ -1,0 +1,142 @@
+.card_wrapper{
+    display: flex;
+    justify-content: space-around;
+    height: 50%;
+    gap: 2rem
+}
+
+.board_wrapper{
+    padding: 2rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+.example-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.example-list {
+    border: solid 1px var(--border-light-color);
+    min-height: 3rem;
+    background: var(--white-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    display: block;
+}
+
+.example-box {
+    padding: 10px 10px;
+    border-bottom: solid 1px var(--border-light-color);
+    color: var(--black-bg);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: var(--white-bg);
+    font-size: 14px;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 0 5px 5px -3px var(--box-shadow-black),
+    0 8px 10px 1px var(--cdk-drag-bg-primary),
+    0 3px 14px 2px var(--cdk-drag-bg-secondary);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.column_wrapper{
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 15rem;
+    background-color: var(--white-bg);
+
+}
+.columns_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.column_title-wrapper{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+}
+
+.column_title_input{
+    display: flex;
+    flex-direction: column;
+
+}
+.column_input{
+    width: 100%;
+    border: none;
+}
+.column_input-btn_wrapper{
+    gap: 0.3rem;
+    display: flex;
+    justify-content: flex-start;
+    width: 70%;
+    height: 60%;
+}
+
+.test{
+    align-items: baseline;
+}
+
+.task_wrapper{
+    display: flex;
+    align-items: flex-start;
+}
+
+.task_card_wrapper{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 0.2rem;
+}
+
+.task_title{
+    margin: 0;
+    margin-top: 0.5rem;
+}
+
+.btn_wrapper{
+    display: flex;
+    justify-content: left;
+}
+
+.mat-chip-wrapper{
+    max-width: 6rem;
+}
+
+.h-progress-bar{
+    height: 0.25rem;
+}

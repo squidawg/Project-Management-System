@@ -1,0 +1,116 @@
+<nav class="navbar navbar-default navbar-color">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a style="cursor: pointer" class="navbar-brand title" routerLink="/">PMA</a>
+      </div>
+      <div>
+        <div class="nav_btn" >
+          <div class="nav nav_btn"  *ngIf="!isAuth" >
+              <div *ngIf="screenWidth > 700" class=" nav_btn">
+                  <button
+                          mat-fab
+                          extended
+                          color="primary"
+                          routerLink="/login">
+                      <mat-icon>login</mat-icon>
+                      {{"btn.signIn" | translate}}
+                  </button>
+                  <button
+                          mat-fab
+                          extended
+                          color="accent"
+                          routerLink="/signup">
+                      <mat-icon>app_registration</mat-icon>
+                      {{"btn.signUp" | translate}}
+                  </button>
+              </div>
+              <div *ngIf="screenWidth <= 700">
+                  <button mat-mini-fab
+                          color="primary"
+                          [matMenuTriggerFor]="menu"
+                          aria-label="Example icon-button with a menu">
+                      <mat-icon>expand_more</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                      <button mat-menu-item
+                              routerLink="/login">
+                          <mat-icon>login</mat-icon>
+                          {{"btn.signIn" | translate}}
+                      </button>
+                      <button mat-menu-item
+                              routerLink="/signup">
+                          <mat-icon>app_registration</mat-icon>
+                          {{"btn.signUp" | translate}}
+                      </button>
+                  </mat-menu>
+              </div>
+          </div>
+            <ul class="nav nav_btn" *ngIf="isAuth">
+                <div *ngIf="screenWidth <= 700">
+                    <button mat-mini-fab
+                            color="primary"
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Example icon-button with a menu">
+                        <mat-icon>expand_more</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item
+                                (click)="onCreateBoard()">
+                            <mat-icon>add_circle_outline</mat-icon>
+                            <span>{{"btn.CreateBoard" | translate}}</span>
+                        </button>
+                        <button mat-menu-item
+                                routerLink="/edit">
+                            <mat-icon>edit</mat-icon>
+                            <span>{{"btn.EditProfile" | translate}}</span>
+                        </button>
+                        <button mat-menu-item
+                                (click)="onLogout()">
+                            <mat-icon>logout</mat-icon>
+                            <span>{{"btn.LogOut" | translate}}</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </ul>
+            <div *ngIf="screenWidth > 700">
+                <ul class="nav nav_btn" *ngIf="isAuth">
+                    <button
+                            mat-fab
+                            extended
+                            color="primary"
+                            (click)="onCreateBoard()">
+                        <mat-icon>add_circle_outline</mat-icon>
+                        {{"btn.CreateBoard" | translate}}
+                    </button>
+                    <button
+                            mat-fab
+                            extended
+                            color="accent"
+                            routerLink="/edit">
+                        <mat-icon>edit</mat-icon>
+                        {{"btn.EditProfile" | translate}}
+                    </button>
+                    <button
+                            mat-fab
+                            extended
+                            color="accent"
+                            (click)="onLogout()">
+                        <mat-icon>logout</mat-icon>
+                        {{"btn.LogOut" | translate}}
+                    </button>
+                </ul>
+            </div>
+            <button
+                    mat-mini-fab
+                    color="primary"
+                    aria-label="Example icon button with a delete icon" [matMenuTriggerFor]="menu">
+                <mat-icon>language</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="setLang('en')">en</button>
+                <button mat-menu-item (click)="setLang('ru')">ru</button>
+            </mat-menu>
+        </div>
+      </div>
+    </div>
+</nav>

@@ -1,0 +1,57 @@
+<form [formGroup]="createBoardForm" >
+    <h1 mat-dialog-title>{{'btn.CreateBoard' | translate}}</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>{{'modal.desc' | translate}}</mat-label>
+                <input
+                        matInput
+                        formControlName="titleBoard"
+                >
+             <mat-error *ngIf="!createBoardForm.get('titleBoard')!.valid">{{onError(createBoardForm.get('titleBoard')) | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>{{'modal.users' | translate}}</mat-label>
+            <mat-chip-grid #chipGrid aria-label="User selection">
+                <mat-chip-row
+                        *ngFor="let user of selected; let i = index"
+                        (removed)="onDeleteUser(user._id)">
+                    {{user.name | titlecase}}
+                    <button
+                            matChipRemove
+                            [attr.aria-label]="'remove ' + user">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+            </mat-chip-grid>
+            <input
+                   #userInput
+                   [formControl]="userCtrl"
+                   [matChipInputFor]="chipGrid"
+                   [matAutocomplete]="auto"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   (matChipInputTokenEnd)="onAddUser($event)"/>
+            <mat-autocomplete
+                #auto="matAutocomplete"
+                (optionSelected)="onSelectUser($event)">
+                <mat-option *ngFor="let filteredUser of filteredUsers | async" [value]="filteredUser._id">
+                    {{filteredUser.name | titlecase}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button
+                mat-button
+                mat-dialog-close
+                (click)="onSubmit()"
+                [disabled]="!createBoardForm.valid && !userCtrl.valid"
+                color="primary">{{'btn.submit' | translate}}</button>
+        <button
+                mat-icon-button
+                mat-dialog-close
+                aria-label="Example icon button with a home icon"
+                >
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</form>
