@@ -15,3 +15,9 @@
     gap: 0.3rem;
     display: inherit;
 }
+
+.nav_btn{
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+}

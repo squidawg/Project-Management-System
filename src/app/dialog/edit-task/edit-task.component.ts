@@ -21,7 +21,7 @@ export class EditTaskComponent {
   editTaskForm!: FormGroup;
 
   userCtrl = this.userAssignService.userCtrl;
-  selected: AuthData[] = [];
+  selected  = new Set<AuthData>();
 
   separatorKeysCodes = this.userAssignService.separatorKeysCodes;
   filteredUsers = this.userAssignService.filteredUsers;
@@ -52,7 +52,7 @@ export class EditTaskComponent {
   }
 
   onSubmit(){
-    const users = this.selected.map( obj => obj._id);
+    const users = [...this.selected].map( obj => obj._id);
     const title: string = this.editTaskForm.value.taskTitle;
     const description: string = this.editTaskForm.value.taskDescription;
     this.tasksStorageService.putTask(title, description, users).subscribe(

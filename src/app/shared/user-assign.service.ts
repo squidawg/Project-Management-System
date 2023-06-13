@@ -37,12 +37,11 @@ export class UserAssignService{
   }
 
 
-  add(event: MatChipInputEvent, users:AuthData[]): void {
+  add(event: MatChipInputEvent, users:Set<AuthData>): void {
     const value = (event.value || '').trim();
-
     for(let obj of this.allUsers){
       if (value && obj.hasOwnProperty(value)) {
-        users.push(obj);
+        users.add(obj);
       }
     }
 
@@ -50,18 +49,23 @@ export class UserAssignService{
     this.userCtrl.setValue(null);
   }
 
-  remove(id: string, users:AuthData[]): void {
-    const index = users.findIndex(obj=> obj._id === id);
-    if (index >= 0) {
-      users.splice(index, 1);
+  remove(id: string, users:Set<AuthData>): void {
+    for(const user of users){
+      if( user._id === id){
+        users.delete(user)
+      }
     }
+    // const index = users.findIndex(obj=> obj._id === id);
+    // if (index >= 0) {
+    //   users.splice(index, 1);
+    // }
   }
 
   selected(event: MatAutocompleteSelectedEvent,
            userInput: ElementRef<HTMLInputElement>,
-           users:AuthData[]): void {
+           users:Set<AuthData>): void {
     const user = this.allUsers.find(obj => obj._id === event.option.value);
-    users.push(user!);
+    users.add(user!);
     userInput.nativeElement.value = '';
     this.userCtrl.setValue(null);
   }

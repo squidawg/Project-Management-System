@@ -22,7 +22,7 @@ export class CreateBoardComponent implements OnInit{
   userCtrl = this.userAssignService.userCtrl;
 
 
-  selected: AuthData[] = [];
+  selected  = new Set<AuthData>();
 
   separatorKeysCodes = this.userAssignService.separatorKeysCodes;
   filteredUsers = this.userAssignService.filteredUsers;
@@ -62,7 +62,7 @@ export class CreateBoardComponent implements OnInit{
   }
 
   onSubmit() {
-    const users = this.selected.map( obj => obj._id);
+    const users = [...this.selected].map( obj => obj._id);
     const owner = this.user.user.value.id;
     const title = this.createBoardForm.value.titleBoard;
 

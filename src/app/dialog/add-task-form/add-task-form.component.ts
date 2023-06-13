@@ -17,9 +17,7 @@ export class AddTaskFormComponent implements OnInit{
   createTaskForm!: FormGroup;
 
   userCtrl = this.userAssignService.userCtrl;
-
-
-  selected: AuthData[] = [];
+  selected  = new Set<AuthData>();
 
   separatorKeysCodes = this.userAssignService.separatorKeysCodes;
   filteredUsers = this.userAssignService.filteredUsers
@@ -55,7 +53,7 @@ export class AddTaskFormComponent implements OnInit{
   }
 
   onSubmit(){
-    const users = this.selected.map( obj => obj._id);
+    const users = [...this.selected].map( obj => obj._id);
     const title: string = this.createTaskForm.value.taskTitle;
     const description: string = this.createTaskForm.value.taskDescription;
     this.tasksStorageService.postTasks(title, description, users).subscribe(
@@ -68,5 +66,4 @@ export class AddTaskFormComponent implements OnInit{
   onError(value: any){
     return this.authentication.getErrorMessage(value);
   }
-
 }

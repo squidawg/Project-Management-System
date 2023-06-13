@@ -10,6 +10,12 @@
 
 }
 
+.footer_inner{
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
 .width{
     display: flex;
     width: 220px;
@@ -22,4 +28,15 @@
 }
 a:hover{
     color: var(--footer-bg-link);
+}
+
+.icon{
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+}
+
+.icon-git{
+    background-image: url("../src/assets/github-142-svgrepo-com.svg");
 }
