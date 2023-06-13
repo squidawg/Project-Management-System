@@ -8,7 +8,7 @@
                 <h2  >{{"btn.EditProfile" | translate}}</h2>
                 <h4  >{{"form.edit_desc" | translate}}</h4>
             </div>
-            <div class="example-container">
+            <div class="example-container d-flex flex-column gap-3">
                 <mat-form-field appearance="fill">
                     <mat-label  >{{"form.name" | translate}}</mat-label>
                     <input
@@ -17,7 +17,6 @@
 
                     <mat-error *ngIf="!editUserForm.get('name')!.valid">{{onError(editUserForm.get('name')) | translate}}</mat-error>
                 </mat-form-field>
-                <br>
                 <mat-form-field appearance="fill">
                     <mat-label  >{{"form.login" | translate}}</mat-label>
                     <input

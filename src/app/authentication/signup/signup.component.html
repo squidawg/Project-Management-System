@@ -10,7 +10,7 @@
                     <a style="cursor: pointer" routerLink="/login">{{"btn.signIn" | translate}}</a>
                 </h4>
             </div>
-            <div class="example-container">
+            <div class="example-container d-flex flex-column gap-3">
                 <mat-form-field appearance="fill">
                     <mat-label>{{"form.name" | translate}}</mat-label>
                     <input
@@ -18,7 +18,6 @@
                             formControlName="name">
                     <mat-error *ngIf="!signUpForm.get('name')!.valid">{{onError(signUpForm.get('name')) | translate}}</mat-error>
                 </mat-form-field>
-                <br>
                 <mat-form-field appearance="fill">
                     <mat-label>{{"form.login" | translate}}</mat-label>
                     <input
@@ -27,7 +26,6 @@
                     >
                     <mat-error *ngIf="!signUpForm.get('login')!.valid">{{onError(signUpForm.get('login'))  | translate}}</mat-error>
                 </mat-form-field>
-                <br>
                 <mat-form-field appearance="fill">
                     <mat-label>{{"form.password" | translate}}</mat-label>
                     <input

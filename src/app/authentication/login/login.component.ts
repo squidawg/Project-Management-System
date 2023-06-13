@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.signInForm = new FormGroup({
-      'login': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      'login': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4)]),
       'password': new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*\\W)(?!.*\\s).{4,}$')])
     })
   }

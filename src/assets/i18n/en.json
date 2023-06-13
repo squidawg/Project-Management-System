@@ -11,7 +11,7 @@
 	"btn.submit": "Submit",
 	"dashboard.desc": "You don’t have any boards in this Workspace yet. Boards you create or join will show up here.",
 	"dashboard.title": "My Boards:",
-	"error_handler.invalid": "Not a valid pattern",
+	"error_handler.invalid": "Input should be letters only. min length 4 symbols",
 	"error_handler.password": "field must contain at least one uppercase letter and special symbol with minimum length of 4",
 	"error_handler.required": "this is required",
 	"form.edit_desc": "Provide new info",

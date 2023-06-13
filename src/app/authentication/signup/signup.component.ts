@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit{
           this.isLoading = false;
           this.router.navigate(['/login']);
     }, errMessage => {
-          this.snackBar.openSnackBar(errMessage)
+          this.snackBar.openSnackBar(errMessage);
           this.isLoading = false;
     })
     this.signUpForm.reset();

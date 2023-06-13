@@ -32,8 +32,8 @@ export class EditProfileComponent implements OnInit{
     this.authentication.getUser(userId).subscribe( resData => {
     this.isLoading = !this.isLoading
       this.editUserForm = new FormGroup({
-        'name': new FormControl(resData.name, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-        'login': new FormControl(resData.login, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+        'name': new FormControl(resData.name, [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4)]),
+        'login': new FormControl(resData.login, [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4)]),
         'password': new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*\\W)(?!.*\\s).{4,}$')])
       });
   }, errMessage => {
