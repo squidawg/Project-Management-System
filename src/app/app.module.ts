@@ -44,6 +44,7 @@ import { TranslatePipe } from './translate/translate.pipe';
 import {TranslateService} from "./translate/translate.service";
 import {TranformPipe} from "./shared/tranform.pipe";
 import {MatBadgeModule} from "@angular/material/badge";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 export function setupTranslateServiceFactory(
     service: TranslateService): Function {
@@ -94,6 +95,7 @@ export function setupTranslateServiceFactory(
         MatChipsModule,
         MatSelectModule,
         MatBadgeModule,
+        MatProgressBarModule,
 
 
     ],

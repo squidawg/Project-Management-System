@@ -53,6 +53,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   columnIndex: boolean[] = [];
 
   isLoading = false;
+  isDrop = false;
   isEditing: boolean[] = [];
 
 
@@ -77,14 +78,12 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   onFetchUsers() {
-
     this.authentication.getUsers()
         .subscribe(resData => {
       this.userAssignService.setUsers(resData);
     }, errMessage => {
       this.snackBar.openSnackBar(errMessage);
     });
-
   }
 
   onFetchData() {
@@ -123,15 +122,20 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   dropColumn(event: CdkDragDrop<ColumnData[]>) {
+    this.isDrop = !this.isDrop
     moveItemInArray(this.sortedData, event.previousIndex, event.currentIndex);
     this.sortedData.forEach((item, i) => {
       item.order = i;
     });
     this.boardStorageService.patchColumns(this.sortedData)
         .subscribe(
-        () => {},
+        () => {
+          this.isDrop = !this.isDrop
+        },
         errMessage => {
           this.snackBar.openSnackBar(errMessage);
+          this.isDrop = !this.isDrop
+
         });
   }
 
@@ -143,9 +147,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardStorageService.columnId = column!._id;
     this.boardStorageService.putColumn(column.title!)
         .subscribe(() => {
-      this.isEditing[index] = !this.isEditing[index];
+          this.isDrop = !this.isDrop
+          this.isEditing[index] = !this.isEditing[index];
     }, errMessage => {
-      this.snackBar.openSnackBar(errMessage);
+          this.isDrop = !this.isDrop
+
+          this.snackBar.openSnackBar(errMessage);
     })
   }
 
@@ -177,6 +184,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   dropTask(event: CdkDragDrop<TaskData[] | any>, i: number) {
+    this.isDrop = !this.isDrop
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -194,9 +202,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
     this.tasksStorageService.patchTasks(taskData)
         .subscribe(
-        () =>{},
+        () =>{
+          this.isDrop = !this.isDrop
+        },
                 errMesage => {
-      this.snackBar.openSnackBar(errMesage)
+                  this.isDrop = !this.isDrop
+                  this.snackBar.openSnackBar(errMesage)
     });
   }
 
@@ -205,5 +216,4 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.taskIndex[taskIndex] = !this.taskIndex[taskIndex];
     this.columnIndex[colIndex] = !this.columnIndex[colIndex]
   }
-
 }
