@@ -9,7 +9,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {SnackbarService} from "../../shared/snackbar.service";
 import {BoardStorageService} from "../../board/board-storage.service";
 import { concatMap } from 'rxjs/operators';
-import {BoardTemplateModel} from "../../board/board.template/board.template.model";
+import {BoardTemplateModel} from "../../board/board.template.model";
 
 @Component({
   selector: 'app-create-board',
